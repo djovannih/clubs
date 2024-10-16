@@ -11,7 +11,7 @@ export default function AttributesTree({ tree, setTree }: AttributesTreeProps) {
   return tree.map((row, rowIndex) => (
     <div key={rowIndex}>
       {row.some((node) =>
-        node.parentsIds.some((id) => id.charAt(0) !== node.id.charAt(0))
+        node.parentsIds.some((id) => id.charAt(0) !== node.id.charAt(0)),
       ) && <HorizontalLine topRow={tree.at(rowIndex - 1)!} bottomRow={row} />}
       <div key={row[0].id} className="grid grid-cols-3 gap-8">
         {row.map((node) => (

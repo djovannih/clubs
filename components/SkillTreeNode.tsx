@@ -27,26 +27,26 @@ export default function SkillTreeNode({
   return (
     <div
       className={clsx(
-        "flex flex-col items-center z-10",
+        "z-10 flex flex-col items-center",
         !showTopRow && "self-end",
         !showBottomRow && "self-start",
         node.column === 0 && "col-start-1",
         node.column === 1 && "col-start-2",
-        node.column === 2 && "col-start-3"
+        node.column === 2 && "col-start-3",
       )}
     >
       {showTopRow && (
         <div
           className={clsx(
-            "w-2 h-9 -mt-1",
-            node.selected ? "bg-green-600" : "bg-gray-500"
+            "-mt-1 h-9 w-2",
+            node.selected ? "bg-green-600" : "bg-gray-500",
           )}
         ></div>
       )}
       <button
         className={clsx(
           "size-8 disabled:cursor-not-allowed",
-          node.selected ? "bg-green-600" : "bg-gray-500"
+          node.selected ? "bg-green-600" : "bg-gray-500",
         )}
         onClick={() => toggleNode(node)}
         disabled={!requirementsSatisfied}
@@ -56,10 +56,10 @@ export default function SkillTreeNode({
       {showBottomRow && (
         <div
           className={clsx(
-            "w-2 h-9 -mb-1",
+            "-mb-1 h-9 w-2",
             node.selected && children.some((child) => child.selected)
               ? "bg-green-600"
-              : "bg-gray-500"
+              : "bg-gray-500",
           )}
         ></div>
       )}

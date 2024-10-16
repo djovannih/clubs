@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 const updateTree = (currentTree: AttributeNode[][], node: AttributeNode) => {
   const newTree: AttributeNode[][] = currentTree.map((row) =>
-    row.map((n) => ({ ...n }))
+    row.map((n) => ({ ...n })),
   );
 
   const currentNode = newTree.at(node.row)!.find(({ id }) => id === node.id)!;
@@ -11,8 +11,8 @@ const updateTree = (currentTree: AttributeNode[][], node: AttributeNode) => {
   const hasSelectedParent = (childNode: AttributeNode) => {
     return childNode.parentsIds.some((parentId) =>
       newTree.some((row) =>
-        row.some((parent) => parent.id === parentId && parent.selected)
-      )
+        row.some((parent) => parent.id === parentId && parent.selected),
+      ),
     );
   };
 
@@ -37,7 +37,7 @@ const updateTree = (currentTree: AttributeNode[][], node: AttributeNode) => {
 
 export const toggleNode = (
   node: AttributeNode,
-  setTree: Dispatch<SetStateAction<AttributeNode[][]>>
+  setTree: Dispatch<SetStateAction<AttributeNode[][]>>,
 ) => {
   setTree((prevTree) => updateTree(prevTree, node));
 };

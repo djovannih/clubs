@@ -30,26 +30,26 @@ export default function HorizontalLine({
       bottomRow.find(({ column }) => column === 2)?.selected);
 
   return (
-    <div className="grid grid-cols-2 mx-3">
+    <div className="mx-3 grid grid-cols-2">
       {drawFirstSegment && (
         <div
           className={clsx(
-            "h-2 col-start-1",
-            firstSegmentSelected ? "bg-green-600 z-20" : "bg-gray-500",
+            "col-start-1 h-2",
+            firstSegmentSelected ? "z-20 bg-green-600" : "bg-gray-500",
             firstSegmentSelected &&
               !secondSegmentSelected &&
-              "w-[calc(100%+0.25rem)]"
+              "w-[calc(100%+0.25rem)]",
           )}
         ></div>
       )}
       {drawSecondSegment && (
         <div
           className={clsx(
-            "h-2 col-start-2",
-            secondSegmentSelected ? "bg-green-600 z-20" : "bg-gray-500",
+            "col-start-2 h-2",
+            secondSegmentSelected ? "z-20 bg-green-600" : "bg-gray-500",
             !firstSegmentSelected &&
               secondSegmentSelected &&
-              "w-[calc(100%+0.25rem)] -ml-[0.25rem]"
+              "-ml-[0.25rem] w-[calc(100%+0.25rem)]",
           )}
         ></div>
       )}

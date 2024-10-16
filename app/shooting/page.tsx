@@ -113,7 +113,7 @@ export default function Character() {
   ]);
 
   return (
-    <div className="w-80 flex flex-col items-center mx-auto">
+    <div className="mx-auto flex w-80 flex-col items-center">
       <AttributesTree tree={tree} setTree={setTree} />
     </div>
   );
