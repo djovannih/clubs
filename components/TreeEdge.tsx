@@ -1,33 +1,31 @@
+import { GraphNode } from "@/lib/graph";
 import clsx from "clsx";
 
-interface HorizontalLineProps {
-  topRow: AttributeNode[];
-  bottomRow: AttributeNode[];
+interface TreeEdgeProps {
+  topRow: GraphNode[];
+  bottomRow: GraphNode[];
 }
 
-export default function HorizontalLine({
-  topRow,
-  bottomRow,
-}: HorizontalLineProps) {
+export default function TreeEdge({ topRow, bottomRow }: TreeEdgeProps) {
   const drawFirstSegment = bottomRow
     .filter(({ column }) => column > 0)
-    .some(({ parentsIds }) => parentsIds.some((id) => id.charAt(0) === "A"));
+    .some(({ parentIds }) => parentIds.some((id) => id.charAt(0) === "A"));
 
   const firstSegmentSelected =
-    (topRow.at(0)?.selected &&
-      bottomRow.some((node) => node.column > 0 && node.selected)) ||
-    (topRow.some((node) => node.column > 0 && node.selected) &&
-      bottomRow.at(0)?.selected);
+    (topRow.at(0)?.isActive &&
+      bottomRow.some((node) => node.column > 0 && node.isActive)) ||
+    (topRow.some((node) => node.column > 0 && node.isActive) &&
+      bottomRow.at(0)?.isActive);
 
   const drawSecondSegment = bottomRow
     .at(2)
-    ?.parentsIds.some((id) => id.charAt(0) !== "C");
+    ?.parentIds.some((id) => id.charAt(0) !== "C");
 
   const secondSegmentSelected =
-    (topRow.find(({ column }) => column === 2)?.selected &&
-      bottomRow.some((node) => node.column < 2 && node.selected)) ||
-    (topRow.some((node) => node.column < 2 && node.selected) &&
-      bottomRow.find(({ column }) => column === 2)?.selected);
+    (topRow.find(({ column }) => column === 2)?.isActive &&
+      bottomRow.some((node) => node.column < 2 && node.isActive)) ||
+    (topRow.some((node) => node.column < 2 && node.isActive) &&
+      bottomRow.find(({ column }) => column === 2)?.isActive);
 
   return (
     <div className="mx-3 grid grid-cols-2">

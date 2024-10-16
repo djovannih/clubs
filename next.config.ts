@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     cssChunking: "loose",
     reactCompiler: true,
     typedRoutes: true,
-    useLightningcss: true,
   },
 };
 
