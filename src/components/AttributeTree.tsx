@@ -1,7 +1,6 @@
 import { Graph, GraphNode, groupByRow } from "@/lib/graph";
-import AttributeNode from "./AttributeNode";
-import TreeEdge from "./TreeEdge";
-import clsx from "clsx";
+import AttributeNode from "@/components/AttributeNode";
+import TreeEdge from "@/components/TreeEdge";
 
 interface AttributeTreeProps {
   tree: Graph;
