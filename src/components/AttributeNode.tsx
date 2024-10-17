@@ -20,11 +20,11 @@ export default function AttributeNode({
   return (
     <div
       className={clsx(
-        "z-10 flex flex-col items-center",
+        "z-10 col-start-1 flex flex-col items-center",
         !showTopRow && "self-end",
         !showBottomRow && "self-start",
-        `col-start-${node.column + 1}`,
       )}
+      style={{ gridColumnStart: node.column + 1 }}
     >
       {showTopRow && (
         <div

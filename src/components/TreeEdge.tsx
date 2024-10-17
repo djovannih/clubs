@@ -33,7 +33,7 @@ export default function TreeEdge({ topRow, bottomRow }: TreeEdgeProps) {
         <div
           className={clsx(
             "col-start-1 h-2",
-            firstSegmentSelected ? "z-20 bg-green-600" : "bg-gray-500",
+            firstSegmentSelected ? "bg-green-600 z-20" : "bg-gray-500",
             firstSegmentSelected &&
               !secondSegmentSelected &&
               "w-[calc(100%+0.25rem)]",
@@ -44,7 +44,7 @@ export default function TreeEdge({ topRow, bottomRow }: TreeEdgeProps) {
         <div
           className={clsx(
             "col-start-2 h-2",
-            secondSegmentSelected ? "z-20 bg-green-600" : "bg-gray-500",
+            secondSegmentSelected ? "bg-green-600 z-20" : "bg-gray-500",
             !firstSegmentSelected &&
               secondSegmentSelected &&
               "-ml-[0.25rem] w-[calc(100%+0.25rem)]",
