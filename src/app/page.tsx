@@ -14,7 +14,6 @@ export default function Home() {
 
   return (
     <>
-      <Idk />
       <div className="rounded-lg bg-background p-6">
         <h2 className="mb-4 text-2xl font-bold">Attributes</h2>
         {attributes.map((attr) => (
@@ -23,15 +22,16 @@ export default function Home() {
               <span>{attr.name}</span>
               <span>{attr.value}</span>
             </div>
-            <div className="h-2.5 w-full rounded-full bg-node-locked">
+            <div className="bg-node-locked h-2.5 w-full rounded-full">
               <div
-                className="h-2.5 rounded-full bg-highlight-dark"
+                className="bg-highlight-dark h-2.5 rounded-full"
                 style={{ width: `${(attr.value / attr.maxValue) * 100}%` }}
               ></div>
             </div>
           </div>
         ))}
       </div>
+      <Idk />
     </>
   );
 }

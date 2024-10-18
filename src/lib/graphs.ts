@@ -1,6 +1,6 @@
 import { Graph } from "@/lib/graph";
 
-export const paceTree: Graph[] = [
+export const paceGraph: Graph[] = [
   new Map([
     [
       "A1",
@@ -148,7 +148,7 @@ export const paceTree: Graph[] = [
   ]),
 ];
 
-export const shootingTree: Graph[] = [
+export const shootingGraph: Graph[] = [
   new Map([
     [
       "A1",
