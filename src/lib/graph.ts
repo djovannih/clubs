@@ -9,8 +9,14 @@ export type GraphNode = {
 
 export type Graph = Map<string, GraphNode>;
 
+export type Forest = Graph[];
+
 export const getChildren = (graph: Graph, nodeId: string) =>
-  Array.from(graph.values().filter((node) => node.parentIds.includes(nodeId)));
+  Array.from(
+    Array.from(graph.values()).filter((node) =>
+      node.parentIds.includes(nodeId),
+    ),
+  );
 
 const getCheapestParentId = (graph: Graph, nodeId: string) =>
   graph
@@ -22,7 +28,7 @@ const getCheapestParentId = (graph: Graph, nodeId: string) =>
         : cheapestId,
     );
 
-export const activateNode = (graph: Graph, nodeId: string): Graph => {
+const activateNode = (graph: Graph, nodeId: string): Graph => {
   const node = graph.get(nodeId)!;
 
   const hasActiveParent = node.parentIds.some(
@@ -36,7 +42,7 @@ export const activateNode = (graph: Graph, nodeId: string): Graph => {
     : updatedGraph;
 };
 
-export const deactivateNode = (graph: Graph, nodeId: string): Graph => {
+const deactivateNode = (graph: Graph, nodeId: string): Graph => {
   const node = graph.get(nodeId)!;
 
   const childrenToDeactivate = getChildren(graph, nodeId).filter(
@@ -54,10 +60,13 @@ export const deactivateNode = (graph: Graph, nodeId: string): Graph => {
   return updatedGraph;
 };
 
-export const groupByRow = (graph: Graph) => {
-  return graph
-    .values()
-    .reduce<
-      Map<number, GraphNode[]>
-    >((acc, node) => new Map(acc).set(node.row, [...(acc.get(node.row) || []), node]), new Map());
-};
+export const toggleNode = (graph: Graph, nodeId: string) =>
+  graph.get(nodeId)!.isActive
+    ? deactivateNode(graph, nodeId)
+    : activateNode(graph, nodeId);
+
+export const groupByRow = (graph: Graph) =>
+  Array.from(graph.values()).reduce<Map<number, GraphNode[]>>(
+    (acc, node) => acc.set(node.row, [...(acc.get(node.row) || []), node]),
+    new Map(),
+  );

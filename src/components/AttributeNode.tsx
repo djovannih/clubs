@@ -1,5 +1,6 @@
 import { getChildren, Graph, GraphNode } from "@/lib/graph";
 import clsx from "clsx";
+import { useSetAtom } from "jotai";
 
 interface AttributeNodeProps {
   tree: Graph;
@@ -7,8 +8,8 @@ interface AttributeNodeProps {
   toggleNode: () => void;
 }
 export default function AttributeNode({
-  node,
   tree,
+  node,
   toggleNode,
 }: AttributeNodeProps) {
   const hasParents = node.parentIds.length > 0;
@@ -30,14 +31,14 @@ export default function AttributeNode({
         <div
           className={clsx(
             "-mt-1 h-9 w-2",
-            node.isActive ? "bg-green-600" : "bg-gray-500",
+            node.isActive ? "bg-primary-dark" : "bg-inactive-node",
           )}
         ></div>
       )}
       <button
         className={clsx(
           "size-8 disabled:cursor-not-allowed",
-          node.isActive ? "bg-green-600" : "bg-gray-500",
+          node.isActive ? "bg-primary-dark" : "bg-inactive-node",
         )}
         onClick={toggleNode}
       >
@@ -48,8 +49,8 @@ export default function AttributeNode({
           className={clsx(
             "-mb-1 h-9 w-2",
             node.isActive && children.some((child) => child.isActive)
-              ? "bg-green-600"
-              : "bg-gray-500",
+              ? "bg-primary-dark"
+              : "bg-inactive-node",
           )}
         ></div>
       )}

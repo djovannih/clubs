@@ -1,16 +1,15 @@
-import { Graph, GraphNode, groupByRow } from "@/lib/graph";
+import { type Graph, type GraphNode, groupByRow } from "@/lib/graph";
 import AttributeNode from "@/components/AttributeNode";
 import TreeEdge from "@/components/TreeEdge";
+import { useAtom, type WritableAtom } from "jotai";
 
 interface AttributeTreeProps {
-  tree: Graph;
-  toggleNode: (nodeId: string) => void;
+  treeAtom: WritableAtom<Graph, [nodeId: string], void>;
 }
 
-export default function AttributeTree({
-  tree,
-  toggleNode,
-}: AttributeTreeProps) {
+export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
+  const [tree, toggleNode] = useAtom(treeAtom);
+
   const showEdge = (row: GraphNode[]) =>
     row.some((node) =>
       node.parentIds.some(
@@ -20,9 +19,10 @@ export default function AttributeTree({
 
   const rows = groupByRow(tree);
   const columnsCount =
-    tree
-      .values()
-      .reduce((acc, node) => (node.column > acc ? node.column : acc), 0) + 1;
+    Array.from(tree.values()).reduce(
+      (acc, node) => (node.column > acc ? node.column : acc),
+      0,
+    ) + 1;
 
   return Array.from(rows.entries()).map(([rowIndex, row]) => (
     <div key={rowIndex}>
