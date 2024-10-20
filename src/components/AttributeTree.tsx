@@ -24,26 +24,30 @@ export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
       0,
     ) + 1;
 
-  return Array.from(rows.entries()).map(([rowIndex, row]) => (
-    <div key={rowIndex}>
-      {showEdge(row) && (
-        <TreeEdge topRow={rows.get(rowIndex - 1)!} bottomRow={row} />
-      )}
-      <div
-        className="grid grid-cols-3 gap-8"
-        style={{
-          gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
-        }}
-      >
-        {row.map((node) => (
-          <AttributeNode
-            key={node.id}
-            tree={tree}
-            node={node}
-            toggleNode={() => toggleNode(node.id)}
-          />
-        ))}
-      </div>
+  return (
+    <div className="mb-32">
+      {Array.from(rows.entries()).map(([rowIndex, row]) => (
+        <div key={rowIndex}>
+          {showEdge(row) && (
+            <TreeEdge topRow={rows.get(rowIndex - 1)!} bottomRow={row} />
+          )}
+          <div
+            className="grid grid-cols-3 gap-8"
+            style={{
+              gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
+            }}
+          >
+            {row.map((node) => (
+              <AttributeNode
+                key={node.id}
+                tree={tree}
+                node={node}
+                toggleNode={() => toggleNode(node.id)}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
-  ));
+  );
 }

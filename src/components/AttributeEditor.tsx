@@ -15,7 +15,7 @@ export default function AttributeEditor({}: AttributeEditorProps) {
     "Passing",
     "Dribbling",
     "Defending",
-    "Physical",
+    "Physicality",
   ];
 
   const [activeTab, setActiveTab] = useState(forests.at(0));
@@ -34,7 +34,10 @@ export default function AttributeEditor({}: AttributeEditorProps) {
 
   return (
     <>
-      <div className="my-8 grid grid-cols-3 justify-between bg-background">
+      <h2 className="mb-4 text-center text-3xl font-bold uppercase">
+        Attributes
+      </h2>
+      <div className="grid grid-cols-3 justify-between bg-background">
         {forests.map((tab) => (
           <button
             key={tab}
