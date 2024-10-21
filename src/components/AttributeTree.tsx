@@ -32,7 +32,7 @@ export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
             <TreeEdge topRow={rows.get(rowIndex - 1)!} bottomRow={row} />
           )}
           <div
-            className="grid grid-cols-3 gap-8"
+            className="grid gap-8"
             style={{
               gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
             }}

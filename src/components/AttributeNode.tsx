@@ -1,6 +1,5 @@
 import { getChildren, Graph, GraphNode } from "@/lib/graph";
 import clsx from "clsx";
-import { useSetAtom } from "jotai";
 
 interface AttributeNodeProps {
   tree: Graph;

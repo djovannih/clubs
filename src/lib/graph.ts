@@ -1,3 +1,7 @@
+import { Player } from "./player";
+
+export type UpdatePlayerAction = "INC" | "DEC";
+
 export type GraphNode = {
   id: string;
   activationCost: number;
@@ -5,6 +9,7 @@ export type GraphNode = {
   parentIds: string[];
   row: number;
   column: number;
+  updatePlayer: (player: Player, action: UpdatePlayerAction) => Player;
 };
 
 export type Graph = Map<string, GraphNode>;
@@ -12,11 +17,7 @@ export type Graph = Map<string, GraphNode>;
 export type Forest = Graph[];
 
 export const getChildren = (graph: Graph, nodeId: string) =>
-  Array.from(
-    Array.from(graph.values()).filter((node) =>
-      node.parentIds.includes(nodeId),
-    ),
-  );
+  Array.from(graph.values()).filter((node) => node.parentIds.includes(nodeId));
 
 const getCheapestParentId = (graph: Graph, nodeId: string) =>
   graph

@@ -6,7 +6,7 @@ export type PlayerAttribute = {
 export type PlayerAttributes = {
   Pace: {
     Acceleration: PlayerAttribute;
-    "Sprint speed": PlayerAttribute;
+    "Sprint Speed": PlayerAttribute;
   };
   Shooting: {
     Positioning: PlayerAttribute;

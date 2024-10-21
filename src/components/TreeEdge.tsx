@@ -18,8 +18,8 @@ export default function TreeEdge({ topRow, bottomRow }: TreeEdgeProps) {
       bottomRow.at(0)?.isActive);
 
   const drawSecondSegment = bottomRow
-    .at(2)
-    ?.parentIds.some((id) => id.charAt(0) !== "C");
+    .filter(({ column }) => column < 2)
+    .some(({ parentIds }) => parentIds.some((id) => id.charAt(0) === "C"));
 
   const secondSegmentSelected =
     (topRow.find(({ column }) => column === 2)?.isActive &&
