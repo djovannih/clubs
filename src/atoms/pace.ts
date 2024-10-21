@@ -20,6 +20,7 @@ const paceForest = [
           parentIds: [],
           row: 0,
           column: 0,
+          displayActions: [{ stat: "Acc.", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -46,6 +47,7 @@ const paceForest = [
           parentIds: [],
           row: 0,
           column: 2,
+          displayActions: [{ stat: "Speed", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -72,6 +74,7 @@ const paceForest = [
           parentIds: ["A1", "C1"],
           row: 1,
           column: 0,
+          displayActions: [{ stat: "Acc.", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -98,6 +101,10 @@ const paceForest = [
           parentIds: ["A1", "C1"],
           row: 1,
           column: 1,
+          displayActions: [
+            { stat: "Acc.", value: 1 },
+            { stat: "Speed", value: 1 },
+          ],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -130,6 +137,7 @@ const paceForest = [
           parentIds: ["A1", "C1"],
           row: 1,
           column: 2,
+          displayActions: [{ stat: "Speed", value: 1 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -156,6 +164,7 @@ const paceForest = [
           parentIds: ["A2"],
           row: 2,
           column: 0,
+          displayActions: [{ stat: "Acc.", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -182,6 +191,7 @@ const paceForest = [
           parentIds: ["C2"],
           row: 2,
           column: 2,
+          displayActions: [{ stat: "Speed", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -208,6 +218,7 @@ const paceForest = [
           parentIds: ["A3", "C3"],
           row: 3,
           column: 0,
+          displayActions: [{ stat: "Acc.", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -234,6 +245,10 @@ const paceForest = [
           parentIds: ["A3", "C3"],
           row: 3,
           column: 1,
+          displayActions: [
+            { stat: "Acc.", value: 1 },
+            { stat: "Speed", value: 1 },
+          ],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -266,6 +281,7 @@ const paceForest = [
           parentIds: ["A3", "C3"],
           row: 3,
           column: 2,
+          displayActions: [{ stat: "Speed", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -292,6 +308,7 @@ const paceForest = [
           parentIds: ["A4"],
           row: 4,
           column: 0,
+          displayActions: [{ stat: "Acc.", value: 3 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -318,6 +335,10 @@ const paceForest = [
           parentIds: ["B4"],
           row: 4,
           column: 1,
+          displayActions: [
+            { stat: "Acc.", value: 2 },
+            { stat: "Speed", value: 2 },
+          ],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {
@@ -350,6 +371,7 @@ const paceForest = [
           parentIds: ["C4"],
           row: 4,
           column: 2,
+          displayActions: [{ stat: "Speed", value: 2 }],
           updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
             ...player,
             attributes: {

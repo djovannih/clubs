@@ -19,21 +19,19 @@ export default function PlayerInfo() {
           <div>Height: {player.height}</div>
           <div>Weight: {player.weight}</div>
           <div>AcceleRATE: {player.accelerationRate}</div>
-          <div>Acc: {player.attributes.Pace.Acceleration.value}</div>
-          <div>Sprint: {player.attributes.Pace["Sprint Speed"].value}</div>
           <div className="flex gap-2">
             <span>Weak foot:</span>
             <div className="flex">
-              {Array.from({ length: player.weakFoot }, () => (
-                <Star size={24} fill="yellow" strokeWidth={0} />
+              {Array.from({ length: player.weakFoot }, (_, i) => (
+                <Star key={i} size={24} fill="yellow" strokeWidth={0} />
               ))}
             </div>
           </div>
           <div className="flex gap-2">
             <span>Skill moves:</span>
             <div className="flex">
-              {Array.from({ length: player.skillMoves }, () => (
-                <Star size={24} fill="yellow" strokeWidth={0} />
+              {Array.from({ length: player.skillMoves }, (_, i) => (
+                <Star key={i} size={24} fill="yellow" strokeWidth={0} />
               ))}
             </div>
           </div>

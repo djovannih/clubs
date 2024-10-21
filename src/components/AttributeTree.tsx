@@ -1,6 +1,6 @@
-import { type Graph, type GraphNode, groupByRow } from "@/lib/graph";
 import AttributeNode from "@/components/AttributeNode";
-import TreeEdge from "@/components/TreeEdge";
+import RowsJunction from "@/components/NodeJunction";
+import { type Graph, groupByRow } from "@/lib/graph";
 import { useAtom, type WritableAtom } from "jotai";
 
 interface AttributeTreeProps {
@@ -9,13 +9,6 @@ interface AttributeTreeProps {
 
 export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
   const [tree, toggleNode] = useAtom(treeAtom);
-
-  const showEdge = (row: GraphNode[]) =>
-    row.some((node) =>
-      node.parentIds.some(
-        (pid) => tree.get(pid)?.column !== tree.get(node.id)?.column,
-      ),
-    );
 
   const rows = groupByRow(tree);
   const columnsCount =
@@ -28,11 +21,15 @@ export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
     <div className="mb-32">
       {Array.from(rows.entries()).map(([rowIndex, row]) => (
         <div key={rowIndex}>
-          {showEdge(row) && (
-            <TreeEdge topRow={rows.get(rowIndex - 1)!} bottomRow={row} />
+          {rowIndex > 0 && (
+            <RowsJunction
+              tree={tree}
+              topRow={rows.get(rowIndex - 1)!}
+              bottomRow={row}
+            />
           )}
           <div
-            className="grid gap-8"
+            className="grid"
             style={{
               gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
             }}

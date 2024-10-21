@@ -1,58 +1,34 @@
-import { getChildren, Graph, GraphNode } from "@/lib/graph";
+import { GraphNode } from "@/lib/graph";
 import clsx from "clsx";
+import Badge from "./Badge";
 
 interface AttributeNodeProps {
-  tree: Graph;
   node: GraphNode;
   toggleNode: () => void;
 }
 export default function AttributeNode({
-  tree,
   node,
   toggleNode,
 }: AttributeNodeProps) {
-  const hasParents = node.parentIds.length > 0;
-  const children = getChildren(tree, node.id);
-
-  const showTopRow = hasParents;
-  const showBottomRow = children.length > 0;
-
   return (
     <div
-      className={clsx(
-        "z-10 col-start-1 flex flex-col items-center",
-        !showTopRow && "self-end",
-        !showBottomRow && "self-start",
-      )}
+      className="items-between z-10 mx-4 flex h-full flex-col"
       style={{ gridColumnStart: node.column + 1 }}
     >
-      {showTopRow && (
-        <div
-          className={clsx(
-            "-mt-1 h-9 w-2",
-            node.isActive ? "bg-primary-dark" : "bg-inactive-node",
-          )}
-        ></div>
-      )}
       <button
         className={clsx(
-          "size-8 disabled:cursor-not-allowed",
+          "relative rounded-lg p-4",
           node.isActive ? "bg-primary-dark" : "bg-inactive-node",
         )}
         onClick={toggleNode}
       >
-        {node.id}
+        <ul className="flex min-h-[2lh] grow flex-col items-center justify-center rounded-sm text-sm">
+          {node.displayActions.map((action) => (
+            <li key={action.stat}>{`${action.stat} +${action.value}`}</li>
+          ))}
+        </ul>
+        <Badge>{node.activationCost}</Badge>
       </button>
-      {showBottomRow && (
-        <div
-          className={clsx(
-            "-mb-1 h-9 w-2",
-            node.isActive && children.some((child) => child.isActive)
-              ? "bg-primary-dark"
-              : "bg-inactive-node",
-          )}
-        ></div>
-      )}
     </div>
   );
 }
