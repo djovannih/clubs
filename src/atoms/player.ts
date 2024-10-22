@@ -1,4 +1,4 @@
-import { Player, PlayerAttribute } from "@/lib/player";
+import { AttributeCategory, Player, PlayerAttribute } from "@/lib/player";
 import { atom } from "jotai";
 
 export const playerAtom = atom<Player>({
@@ -8,136 +8,67 @@ export const playerAtom = atom<Player>({
   accelerationRate: "Controlled Explosive",
   weakFoot: 3,
   skillMoves: 4,
-  attributes: {
-    Pace: {
-      Acceleration: {
-        value: 70,
-        maxValue: 99,
-      },
-      "Sprint Speed": {
-        value: 70,
-        maxValue: 99,
-      },
-    },
-    Shooting: {
-      Positioning: {
-        value: 70,
-        maxValue: 99,
-      },
-      Finishing: {
-        value: 70,
-        maxValue: 99,
-      },
-      "Shot Power": {
-        value: 70,
-        maxValue: 99,
-      },
-      "Long Shots": {
-        value: 70,
-        maxValue: 99,
-      },
-      Volleys: {
-        value: 70,
-        maxValue: 99,
-      },
-      Penalties: {
-        value: 70,
-        maxValue: 99,
-      },
-    },
-    Passing: {
-      Vision: {
-        value: 70,
-        maxValue: 99,
-      },
-      Crossing: {
-        value: 70,
-        maxValue: 99,
-      },
-      "Free Kick Accuracy": {
-        value: 70,
-        maxValue: 99,
-      },
-      "Short Passing": {
-        value: 70,
-        maxValue: 99,
-      },
-      "Long Passing": {
-        value: 70,
-        maxValue: 99,
-      },
-      Curve: {
-        value: 70,
-        maxValue: 99,
-      },
-    },
-    Dribbling: {
-      "Ball Control": {
-        value: 70,
-        maxValue: 99,
-      },
-      Dribbling: {
-        value: 70,
-        maxValue: 99,
-      },
-      Agility: {
-        value: 70,
-        maxValue: 99,
-      },
-      Reactions: {
-        value: 70,
-        maxValue: 99,
-      },
-      Balance: {
-        value: 70,
-        maxValue: 99,
-      },
-      Composure: {
-        value: 70,
-        maxValue: 99,
-      },
-    },
-    Defending: {
-      Interceptions: {
-        value: 70,
-        maxValue: 99,
-      },
-      "Def awareness": {
-        value: 70,
-        maxValue: 99,
-      },
-      "Heading accuracy": {
-        value: 70,
-        maxValue: 99,
-      },
-      "Sliding Tackle": {
-        value: 70,
-        maxValue: 99,
-      },
-      "Standing Tackle": {
-        value: 70,
-        maxValue: 99,
-      },
-    },
-    Physicality: {
-      Aggression: {
-        value: 70,
-        maxValue: 99,
-      },
-      Jumping: {
-        value: 70,
-        maxValue: 99,
-      },
-      Stamina: {
-        value: 70,
-        maxValue: 99,
-      },
-      Strength: {
-        value: 70,
-        maxValue: 99,
-      },
-    },
-  },
+  attributes: new Map<AttributeCategory, Map<string, PlayerAttribute>>([
+    [
+      "pace",
+      new Map<string, PlayerAttribute>([
+        ["acceleration", { value: 70, maxValue: 99 }],
+        ["sprintSpeed", { value: 70, maxValue: 99 }],
+      ]),
+    ],
+    [
+      "shooting",
+      new Map<string, PlayerAttribute>([
+        ["positioning", { value: 70, maxValue: 99 }],
+        ["finishing", { value: 70, maxValue: 99 }],
+        ["shotPower", { value: 70, maxValue: 99 }],
+        ["longShots", { value: 70, maxValue: 99 }],
+        ["volleys", { value: 70, maxValue: 99 }],
+        ["penalties", { value: 70, maxValue: 99 }],
+      ]),
+    ],
+    [
+      "passing",
+      new Map<string, PlayerAttribute>([
+        ["vision", { value: 70, maxValue: 99 }],
+        ["crossing", { value: 70, maxValue: 99 }],
+        ["freeKickAccuracy", { value: 70, maxValue: 99 }],
+        ["shortPassing", { value: 70, maxValue: 99 }],
+        ["longPassing", { value: 70, maxValue: 99 }],
+        ["curve", { value: 70, maxValue: 99 }],
+      ]),
+    ],
+    [
+      "dribbling",
+      new Map<string, PlayerAttribute>([
+        ["ballControl", { value: 70, maxValue: 99 }],
+        ["dribbling", { value: 70, maxValue: 99 }],
+        ["agility", { value: 70, maxValue: 99 }],
+        ["reactions", { value: 70, maxValue: 99 }],
+        ["balance", { value: 70, maxValue: 99 }],
+        ["composure", { value: 70, maxValue: 99 }],
+      ]),
+    ],
+    [
+      "defending",
+      new Map<string, PlayerAttribute>([
+        ["interceptions", { value: 70, maxValue: 99 }],
+        ["defAwareness", { value: 70, maxValue: 99 }],
+        ["headingAccuracy", { value: 70, maxValue: 99 }],
+        ["slidingTackle", { value: 70, maxValue: 99 }],
+        ["standingTackle", { value: 70, maxValue: 99 }],
+      ]),
+    ],
+    [
+      "physicality",
+      new Map<string, PlayerAttribute>([
+        ["aggression", { value: 70, maxValue: 99 }],
+        ["jumping", { value: 70, maxValue: 99 }],
+        ["stamina", { value: 70, maxValue: 99 }],
+        ["strength", { value: 70, maxValue: 99 }],
+      ]),
+    ],
+  ]),
 });
 
 const getCategoryValue = (attributes: PlayerAttribute[]) =>
@@ -148,11 +79,11 @@ const getCategoryValue = (attributes: PlayerAttribute[]) =>
 export const playerAttributesValues = atom(
   (get) =>
     new Map(
-      Object.entries(get(playerAtom).attributes).map(
-        ([categoryName, category]) => [
-          categoryName,
-          getCategoryValue(Object.values(category)),
-        ],
-      ),
+      get(playerAtom)
+        .attributes.entries()
+        .map(([attributeCategory, attributes]) => [
+          attributeCategory,
+          getCategoryValue(Array.from(attributes.values())),
+        ]),
     ),
 );

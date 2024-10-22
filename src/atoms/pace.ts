@@ -1,11 +1,16 @@
-import { type Graph, toggleNode, UpdatePlayerAction } from "@/lib/graph";
-import { Player } from "@/lib/player";
+import { playerAtom } from "@/atoms/player";
+import {
+  type Graph,
+  GraphNode,
+  toggleNode,
+  type UpdatePlayerAction,
+} from "@/lib/graph";
+import type { Player, UpdateAttributeAction } from "@/lib/player";
 import { atom } from "jotai";
-import { playerAtom } from "./player";
 
 const paceForest = [
   atom<Graph>(
-    new Map([
+    new Map<string, GraphNode>([
       [
         "A1",
         {
@@ -15,22 +20,13 @@ const paceForest = [
           parentIds: [],
           row: 0,
           column: 0,
-          displayActions: [{ stat: "Acc.", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -42,22 +38,13 @@ const paceForest = [
           parentIds: [],
           row: 0,
           column: 2,
-          displayActions: [{ stat: "Speed", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -69,22 +56,13 @@ const paceForest = [
           parentIds: ["A1", "C1"],
           row: 1,
           column: 0,
-          displayActions: [{ stat: "Acc.", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -96,31 +74,18 @@ const paceForest = [
           parentIds: ["A1", "C1"],
           row: 1,
           column: 1,
-          displayActions: [
-            { stat: "Acc.", value: 1 },
-            { stat: "Speed", value: 1 },
-          ],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    1 * (action === "INC" ? 1 : -1),
-                },
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    1 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 1,
             },
-          }),
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 1,
+            },
+          ],
         },
       ],
       [
@@ -132,22 +97,13 @@ const paceForest = [
           parentIds: ["A1", "C1"],
           row: 1,
           column: 2,
-          displayActions: [{ stat: "Speed", value: 1 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -159,22 +115,13 @@ const paceForest = [
           parentIds: ["A2"],
           row: 2,
           column: 0,
-          displayActions: [{ stat: "Acc.", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -186,22 +133,13 @@ const paceForest = [
           parentIds: ["C2"],
           row: 2,
           column: 2,
-          displayActions: [{ stat: "Speed", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -213,22 +151,13 @@ const paceForest = [
           parentIds: ["A3", "C3"],
           row: 3,
           column: 0,
-          displayActions: [{ stat: "Acc.", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -240,31 +169,18 @@ const paceForest = [
           parentIds: ["A3", "C3"],
           row: 3,
           column: 1,
-          displayActions: [
-            { stat: "Acc.", value: 1 },
-            { stat: "Speed", value: 1 },
-          ],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    1 * (action === "INC" ? 1 : -1),
-                },
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    1 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 1,
             },
-          }),
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 1,
+            },
+          ],
         },
       ],
       [
@@ -276,22 +192,13 @@ const paceForest = [
           parentIds: ["A3", "C3"],
           row: 3,
           column: 2,
-          displayActions: [{ stat: "Speed", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
       [
@@ -303,22 +210,13 @@ const paceForest = [
           parentIds: ["A4"],
           row: 4,
           column: 0,
-          displayActions: [{ stat: "Acc.", value: 3 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    3 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 3,
             },
-          }),
+          ],
         },
       ],
       [
@@ -330,31 +228,18 @@ const paceForest = [
           parentIds: ["B4"],
           row: 4,
           column: 1,
-          displayActions: [
-            { stat: "Acc.", value: 2 },
-            { stat: "Speed", value: 2 },
-          ],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                Acceleration: {
-                  ...player.attributes.Pace.Acceleration,
-                  value:
-                    player.attributes.Pace.Acceleration.value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "acceleration",
+              value: 2,
             },
-          }),
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 2,
+            },
+          ],
         },
       ],
       [
@@ -366,27 +251,57 @@ const paceForest = [
           parentIds: ["C4"],
           row: 4,
           column: 2,
-          displayActions: [{ stat: "Speed", value: 2 }],
-          updatePlayer: (player: Player, action: UpdatePlayerAction) => ({
-            ...player,
-            attributes: {
-              ...player.attributes,
-              Pace: {
-                ...player.attributes.Pace,
-                "Sprint Speed": {
-                  ...player.attributes.Pace["Sprint Speed"],
-                  value:
-                    player.attributes.Pace["Sprint Speed"].value +
-                    2 * (action === "INC" ? 1 : -1),
-                },
-              },
+          actions: [
+            {
+              category: "pace",
+              attribute: "sprintSpeed",
+              value: 2,
             },
-          }),
+          ],
         },
       ],
     ]),
   ),
 ];
+
+const updatePlayer = (
+  player: Player,
+  action: UpdatePlayerAction,
+  updateAttributeActions: UpdateAttributeAction[],
+) => {
+  const update = (updateAttributeAction: UpdateAttributeAction) => {
+    const mainAttr = player.attributes.get(updateAttributeAction.category);
+    const subAttr = mainAttr?.get(updateAttributeAction.attribute);
+
+    const currentCategory = player.attributes.get(
+      updateAttributeAction.category,
+    );
+    const currentAttribute = currentCategory?.get(
+      updateAttributeAction.attribute,
+    );
+
+    if (!mainAttr || !subAttr || !currentCategory || !currentAttribute)
+      return player;
+
+    const updatedValue =
+      action === "INC"
+        ? updateAttributeAction.value
+        : -updateAttributeAction.value;
+
+    return {
+      ...player,
+      attributes: player.attributes.set(
+        updateAttributeAction.category,
+        currentCategory.set(updateAttributeAction.attribute, {
+          ...currentAttribute,
+          value: currentAttribute.value + updatedValue,
+        }),
+      ),
+    };
+  };
+
+  return updateAttributeActions.reduce((_, action) => update(action), player);
+};
 
 export const paceForestAtom = paceForest.map((treeAtom) =>
   atom(
@@ -397,7 +312,11 @@ export const paceForestAtom = paceForest.map((treeAtom) =>
       set(treeAtom, toggleNode(tree, nodeId));
       set(
         playerAtom,
-        node.updatePlayer(get(playerAtom), node.isActive ? "DEC" : "INC"),
+        updatePlayer(
+          get(playerAtom),
+          node.isActive ? "DEC" : "INC",
+          node.actions,
+        ),
       );
     },
   ),

@@ -1,18 +1,13 @@
 import { Graph, GraphNode } from "@/lib/graph";
 import clsx from "clsx";
 
-interface NodeJunctionProps {
+interface JunctionProps {
   tree: Graph;
   topRow: GraphNode[];
   bottomRow: GraphNode[];
   columnIndex: number;
 }
-const NodeJunction = ({
-  tree,
-  topRow,
-  bottomRow,
-  columnIndex,
-}: NodeJunctionProps) => {
+const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
   const topNode = topRow.find(({ column }) => column === columnIndex);
   const bottomNode = bottomRow.find(({ column }) => column === columnIndex);
 
@@ -139,16 +134,16 @@ const NodeJunction = ({
   );
 };
 
-interface RowsJunctionProps {
+interface NodeJunctionProps {
   tree: Graph;
   topRow: GraphNode[];
   bottomRow: GraphNode[];
 }
-export default function RowsJunction({
+export default function NodeJunction({
   tree,
   topRow,
   bottomRow,
-}: RowsJunctionProps) {
+}: NodeJunctionProps) {
   const columnsCount =
     Math.max(
       ...topRow.map(({ column }) => column),
@@ -158,7 +153,7 @@ export default function RowsJunction({
   return (
     <div className="flex justify-between">
       {Array.from({ length: columnsCount }, (_, i) => (
-        <NodeJunction
+        <Junction
           key={i}
           tree={tree}
           topRow={topRow}

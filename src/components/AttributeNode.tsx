@@ -1,6 +1,6 @@
+import Badge from "@/components/Badge";
 import { GraphNode } from "@/lib/graph";
 import clsx from "clsx";
-import Badge from "./Badge";
 
 interface AttributeNodeProps {
   node: GraphNode;
@@ -23,8 +23,10 @@ export default function AttributeNode({
         onClick={toggleNode}
       >
         <ul className="flex min-h-[2lh] grow flex-col items-center justify-center rounded-sm text-sm">
-          {node.displayActions.map((action) => (
-            <li key={action.stat}>{`${action.stat} +${action.value}`}</li>
+          {node.actions.map((action) => (
+            <li
+              key={action.attribute}
+            >{`${action.attribute} +${action.value}`}</li>
           ))}
         </ul>
         <Badge>{node.activationCost}</Badge>

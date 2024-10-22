@@ -1,7 +1,7 @@
 import AttributeTree from "@/components/AttributeTree";
 import { type Graph } from "@/lib/graph";
 import clsx from "clsx";
-import { type WritableAtom } from "jotai";
+import type { WritableAtom } from "jotai";
 import { useState } from "react";
 
 interface AttributeForestProps {

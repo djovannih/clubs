@@ -37,17 +37,17 @@ export default function PlayerInfo() {
           </div>
         </div>
         <div className="flex flex-col gap-3 rounded-lg bg-node-locked p-4">
-          {Object.keys(player.attributes).map((key) => (
-            <div key={key}>
+          {Array.from(player.attributes.keys()).map((attributeCategory) => (
+            <div key={attributeCategory}>
               <div className="mb-1 flex justify-between">
-                <span>{key}</span>
-                <span>{playerAttributes.get(key)!}</span>
+                <span>{attributeCategory}</span>
+                <span>{playerAttributes.get(attributeCategory)}</span>
               </div>
               <div className="h-2.5 w-full rounded-full bg-node-locked">
                 <div
                   className="h-2.5 rounded-full bg-highlight-dark"
                   style={{
-                    width: `${(playerAttributes.get(key)! / 99) * 100}%`,
+                    width: `${(playerAttributes.get(attributeCategory)! / 99) * 100}%`,
                   }}
                 ></div>
               </div>

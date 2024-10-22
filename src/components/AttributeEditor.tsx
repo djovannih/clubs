@@ -6,29 +6,15 @@ import AttributeForest from "@/components/AttributeForest";
 import clsx from "clsx";
 import { useState } from "react";
 
+const forestByName = new Map([
+  ["Pace", paceForestAtom],
+  ["Shooting", shootingForestAtom],
+]);
+
 export default function AttributeEditor() {
-  const forests = [
-    "Pace",
-    "Shooting",
-    "Passing",
-    "Dribbling",
-    "Defending",
-    "Physicality",
-  ];
-
-  const [activeTab, setActiveTab] = useState(forests.at(0));
-
-  const getActiveForest = () => {
-    switch (activeTab) {
-      case "Pace":
-        return <AttributeForest forest={paceForestAtom} />;
-      case "Shooting":
-        return <AttributeForest forest={shootingForestAtom} />;
-      default:
-        console.error(`Unexpected value: ${activeTab}`);
-        return <></>;
-    }
-  };
+  const [activeForestKey, setActiveForestKey] = useState(
+    forestByName.keys().next().value!,
+  );
 
   return (
     <>
@@ -36,20 +22,20 @@ export default function AttributeEditor() {
         Attributes
       </h2>
       <div className="grid grid-cols-3 justify-between bg-background">
-        {forests.map((tab) => (
+        {Array.from(forestByName.keys()).map((name) => (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
+            key={name}
+            onClick={() => setActiveForestKey(name)}
             className={clsx(
               "p-2",
-              tab === activeTab ? "bg-highlight-dark" : "bg-node-locked",
+              name === activeForestKey ? "bg-highlight-dark" : "bg-node-locked",
             )}
           >
-            {tab}
+            {name}
           </button>
         ))}
       </div>
-      {getActiveForest()}
+      <AttributeForest forest={forestByName.get(activeForestKey)!} />
     </>
   );
 }

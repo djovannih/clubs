@@ -1,11 +1,6 @@
-import { Player } from "./player";
+import { UpdateAttributeAction } from "./player";
 
 export type UpdatePlayerAction = "INC" | "DEC";
-
-export type DisplayAction = {
-  stat: string;
-  value: number;
-};
 
 export type GraphNode = {
   id: string;
@@ -14,8 +9,7 @@ export type GraphNode = {
   parentIds: string[];
   row: number;
   column: number;
-  displayActions: DisplayAction[];
-  updatePlayer: (player: Player, action: UpdatePlayerAction) => Player;
+  actions: UpdateAttributeAction[];
 };
 
 export type Graph = Map<string, GraphNode>;
