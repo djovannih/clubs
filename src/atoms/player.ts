@@ -79,11 +79,11 @@ const getCategoryValue = (attributes: PlayerAttribute[]) =>
 export const playerAttributesValues = atom(
   (get) =>
     new Map(
-      get(playerAtom)
-        .attributes.entries()
-        .map(([attributeCategory, attributes]) => [
+      Array.from(get(playerAtom).attributes.entries()).map(
+        ([attributeCategory, attributes]) => [
           attributeCategory,
           getCategoryValue(Array.from(attributes.values())),
-        ]),
+        ],
+      ),
     ),
 );

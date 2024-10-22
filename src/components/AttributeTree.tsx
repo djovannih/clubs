@@ -18,7 +18,7 @@ export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
     ) + 1;
 
   return (
-    <div className="mb-32">
+    <div>
       {Array.from(rows.entries()).map(([rowIndex, row]) => (
         <div key={rowIndex}>
           {rowIndex > 0 && (

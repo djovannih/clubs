@@ -290,12 +290,16 @@ const updatePlayer = (
 
     return {
       ...player,
-      attributes: player.attributes.set(
-        updateAttributeAction.category,
-        currentCategory.set(updateAttributeAction.attribute, {
-          ...currentAttribute,
-          value: currentAttribute.value + updatedValue,
-        }),
+      attributes: new Map(
+        player.attributes.set(
+          updateAttributeAction.category,
+          new Map(
+            currentCategory.set(updateAttributeAction.attribute, {
+              ...currentAttribute,
+              value: currentAttribute.value + updatedValue,
+            }),
+          ),
+        ),
       ),
     };
   };
