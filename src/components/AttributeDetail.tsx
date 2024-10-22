@@ -1,33 +1,34 @@
-import { playerAtom } from "@/atoms/player";
-import { AttributeCategory } from "@/lib/player";
-import { useAtomValue } from "jotai";
+import type {
+  AttributeName,
+  MainAttributeName,
+  PlayerAttribute,
+} from "@/lib/player";
+import { useTranslations } from "next-intl";
 
 interface AttributeDetailprops {
-  category: AttributeCategory;
+  attributes: Map<MainAttributeName | AttributeName, PlayerAttribute>;
 }
-export default function AttributeDetail({ category }: AttributeDetailprops) {
-  const player = useAtomValue(playerAtom);
+export default function AttributeDetail({ attributes }: AttributeDetailprops) {
+  const t = useTranslations("Attributes");
 
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-node-locked p-4">
-      {Array.from(player.attributes.get(category)!.entries()).map(
-        ([name, attribute]) => (
-          <div key={name}>
-            <div className="mb-1 flex justify-between">
-              <span>{name}</span>
-              <span>{attribute.value}</span>
-            </div>
-            <div className="h-2.5 w-full rounded-full bg-node-locked">
-              <div
-                className="h-2.5 rounded-full bg-highlight-dark"
-                style={{
-                  width: `${(attribute.value / attribute.maxValue) * 100}%`,
-                }}
-              ></div>
-            </div>
+      {Array.from(attributes.entries()).map(([name, attribute]) => (
+        <div key={name}>
+          <div className="mb-1 flex justify-between">
+            <span>{t(`${name}.long`)}</span>
+            <span>{attribute.value}</span>
           </div>
-        ),
-      )}
+          <div className="h-2.5 w-full rounded-full bg-node-locked">
+            <div
+              className="h-2.5 rounded-full bg-highlight-dark"
+              style={{
+                width: `${(attribute.value / attribute.maxValue) * 100}%`,
+              }}
+            ></div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,0 +1,152 @@
+{
+  "Attributes": {
+    "pace": {
+      "long": "Pace",
+      "short": "Pace"
+    },
+    "shooting": {
+      "long": "Shooting",
+      "short": "Shooting"
+    },
+    "passing": {
+      "long": "Passing",
+      "short": "Passing"
+    },
+    "defending": {
+      "long": "Defending",
+      "short": "Defending"
+    },
+    "physicality": {
+      "long": "Physicality",
+      "short": "Physicality"
+    },
+    "acceleration": {
+      "long": "Acceleration",
+      "short": "Acc."
+    },
+    "sprintSpeed": {
+      "long": "Sprint Speed",
+      "short": "Speed"
+    },
+    "positioning": {
+      "long": "Positioning",
+      "short": "Pos."
+    },
+    "finishing": {
+      "long": "Finishing",
+      "short": "Fin."
+    },
+    "shotPower": {
+      "long": "Shot Power",
+      "short": "Power"
+    },
+    "longShots": {
+      "long": "Long Shots",
+      "short": "Long Shots"
+    },
+    "volleys": {
+      "long": "Volleys",
+      "short": "Volleys"
+    },
+    "penalties": {
+      "long": "Penalties",
+      "short": "Penalties"
+    },
+    "vision": {
+      "long": "Vision",
+      "short": "Vision"
+    },
+    "crossing": {
+      "long": "Crossing",
+      "short": "Crossing"
+    },
+    "freeKickAccuracy": {
+      "long": "Free Kick Accuracy",
+      "short": "FK Acc."
+    },
+    "shortPassing": {
+      "long": "Short Passing",
+      "short": "Short pass."
+    },
+    "longPassing": {
+      "long": "Long Passing",
+      "short": "Long pass."
+    },
+    "curve": {
+      "long": "Curve",
+      "short": "Curve"
+    },
+    "agility": {
+      "long": "Agility",
+      "short": "Agility"
+    },
+    "balance": {
+      "long": "Balance",
+      "short": "Balance"
+    },
+    "reactions": {
+      "long": "Reactions",
+      "short": "Reactions"
+    },
+    "ballControl": {
+      "long": "Ball Control",
+      "short": "Ball Control"
+    },
+    "dribbling": {
+      "long": "Dribbling",
+      "short": "Dribbling"
+    },
+    "composure": {
+      "long": "Composure",
+      "short": "Composure"
+    },
+    "interceptions": {
+      "long": "Interceptions",
+      "short": "Interc."
+    },
+    "headingAccuracy": {
+      "long": "Heading Accuracy",
+      "short": "Head."
+    },
+    "defensiveAwareness": {
+      "long": "Defensive Awareness",
+      "short": "Def. Awareness"
+    },
+    "standingTackle": {
+      "long": "Standing Tackle",
+      "short": "St. Tackle"
+    },
+    "slidingTackle": {
+      "long": "Sliding Tackle",
+      "short": "Sl. Tackle"
+    },
+    "jumping": {
+      "long": "Jumping",
+      "short": "Jumping"
+    },
+    "stamina": {
+      "long": "Stamina",
+      "short": "Stamina"
+    },
+    "strength": {
+      "long": "Strength",
+      "short": "Strength"
+    },
+    "aggression": {
+      "long": "Aggression",
+      "short": "Aggression"
+    }
+  },
+  "AttributeEditor": {
+    "attributes": "Attributes"
+  },
+  "PlayerInfo": {
+    "playerInfo": "Player info",
+    "position": "Position",
+    "height": "Height",
+    "weight": "Weight",
+    "accelerate": "AcceleRATE",
+    "weakFoot": "Weak foot",
+    "skillMoves": "Skill moves"
+  }
+}

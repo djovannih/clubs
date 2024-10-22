@@ -1,11 +1,6 @@
 import { playerAtom } from "@/atoms/player";
-import {
-  type Graph,
-  GraphNode,
-  toggleNode,
-  type UpdatePlayerAction,
-} from "@/lib/graph";
-import type { Player, UpdateAttributeAction } from "@/lib/player";
+import { type Graph, type GraphNode, toggleNode } from "@/lib/graph";
+import { updatePlayer } from "@/lib/player";
 import { atom } from "jotai";
 
 const paceForest = [
@@ -263,49 +258,6 @@ const paceForest = [
     ]),
   ),
 ];
-
-const updatePlayer = (
-  player: Player,
-  action: UpdatePlayerAction,
-  updateAttributeActions: UpdateAttributeAction[],
-) => {
-  const update = (updateAttributeAction: UpdateAttributeAction) => {
-    const mainAttr = player.attributes.get(updateAttributeAction.category);
-    const subAttr = mainAttr?.get(updateAttributeAction.attribute);
-
-    const currentCategory = player.attributes.get(
-      updateAttributeAction.category,
-    );
-    const currentAttribute = currentCategory?.get(
-      updateAttributeAction.attribute,
-    );
-
-    if (!mainAttr || !subAttr || !currentCategory || !currentAttribute)
-      return player;
-
-    const updatedValue =
-      action === "INC"
-        ? updateAttributeAction.value
-        : -updateAttributeAction.value;
-
-    return {
-      ...player,
-      attributes: new Map(
-        player.attributes.set(
-          updateAttributeAction.category,
-          new Map(
-            currentCategory.set(updateAttributeAction.attribute, {
-              ...currentAttribute,
-              value: currentAttribute.value + updatedValue,
-            }),
-          ),
-        ),
-      ),
-    };
-  };
-
-  return updateAttributeActions.reduce((_, action) => update(action), player);
-};
 
 export const paceForestAtom = paceForest.map((treeAtom) =>
   atom(

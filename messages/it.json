@@ -1,0 +1,14 @@
+{
+  "PlayerInfo": {
+    "playerInfo": "Informazioni sul giocatore",
+    "position": "Posizione",
+    "height": "Altezza",
+    "weight": "Peso",
+    "accelerate": "AcceleRATE",
+    "weakFoot": "Piede debole",
+    "skillMoves": "Mosse abilità"
+  },
+  "AttributeEditor": {
+    "attributes": "Attributi"
+  }
+}

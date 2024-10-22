@@ -1,5 +1,5 @@
 import Badge from "@/components/Badge";
-import { GraphNode } from "@/lib/graph";
+import type { GraphNode } from "@/lib/graph";
 import clsx from "clsx";
 
 interface AttributeNodeProps {

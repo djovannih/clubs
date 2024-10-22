@@ -17,5 +17,13 @@ export default [
     "next/core-web-vitals",
     "next/typescript",
     "prettier",
+    "plugin:@typescript-eslint/recommended",
   ),
+  {
+    rules: {
+      "react/jsx-no-literals": "error",
+      "no-console": ["error", { allow: ["warn", "error"] }],
+      "@typescript-eslint/consistent-type-imports": "error",
+    },
+  },
 ];

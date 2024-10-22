@@ -14,6 +14,7 @@
     "jotai": "^2.10.1",
     "lucide-react": "^0.453.0",
     "next": "15.0.0",
+    "next-intl": "^3.23.2",
     "react": "19.0.0-rc-83825814-20241015",
     "react-dom": "19.0.0-rc-83825814-20241015"
   },
@@ -25,6 +26,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@types/tailwindcss": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.11.0",
     "babel-plugin-react-compiler": "19.0.0-beta-8a03594-20241020",
     "eslint": "^9.13.0",
     "eslint-config-next": "15.0.0",

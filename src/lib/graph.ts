@@ -1,6 +1,4 @@
-import { UpdateAttributeAction } from "./player";
-
-export type UpdatePlayerAction = "INC" | "DEC";
+import type { UpdateAttributeAction } from "./player";
 
 export type GraphNode = {
   id: string;

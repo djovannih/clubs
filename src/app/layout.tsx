@@ -1,8 +1,9 @@
 import "@/app/globals.css";
 import { Providers } from "@/components/Providers";
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import localFont from "next/font/local";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,9 +21,16 @@ export const metadata: Metadata = {
   description: "Clubs character builder",
 };
 
-export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
+export default async function RootLayout({
+  children,
+}: Readonly<PropsWithChildren>) {
+  const locale = await getLocale();
+
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang={locale}
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <body>
         <Providers>{children}</Providers>
       </body>

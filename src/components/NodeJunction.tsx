@@ -1,4 +1,4 @@
-import { Graph, GraphNode } from "@/lib/graph";
+import type { Graph, GraphNode } from "@/lib/graph";
 import clsx from "clsx";
 
 interface JunctionProps {
