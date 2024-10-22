@@ -1,4 +1,4 @@
-import { Player, PlayerAttribute, PlayerAttributes } from "./player";
+import { Player } from "./player";
 
 export type UpdatePlayerAction = "INC" | "DEC";
 

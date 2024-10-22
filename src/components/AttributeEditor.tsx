@@ -6,9 +6,7 @@ import AttributeForest from "@/components/AttributeForest";
 import clsx from "clsx";
 import { useState } from "react";
 
-interface AttributeEditorProps {}
-
-export default function AttributeEditor({}: AttributeEditorProps) {
+export default function AttributeEditor() {
   const forests = [
     "Pace",
     "Shooting",

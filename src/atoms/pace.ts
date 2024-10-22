@@ -1,9 +1,4 @@
-import {
-  type Graph,
-  GraphNode,
-  toggleNode,
-  UpdatePlayerAction,
-} from "@/lib/graph";
+import { type Graph, toggleNode, UpdatePlayerAction } from "@/lib/graph";
 import { Player } from "@/lib/player";
 import { atom } from "jotai";
 import { playerAtom } from "./player";
