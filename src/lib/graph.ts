@@ -15,6 +15,11 @@ export type Graph = Map<string, GraphNode>;
 
 export type Forest = Graph[];
 
+export type ToggleNodeResult = {
+  updatedTree: Graph;
+  cost: number;
+};
+
 type NodeInfo = Omit<GraphNode, "id" | "isActive" | "parents" | "children"> & {
   parentIds: string[];
 };
@@ -62,6 +67,35 @@ const activateNode = (graph: Graph, node: GraphNode): Graph => {
     : updatedGraph;
 };
 
+const getCheapestBranch = (node: GraphNode) => {
+  const branches: GraphNode[][] = [];
+
+  const traverse = (
+    currentNode: GraphNode,
+    currentBranch: GraphNode[] = [],
+  ) => {
+    currentBranch.push(currentNode);
+    if (currentNode.isActive || currentNode.parents.length === 0) {
+      branches.push([...currentBranch]);
+      return;
+    }
+    currentNode.parents.forEach((parent) => {
+      traverse(parent, [...currentBranch]);
+    });
+  };
+
+  traverse(node);
+  const allBranches = branches.map((branch) => branch.reverse());
+  const branchCosts = allBranches.map((branch) =>
+    branch.reduce(
+      (totalCost, currentNode) => totalCost + currentNode.activationCost,
+      0,
+    ),
+  );
+  const cheapestBranchIndex = branchCosts.indexOf(Math.min(...branchCosts));
+  return allBranches[cheapestBranchIndex];
+};
+
 const deactivateNode = (graph: Graph, node: GraphNode): Graph => {
   const childrenToDeactivate = node.children.filter(
     (child) =>
@@ -75,8 +109,18 @@ const deactivateNode = (graph: Graph, node: GraphNode): Graph => {
   );
 };
 
-export const toggleNode = (graph: Graph, node: GraphNode) =>
-  node.isActive ? deactivateNode(graph, node) : activateNode(graph, node);
+export const toggleNode = (graph: Graph, node: GraphNode) => {
+  const branch = getCheapestBranch(node);
+  return node.isActive
+    ? { updatedTree: deactivateNode(graph, node), toggledNodes: [] }
+    : {
+        updatedTree: branch.reduce(
+          (updatedTree, n) => activateNode(updatedTree, n),
+          graph,
+        ),
+        toggledNodes: branch,
+      };
+};
 
 export const groupByRow = (graph: Graph) =>
   Array.from(graph.values()).reduce<Map<number, GraphNode[]>>(

@@ -1,3 +1,5 @@
+import { type GraphNode } from "./graph";
+
 type Position =
   | "GK"
   | "CB"
@@ -66,6 +68,8 @@ export type PlayerAttribute = {
 };
 
 export type Player = {
+  level: number;
+  availableSkillPoints: number;
   position: Position;
   height: number;
   weight: number;
@@ -81,24 +85,36 @@ export type UpdateAttributeAction = {
 
 export const updatePlayer = (
   player: Player,
+  toggledNodes: GraphNode[],
   actionType: "INC" | "DEC",
-  actions: UpdateAttributeAction[],
 ) => {
-  const update = (action: UpdateAttributeAction) => {
+  const update = (action: UpdateAttributeAction): Player => {
     const attribute = player.attributes.get(action.attribute)!;
-    const updatedValue = actionType === "INC" ? action.value : -action.value;
     return {
       ...player,
       attributes: new Map(
         player.attributes.set(action.attribute, {
           ...attribute,
-          value: attribute.value + updatedValue,
+          value:
+            attribute.value + actionType === "INC"
+              ? action.value
+              : -action.value,
         }),
       ),
     };
   };
 
-  return actions.reduce((_, action) => update(action), player);
+  const cost = toggledNodes.reduce(
+    (totalCost, node) => totalCost + node.activationCost,
+    0,
+  );
+  return toggledNodes
+    .flatMap((node) => node.actions)
+    .reduce((_, action) => update(action), {
+      ...player,
+      availableSkillPoints:
+        player.availableSkillPoints + actionType === "INC" ? -cost : cost,
+    });
 };
 
 export const getAccelerationRate = (player: Player): AccelerationRate => {

@@ -120,13 +120,14 @@ export const paceForestAtom = treeAtoms.map((treeAtom) =>
     (get) => get(treeAtom),
     (get, set, node: GraphNode) => {
       const tree = get(treeAtom);
-      set(treeAtom, toggleNode(tree, node));
+      const { updatedTree, toggledNodes } = toggleNode(tree, node);
+      set(treeAtom, updatedTree);
       set(
         playerAtom,
         updatePlayer(
           get(playerAtom),
+          toggledNodes,
           node.isActive ? "DEC" : "INC",
-          node.actions,
         ),
       );
     },

@@ -9,6 +9,8 @@ import {
 import { atom } from "jotai";
 
 export const playerAtom = atom<Player>({
+  level: 99,
+  availableSkillPoints: 160,
   position: "CAM",
   height: 180,
   weight: 80,
