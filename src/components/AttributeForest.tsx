@@ -1,11 +1,11 @@
 import AttributeTree from "@/components/AttributeTree";
-import { type Graph } from "@/lib/graph";
+import type { GraphNode, Graph } from "@/lib/graph";
 import clsx from "clsx";
 import type { WritableAtom } from "jotai";
 import { useState } from "react";
 
 interface AttributeForestProps {
-  forest: WritableAtom<Graph, [nodeId: string], void>[];
+  forest: WritableAtom<Graph, [node: GraphNode], void>[];
 }
 
 export default function AttributeForest({ forest }: AttributeForestProps) {

@@ -4,7 +4,8 @@ export type GraphNode = {
   id: string;
   activationCost: number;
   isActive: boolean;
-  parentIds: string[];
+  parents: GraphNode[];
+  children: GraphNode[];
   row: number;
   column: number;
   actions: UpdateAttributeAction[];
@@ -14,55 +15,68 @@ export type Graph = Map<string, GraphNode>;
 
 export type Forest = Graph[];
 
-export const getChildren = (graph: Graph, nodeId: string) =>
-  Array.from(graph.values()).filter((node) => node.parentIds.includes(nodeId));
+type NodeInfo = Omit<GraphNode, "id" | "isActive" | "parents" | "children"> & {
+  parentIds: string[];
+};
 
-const getCheapestParentId = (graph: Graph, nodeId: string) =>
-  graph
-    .get(nodeId)!
-    .parentIds.reduce((cheapestId, parentId) =>
-      graph.get(parentId)!.activationCost <
-      graph.get(cheapestId)!.activationCost
-        ? parentId
-        : cheapestId,
-    );
+const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
+  const node: GraphNode = {
+    id: `${String.fromCharCode(65 + nodeInfo.column)}${nodeInfo.row + 1}`,
+    row: nodeInfo.row,
+    column: nodeInfo.column,
+    activationCost: nodeInfo.activationCost,
+    isActive: false,
+    actions: nodeInfo.actions,
+    parents: nodeInfo.parentIds.map((parentId) => tree.get(parentId)!),
+    children: [],
+  };
 
-const activateNode = (graph: Graph, nodeId: string): Graph => {
-  const node = graph.get(nodeId)!;
+  return new Map(
+    nodeInfo.parentIds.reduce(
+      (treeAcc, parentId) => {
+        const parentNode = treeAcc.get(parentId)!;
+        return treeAcc.set(parentId, {
+          ...parentNode,
+          children: [...parentNode.children, node],
+        });
+      },
+      tree.set(node.id, node),
+    ),
+  );
+};
 
-  const hasActiveParent = node.parentIds.some(
-    (parentId) => graph.get(parentId)?.isActive,
+export const createTree = (nodes: NodeInfo[]) =>
+  new Map(nodes.reduce((treee, node) => addNode(treee, node), new Map()));
+
+const getCheapestParent = (node: GraphNode) =>
+  node.parents.reduce((cheapest, parent) =>
+    parent.activationCost < cheapest.activationCost ? parent : cheapest,
   );
 
-  const updatedGraph = new Map(graph.set(nodeId, { ...node, isActive: true }));
+const activateNode = (graph: Graph, node: GraphNode): Graph => {
+  const hasActiveParent = node.parents.some((parent) => parent.isActive);
+  const updatedGraph = new Map(graph.set(node.id, { ...node, isActive: true }));
 
-  return !hasActiveParent && node.parentIds.length > 0
-    ? activateNode(updatedGraph, getCheapestParentId(updatedGraph, nodeId))
+  return !hasActiveParent && node.parents.length > 0
+    ? activateNode(updatedGraph, getCheapestParent(node))
     : updatedGraph;
 };
 
-const deactivateNode = (graph: Graph, nodeId: string): Graph => {
-  const node = graph.get(nodeId)!;
-
-  const childrenToDeactivate = getChildren(graph, nodeId).filter(
+const deactivateNode = (graph: Graph, node: GraphNode): Graph => {
+  const childrenToDeactivate = node.children.filter(
     (child) =>
       child.isActive &&
-      !child.parentIds.some(
-        (pid) => pid !== nodeId && graph.get(pid)!.isActive,
-      ),
+      !child.parents.some((parent) => parent.id !== node.id && parent.isActive),
   );
 
-  let updatedGraph = new Map(graph.set(nodeId, { ...node, isActive: false }));
-  for (const child of childrenToDeactivate)
-    updatedGraph = new Map(deactivateNode(updatedGraph, child.id));
-
-  return updatedGraph;
+  return childrenToDeactivate.reduce(
+    (tree, child) => new Map(deactivateNode(tree, child)),
+    new Map(graph.set(node.id, { ...node, isActive: false })),
+  );
 };
 
-export const toggleNode = (graph: Graph, nodeId: string) =>
-  graph.get(nodeId)!.isActive
-    ? deactivateNode(graph, nodeId)
-    : activateNode(graph, nodeId);
+export const toggleNode = (graph: Graph, node: GraphNode) =>
+  node.isActive ? deactivateNode(graph, node) : activateNode(graph, node);
 
 export const groupByRow = (graph: Graph) =>
   Array.from(graph.values()).reduce<Map<number, GraphNode[]>>(

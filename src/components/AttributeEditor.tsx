@@ -2,10 +2,9 @@
 
 import { paceForestAtom } from "@/atoms/pace";
 import { categoryAttributesAtom } from "@/atoms/player";
-import { shootingForestAtom } from "@/atoms/shooting";
 import AttributeDetail from "@/components/AttributeDetail";
 import AttributeForest from "@/components/AttributeForest";
-import type { Graph } from "@/lib/graph";
+import type { Graph, GraphNode } from "@/lib/graph";
 import type { MainAttributeName } from "@/lib/player";
 import clsx from "clsx";
 import { useAtomValue, type WritableAtom } from "jotai";
@@ -15,10 +14,10 @@ import { useState } from "react";
 // TODO: Put this something else, maybe in an atom?
 const forestByName = new Map<
   MainAttributeName,
-  WritableAtom<Graph, [nodeId: string], void>[]
+  WritableAtom<Graph, [node: GraphNode], void>[]
 >([
   ["pace", paceForestAtom],
-  ["shooting", shootingForestAtom],
+  // ["shooting", shootingForestAtom],
 ]);
 
 export default function AttributeEditor() {
@@ -34,6 +33,7 @@ export default function AttributeEditor() {
       <h2 className="mb-4 text-center text-3xl font-bold uppercase">
         {t("attributes")}
       </h2>
+      {/* TODO: extract a component */}
       <div className="grid grid-cols-3 justify-between bg-background">
         {Array.from(forestByName.keys()).map((name) => (
           <button

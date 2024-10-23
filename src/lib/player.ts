@@ -232,7 +232,7 @@ export const getMainAttributes = (
     Math.round(values.reduce((acc, value) => acc + value, 0) / values.length);
 
   const categoryAttributes = getCategoryAttributes(attributes);
-  
+
   return new Map<MainAttributeName, PlayerAttribute>(
     Array.from(categoryAttributes.entries()).map(
       ([mainAttributeName, catAttr]) => [

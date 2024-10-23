@@ -1,271 +1,126 @@
 import { playerAtom } from "@/atoms/player";
-import { type Graph, type GraphNode, toggleNode } from "@/lib/graph";
+import {
+  createTree,
+  type Graph,
+  type GraphNode,
+  toggleNode,
+} from "@/lib/graph";
 import { updatePlayer } from "@/lib/player";
 import { atom } from "jotai";
 
-const paceForest = [
+const treeAtoms = [
   atom<Graph>(
-    new Map<string, GraphNode>([
-      [
-        "A1",
-        {
-          id: "A1",
-          activationCost: 2,
-          isActive: false,
-          parentIds: [],
-          row: 0,
-          column: 0,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "C1",
-        {
-          id: "C1",
-          activationCost: 2,
-          isActive: false,
-          parentIds: [],
-          row: 0,
-          column: 2,
-          actions: [
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "A2",
-        {
-          id: "A2",
-          activationCost: 2,
-          isActive: false,
-          parentIds: ["A1", "C1"],
-          row: 1,
-          column: 0,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "B2",
-        {
-          id: "B2",
-          activationCost: 3,
-          isActive: false,
-          parentIds: ["A1", "C1"],
-          row: 1,
-          column: 1,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 1,
-            },
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 1,
-            },
-          ],
-        },
-      ],
-      [
-        "C2",
-        {
-          id: "C2",
-          activationCost: 2,
-          isActive: false,
-          parentIds: ["A1", "C1"],
-          row: 1,
-          column: 2,
-          actions: [
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "A3",
-        {
-          id: "A3",
-          activationCost: 3,
-          isActive: false,
-          parentIds: ["A2"],
-          row: 2,
-          column: 0,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "C3",
-        {
-          id: "C3",
-          activationCost: 3,
-          isActive: false,
-          parentIds: ["C2"],
-          row: 2,
-          column: 2,
-          actions: [
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "A4",
-        {
-          id: "A4",
-          activationCost: 3,
-          isActive: false,
-          parentIds: ["A3", "C3"],
-          row: 3,
-          column: 0,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "B4",
-        {
-          id: "B4",
-          activationCost: 4,
-          isActive: false,
-          parentIds: ["A3", "C3"],
-          row: 3,
-          column: 1,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 1,
-            },
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 1,
-            },
-          ],
-        },
-      ],
-      [
-        "C4",
-        {
-          id: "C4",
-          activationCost: 3,
-          isActive: false,
-          parentIds: ["A3", "C3"],
-          row: 3,
-          column: 2,
-          actions: [
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "A5",
-        {
-          id: "A5",
-          activationCost: 4,
-          isActive: false,
-          parentIds: ["A4"],
-          row: 4,
-          column: 0,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 3,
-            },
-          ],
-        },
-      ],
-      [
-        "B5",
-        {
-          id: "B5",
-          activationCost: 5,
-          isActive: false,
-          parentIds: ["B4"],
-          row: 4,
-          column: 1,
-          actions: [
-            {
-              category: "pace",
-              attribute: "acceleration",
-              value: 2,
-            },
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 2,
-            },
-          ],
-        },
-      ],
-      [
-        "C5",
-        {
-          id: "C5",
-          activationCost: 4,
-          isActive: false,
-          parentIds: ["C4"],
-          row: 4,
-          column: 2,
-          actions: [
-            {
-              category: "pace",
-              attribute: "sprintSpeed",
-              value: 2,
-            },
-          ],
-        },
-      ],
+    createTree([
+      {
+        activationCost: 2,
+        parentIds: [],
+        row: 0,
+        column: 0,
+        actions: [{ attribute: "acceleration", value: 2 }],
+      },
+      {
+        activationCost: 2,
+        parentIds: [],
+        row: 0,
+        column: 2,
+        actions: [{ attribute: "sprintSpeed", value: 2 }],
+      },
+      {
+        activationCost: 2,
+        parentIds: ["A1", "C1"],
+        row: 1,
+        column: 0,
+        actions: [{ attribute: "acceleration", value: 2 }],
+      },
+      {
+        activationCost: 3,
+        parentIds: ["A1", "C1"],
+        row: 1,
+        column: 1,
+        actions: [
+          { attribute: "acceleration", value: 1 },
+          { attribute: "sprintSpeed", value: 1 },
+        ],
+      },
+      {
+        activationCost: 2,
+        parentIds: ["A1", "C1"],
+        row: 1,
+        column: 2,
+        actions: [{ attribute: "sprintSpeed", value: 2 }],
+      },
+      {
+        activationCost: 3,
+        parentIds: ["A2"],
+        row: 2,
+        column: 0,
+        actions: [{ attribute: "acceleration", value: 2 }],
+      },
+      {
+        activationCost: 3,
+        parentIds: ["C2"],
+        row: 2,
+        column: 2,
+        actions: [{ attribute: "sprintSpeed", value: 2 }],
+      },
+      {
+        activationCost: 3,
+        parentIds: ["A3", "C3"],
+        row: 3,
+        column: 0,
+        actions: [{ attribute: "acceleration", value: 2 }],
+      },
+      {
+        activationCost: 4,
+        parentIds: ["A3", "C3"],
+        row: 3,
+        column: 1,
+        actions: [
+          { attribute: "acceleration", value: 1 },
+          { attribute: "sprintSpeed", value: 1 },
+        ],
+      },
+      {
+        activationCost: 3,
+        parentIds: ["A3", "C3"],
+        row: 3,
+        column: 2,
+        actions: [{ attribute: "sprintSpeed", value: 2 }],
+      },
+      {
+        activationCost: 4,
+        parentIds: ["A4"],
+        row: 4,
+        column: 0,
+        actions: [{ attribute: "acceleration", value: 3 }],
+      },
+      {
+        activationCost: 5,
+        parentIds: ["B4"],
+        row: 4,
+        column: 1,
+        actions: [
+          { attribute: "acceleration", value: 2 },
+          { attribute: "sprintSpeed", value: 2 },
+        ],
+      },
+      {
+        activationCost: 4,
+        parentIds: ["C4"],
+        row: 4,
+        column: 2,
+        actions: [{ attribute: "sprintSpeed", value: 2 }],
+      },
     ]),
   ),
 ];
 
-export const paceForestAtom = paceForest.map((treeAtom) =>
+export const paceForestAtom = treeAtoms.map((treeAtom) =>
   atom(
     (get) => get(treeAtom),
-    (get, set, nodeId: string) => {
+    (get, set, node: GraphNode) => {
       const tree = get(treeAtom);
-      const node = tree.get(nodeId)!;
-      set(treeAtom, toggleNode(tree, nodeId));
+      set(treeAtom, toggleNode(tree, node));
       set(
         playerAtom,
         updatePlayer(

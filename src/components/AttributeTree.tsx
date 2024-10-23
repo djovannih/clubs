@@ -1,10 +1,10 @@
 import AttributeNode from "@/components/AttributeNode";
 import NodeJunction from "@/components/NodeJunction";
-import { type Graph, groupByRow } from "@/lib/graph";
+import { type Graph, type GraphNode, groupByRow } from "@/lib/graph";
 import { useAtom, type WritableAtom } from "jotai";
 
 interface AttributeTreeProps {
-  treeAtom: WritableAtom<Graph, [nodeId: string], void>;
+  treeAtom: WritableAtom<Graph, [node: GraphNode], void>;
 }
 
 export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
@@ -22,11 +22,7 @@ export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
       {Array.from(rows.entries()).map(([rowIndex, row]) => (
         <div key={rowIndex}>
           {rowIndex > 0 && (
-            <NodeJunction
-              tree={tree}
-              topRow={rows.get(rowIndex - 1)!}
-              bottomRow={row}
-            />
+            <NodeJunction topRow={rows.get(rowIndex - 1)!} bottomRow={row} />
           )}
           <div
             className="grid"
@@ -38,7 +34,7 @@ export default function AttributeTree({ treeAtom }: AttributeTreeProps) {
               <AttributeNode
                 key={node.id}
                 node={node}
-                toggleNode={() => toggleNode(node.id)}
+                toggleNode={() => toggleNode(node)}
               />
             ))}
           </div>
