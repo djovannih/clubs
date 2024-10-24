@@ -4,8 +4,8 @@ export type GraphNode = {
   id: string;
   activationCost: number;
   isActive: boolean;
-  parents: GraphNode[];
-  children: GraphNode[];
+  parentIds: string[];
+  childrenIds: string[];
   row: number;
   column: number;
   actions: UpdateAttributeAction[];
@@ -20,9 +20,7 @@ export type ToggleNodeResult = {
   cost: number;
 };
 
-type NodeInfo = Omit<GraphNode, "id" | "isActive" | "parents" | "children"> & {
-  parentIds: string[];
-};
+type NodeInfo = Omit<GraphNode, "id" | "isActive" | "childrenIds">;
 
 const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
   const node: GraphNode = {
@@ -32,8 +30,8 @@ const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
     activationCost: nodeInfo.activationCost,
     isActive: false,
     actions: nodeInfo.actions,
-    parents: nodeInfo.parentIds.map((parentId) => tree.get(parentId)!),
-    children: [],
+    parentIds: nodeInfo.parentIds,
+    childrenIds: [],
   };
 
   return new Map(
@@ -42,7 +40,7 @@ const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
         const parentNode = treeAcc.get(parentId)!;
         return treeAcc.set(parentId, {
           ...parentNode,
-          children: [...parentNode.children, node],
+          childrenIds: [...parentNode.childrenIds, node.id],
         });
       },
       tree.set(node.id, node),
@@ -53,25 +51,24 @@ const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
 export const createTree = (nodes: NodeInfo[]) =>
   new Map(nodes.reduce((tree, node) => addNode(tree, node), new Map()));
 
-export const getCheapestBranch = (startNode: GraphNode): GraphNode[] => {
+export const getCheapestBranch = (
+  startNode: GraphNode,
+  tree: Graph,
+): GraphNode[] => {
   function findBranchToRoot(
-    node: GraphNode,
+    nodeId: string,
     currentBranch: GraphNode[] = [],
   ): GraphNode[] {
-    // Add current node to the branch
+    const node = tree.get(nodeId)!;
     const branch = [node, ...currentBranch];
 
-    // If the node is a root or an active parent, return the branch
-    if (node.isActive || node.parents.length === 0) {
-      return branch;
-    }
+    if (node.isActive || node.parentIds.length === 0) return branch;
 
-    // Recursively find the cheapest branch from the parents
     let cheapestBranch: GraphNode[] = [];
     let minCost = Infinity;
 
-    for (const parent of node.parents) {
-      const parentBranch = findBranchToRoot(parent, branch);
+    for (const parentId of node.parentIds) {
+      const parentBranch = findBranchToRoot(parentId, branch);
       const branchCost = parentBranch.reduce(
         (acc, n) => acc + n.activationCost,
         0,
@@ -86,14 +83,14 @@ export const getCheapestBranch = (startNode: GraphNode): GraphNode[] => {
     return cheapestBranch;
   }
 
-  return findBranchToRoot(startNode);
+  return findBranchToRoot(startNode.id);
 };
 
 export const toggleNode = (graph: Graph, node: GraphNode) => {
   if (node.isActive) {
     const getToggledNodes = (node: GraphNode): GraphNode[] => [
       node,
-      ...node.children
+      ...node.childrenIds
         .filter((child) =>
           child.parents.some(
             (parent) => parent.id !== node.id && !parent.isActive,
@@ -115,7 +112,7 @@ export const toggleNode = (graph: Graph, node: GraphNode) => {
     };
   }
 
-  const branch = getCheapestBranch(node);
+  const branch = getCheapestBranch(node, graph);
   const newLocal = branch.reduce(
     (tree, { id }) => tree.set(id, { ...tree.get(id)!, isActive: true }),
     graph,

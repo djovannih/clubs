@@ -1,6 +1,7 @@
 import Badge from "@/components/Badge";
 import type { GraphNode } from "@/lib/graph";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
 interface AttributeNodeProps {
   node: GraphNode;
@@ -12,6 +13,8 @@ export default function AttributeNode({
   toggleNode,
   disabled,
 }: AttributeNodeProps) {
+  const t = useTranslations("Attributes");
+
   return (
     <div
       className="items-between z-10 mx-4 flex h-full flex-col"
@@ -29,7 +32,7 @@ export default function AttributeNode({
           {node.actions.map((action) => (
             <li
               key={action.attribute}
-            >{`${action.attribute} +${action.value}`}</li>
+            >{`${t(`${action.attribute}.short`)} +${action.value}`}</li>
           ))}
         </ul>
         <Badge>{node.activationCost}</Badge>

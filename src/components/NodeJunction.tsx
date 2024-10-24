@@ -11,21 +11,21 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
   const bottomNode = bottomRow.find(({ column }) => column === columnIndex);
 
   const showTopEdge = bottomRow.some(
-    (node) => topNode && node?.parents.some((p) => p.id === topNode.id),
+    (node) => topNode && node?.parentIds.some((p) => p.id === topNode.id),
   );
   const topEdgeIsActive =
     showTopEdge &&
     topNode?.isActive &&
     bottomRow.some(
-      (node) => node.parents.some((p) => p.id === topNode.id) && node.isActive,
+      (node) => node.parentIds.some((p) => p.id === topNode.id) && node.isActive,
     );
 
-  const showBottomEdge = bottomNode && bottomNode.parents.length > 0;
+  const showBottomEdge = bottomNode && bottomNode.parentIds.length > 0;
   const bottomEdgeIsActive = showBottomEdge && bottomNode?.isActive;
 
   const showLeftEdge = bottomRow
     .filter((node) => node.column < columnIndex)
-    .some((node) => node?.parents.some((p) => p.column >= columnIndex));
+    .some((node) => node?.parentIds.some((p) => p.column >= columnIndex));
   const leftEdgeIsActive =
     showLeftEdge &&
     (topRow.some(
@@ -36,7 +36,7 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
           (bottomNode) =>
             bottomNode.column < columnIndex &&
             bottomNode.isActive &&
-            bottomNode.parents.some((p) => p.id === topNode.id),
+            bottomNode.parentIds.some((p) => p.id === topNode.id),
         ),
     ) ||
       topRow.some(
@@ -47,13 +47,13 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
             (bottomNode) =>
               bottomNode.column >= columnIndex &&
               bottomNode.isActive &&
-              bottomNode.parents.some((p) => p.id === topNode.id),
+              bottomNode.parentIds.some((p) => p.id === topNode.id),
           ),
       ));
 
   const showRightEdge = bottomRow
     .filter((node) => node.column > columnIndex)
-    .some((node) => node?.parents.some((p) => p.column <= columnIndex));
+    .some((node) => node?.parentIds.some((p) => p.column <= columnIndex));
   const rightEdgeIsActive =
     showRightEdge &&
     (topRow.some(
@@ -64,7 +64,7 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
           (bottomNode) =>
             bottomNode.column > columnIndex &&
             bottomNode.isActive &&
-            bottomNode.parents.some((p) => p.id === topNode.id),
+            bottomNode.parentIds.some((p) => p.id === topNode.id),
         ),
     ) ||
       topRow.some(
@@ -75,7 +75,7 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
             (bottomNode) =>
               bottomNode.column <= columnIndex &&
               bottomNode.isActive &&
-              bottomNode.parents.some((p) => p.id === topNode.id),
+              bottomNode.parentIds.some((p) => p.id === topNode.id),
           ),
       ));
 
