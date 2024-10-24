@@ -28,7 +28,11 @@ export default function AttributeTree({
       {Array.from(rows.entries()).map(([rowIndex, row]) => (
         <div key={rowIndex}>
           {rowIndex > 0 && (
-            <NodeJunction topRow={rows.get(rowIndex - 1)!} bottomRow={row} />
+            <NodeJunction
+              tree={tree}
+              topRow={rows.get(rowIndex - 1)!}
+              bottomRow={row}
+            />
           )}
           <div
             className="grid"

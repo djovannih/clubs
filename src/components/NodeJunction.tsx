@@ -1,23 +1,24 @@
-import type { GraphNode } from "@/lib/graph";
+import type { Graph, GraphNode } from "@/lib/graph";
 import clsx from "clsx";
 
 interface JunctionProps {
+  tree: Graph;
   topRow: GraphNode[];
   bottomRow: GraphNode[];
   columnIndex: number;
 }
-const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
+const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
   const topNode = topRow.find(({ column }) => column === columnIndex);
   const bottomNode = bottomRow.find(({ column }) => column === columnIndex);
 
   const showTopEdge = bottomRow.some(
-    (node) => topNode && node?.parentIds.some((p) => p.id === topNode.id),
+    (node) => topNode && node?.parentIds.some((p) => p === topNode.id),
   );
   const topEdgeIsActive =
     showTopEdge &&
     topNode?.isActive &&
     bottomRow.some(
-      (node) => node.parentIds.some((p) => p.id === topNode.id) && node.isActive,
+      (node) => node.parentIds.some((p) => p === topNode.id) && node.isActive,
     );
 
   const showBottomEdge = bottomNode && bottomNode.parentIds.length > 0;
@@ -25,7 +26,9 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
 
   const showLeftEdge = bottomRow
     .filter((node) => node.column < columnIndex)
-    .some((node) => node?.parentIds.some((p) => p.column >= columnIndex));
+    .some((node) =>
+      node?.parentIds.some((p) => tree.get(p)!.column >= columnIndex),
+    );
   const leftEdgeIsActive =
     showLeftEdge &&
     (topRow.some(
@@ -36,7 +39,7 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
           (bottomNode) =>
             bottomNode.column < columnIndex &&
             bottomNode.isActive &&
-            bottomNode.parentIds.some((p) => p.id === topNode.id),
+            bottomNode.parentIds.some((p) => p === topNode.id),
         ),
     ) ||
       topRow.some(
@@ -47,13 +50,15 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
             (bottomNode) =>
               bottomNode.column >= columnIndex &&
               bottomNode.isActive &&
-              bottomNode.parentIds.some((p) => p.id === topNode.id),
+              bottomNode.parentIds.some((p) => p === topNode.id),
           ),
       ));
 
   const showRightEdge = bottomRow
     .filter((node) => node.column > columnIndex)
-    .some((node) => node?.parentIds.some((p) => p.column <= columnIndex));
+    .some((node) =>
+      node.parentIds.some((p) => tree.get(p)!.column <= columnIndex),
+    );
   const rightEdgeIsActive =
     showRightEdge &&
     (topRow.some(
@@ -64,7 +69,7 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
           (bottomNode) =>
             bottomNode.column > columnIndex &&
             bottomNode.isActive &&
-            bottomNode.parentIds.some((p) => p.id === topNode.id),
+            bottomNode.parentIds.some((p) => p === topNode.id),
         ),
     ) ||
       topRow.some(
@@ -75,7 +80,7 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
             (bottomNode) =>
               bottomNode.column <= columnIndex &&
               bottomNode.isActive &&
-              bottomNode.parentIds.some((p) => p.id === topNode.id),
+              bottomNode.parentIds.some((p) => p === topNode.id),
           ),
       ));
 
@@ -130,10 +135,15 @@ const Junction = ({ topRow, bottomRow, columnIndex }: JunctionProps) => {
 };
 
 interface NodeJunctionProps {
+  tree: Graph;
   topRow: GraphNode[];
   bottomRow: GraphNode[];
 }
-export default function NodeJunction({ topRow, bottomRow }: NodeJunctionProps) {
+export default function NodeJunction({
+  tree,
+  topRow,
+  bottomRow,
+}: NodeJunctionProps) {
   const columnsCount =
     Math.max(
       ...topRow.map(({ column }) => column),
@@ -145,6 +155,7 @@ export default function NodeJunction({ topRow, bottomRow }: NodeJunctionProps) {
       {Array.from({ length: columnsCount }, (_, i) => (
         <Junction
           key={i}
+          tree={tree}
           topRow={topRow}
           bottomRow={bottomRow}
           columnIndex={i}

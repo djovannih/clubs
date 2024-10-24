@@ -88,17 +88,22 @@ export const getCheapestBranch = (
 
 export const toggleNode = (graph: Graph, node: GraphNode) => {
   if (node.isActive) {
-    const getToggledNodes = (node: GraphNode): GraphNode[] => [
-      node,
-      ...node.childrenIds
-        .filter((child) =>
-          child.parents.some(
-            (parent) => parent.id !== node.id && !parent.isActive,
-          ),
+    const getChildrenToDeactivate = (node: GraphNode): GraphNode[] => {
+      const childrenToDeactivate = node.childrenIds
+        .filter(
+          (childId) =>
+            graph.get(childId)!.isActive &&
+            !graph
+              .get(childId)!
+              .parentIds.some((p) => p !== node.id && graph.get(p)!.isActive),
         )
-        .flatMap((node) => getToggledNodes(node)),
-    ];
-    const nodesToDeactivate = getToggledNodes(node);
+        .map((childId) => graph.get(childId)!);
+      const others = childrenToDeactivate.flatMap((child) =>
+        getChildrenToDeactivate(child),
+      );
+      return [...childrenToDeactivate, ...others];
+    };
+    const nodesToDeactivate = [node, ...getChildrenToDeactivate(node)];
     const updatedTree = new Map(
       nodesToDeactivate.reduce(
         (updatedTree, node) =>
