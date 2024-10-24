@@ -1,6 +1,7 @@
 import { playerAtom } from "@/atoms/player";
 import {
   createTree,
+  getCheapestBranch,
   type Graph,
   type GraphNode,
   toggleNode,
@@ -133,3 +134,15 @@ export const paceForestAtom = treeAtoms.map((treeAtom) =>
     },
   ),
 );
+
+export const nodeCosts = atom((get) => {
+  return treeAtoms.map((treeAtom) => {
+    const tree = get(treeAtom);
+    return new Map(
+      Array.from(tree.values()).map((node) => [
+        node.id,
+        getCheapestBranch(node).reduce((cost, n) => cost + n.activationCost, 0),
+      ]),
+    );
+  });
+});

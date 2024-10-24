@@ -87,8 +87,8 @@ export const updatePlayer = (
   player: Player,
   toggledNodes: GraphNode[],
   actionType: "INC" | "DEC",
-) => {
-  const update = (action: UpdateAttributeAction): Player => {
+): Player => {
+  const update = (player: Player, action: UpdateAttributeAction): Player => {
     const attribute = player.attributes.get(action.attribute)!;
     return {
       ...player,
@@ -96,9 +96,8 @@ export const updatePlayer = (
         player.attributes.set(action.attribute, {
           ...attribute,
           value:
-            attribute.value + actionType === "INC"
-              ? action.value
-              : -action.value,
+            attribute.value +
+            (actionType === "INC" ? action.value : -action.value),
         }),
       ),
     };
@@ -110,10 +109,10 @@ export const updatePlayer = (
   );
   return toggledNodes
     .flatMap((node) => node.actions)
-    .reduce((_, action) => update(action), {
+    .reduce((player, action) => update(player, action), {
       ...player,
       availableSkillPoints:
-        player.availableSkillPoints + actionType === "INC" ? -cost : cost,
+        player.availableSkillPoints + (actionType === "INC" ? -cost : cost),
     });
 };
 

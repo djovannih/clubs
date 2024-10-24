@@ -5,10 +5,12 @@ import clsx from "clsx";
 interface AttributeNodeProps {
   node: GraphNode;
   toggleNode: () => void;
+  disabled: boolean;
 }
 export default function AttributeNode({
   node,
   toggleNode,
+  disabled,
 }: AttributeNodeProps) {
   return (
     <div
@@ -21,6 +23,7 @@ export default function AttributeNode({
           node.isActive ? "bg-primary-dark" : "bg-inactive-node",
         )}
         onClick={toggleNode}
+        disabled={disabled}
       >
         <ul className="flex min-h-[2lh] grow flex-col items-center justify-center rounded-sm text-sm">
           {node.actions.map((action) => (

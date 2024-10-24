@@ -23,6 +23,7 @@ export default function PlayerInfo() {
       </h2>
       <div className="mb-8 flex flex-col gap-4 p-4">
         <div className="rounded-lg bg-node-locked p-4">
+          <div>{`Skill Points: ${player.availableSkillPoints}`}</div>
           <div>{`${t("position")}: ${player.position}`}</div>
           <div>{`${t("height")}: ${player.height}`}</div>
           <div>{`${t("weight")}: ${player.weight}`}</div>

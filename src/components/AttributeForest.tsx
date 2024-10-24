@@ -1,7 +1,8 @@
+import { nodeCosts as nodeCostsAtom } from "@/atoms/pace";
 import AttributeTree from "@/components/AttributeTree";
 import type { GraphNode, Graph } from "@/lib/graph";
 import clsx from "clsx";
-import type { WritableAtom } from "jotai";
+import { useAtomValue, type WritableAtom } from "jotai";
 import { useState } from "react";
 
 interface AttributeForestProps {
@@ -10,6 +11,7 @@ interface AttributeForestProps {
 
 export default function AttributeForest({ forest }: AttributeForestProps) {
   const [activeTreeIndex, setActiveTreeIndex] = useState(0);
+  const nodeCostsByForest = useAtomValue(nodeCostsAtom);
 
   return (
     <>
@@ -25,7 +27,10 @@ export default function AttributeForest({ forest }: AttributeForestProps) {
           >{`Tab ${i + 1}`}</button>
         ))}
       </div>
-      <AttributeTree treeAtom={forest.at(activeTreeIndex)!} />
+      <AttributeTree
+        treeAtom={forest.at(activeTreeIndex)!}
+        nodeCosts={nodeCostsByForest.at(activeTreeIndex)!}
+      />
     </>
   );
 }
