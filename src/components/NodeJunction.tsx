@@ -24,11 +24,11 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
   const showBottomEdge = bottomNode && bottomNode.parentIds.length > 0;
   const bottomEdgeIsActive = showBottomEdge && bottomNode?.isActive;
 
-  const showLeftEdge = bottomRow
-    .filter((node) => node.column < columnIndex)
-    .some((node) =>
-      node?.parentIds.some((p) => tree.get(p)!.column >= columnIndex),
-    );
+  const showLeftEdge = topRow.some(
+    (node) =>
+      node.column < columnIndex &&
+      node.childrenIds.some((child) => tree.get(child)!.column >= columnIndex),
+  );
   const leftEdgeIsActive =
     showLeftEdge &&
     (topRow.some(

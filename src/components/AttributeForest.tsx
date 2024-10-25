@@ -1,24 +1,24 @@
-import { nodeCosts as nodeCostsAtom } from "@/atoms/pace";
+import { forestsAtom } from "@/atoms/forest";
 import AttributeTree from "@/components/AttributeTree";
-import type { GraphNode, Graph } from "@/lib/graph";
+import type { MainAttributeName } from "@/lib/player";
 import clsx from "clsx";
-import { useAtomValue, type WritableAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { useState } from "react";
 
 interface AttributeForestProps {
-  forest: WritableAtom<Graph, [node: GraphNode], void>[];
+  forestName: MainAttributeName;
 }
 
-export default function AttributeForest({ forest }: AttributeForestProps) {
+export default function AttributeForest({ forestName }: AttributeForestProps) {
+  const forest = useAtomValue(forestsAtom).get(forestName)!;
   const [activeTreeIndex, setActiveTreeIndex] = useState(0);
-  const nodeCostsByForest = useAtomValue(nodeCostsAtom);
 
   return (
     <>
       <div className="my-8 flex bg-background">
-        {forest.map((treeAtom, i) => (
+        {forest.map((_, i) => (
           <button
-            key={`${treeAtom}`}
+            key={`${forestName}-${i}`}
             onClick={() => setActiveTreeIndex(i)}
             className={clsx(
               "grow p-2",
@@ -27,10 +27,7 @@ export default function AttributeForest({ forest }: AttributeForestProps) {
           >{`Tab ${i + 1}`}</button>
         ))}
       </div>
-      <AttributeTree
-        treeAtom={forest.at(activeTreeIndex)!}
-        nodeCosts={nodeCostsByForest.at(activeTreeIndex)!}
-      />
+      <AttributeTree forestName={forestName} treeIndex={activeTreeIndex} />
     </>
   );
 }

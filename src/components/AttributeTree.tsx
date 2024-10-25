@@ -1,20 +1,21 @@
-import { playerAtom } from "@/atoms/player";
+import { forestsAtom } from "@/atoms/forest";
 import AttributeNode from "@/components/AttributeNode";
 import NodeJunction from "@/components/NodeJunction";
-import { type Graph, type GraphNode, groupByRow } from "@/lib/graph";
-import { useAtom, useAtomValue, type WritableAtom } from "jotai";
+import { groupByRow } from "@/lib/graph";
+import type { MainAttributeName } from "@/lib/player";
+import { useAtomValue } from "jotai";
 
 interface AttributeTreeProps {
-  treeAtom: WritableAtom<Graph, [node: GraphNode], void>;
-  nodeCosts: Map<string, number>;
+  forestName: MainAttributeName;
+  treeIndex: number;
 }
 
 export default function AttributeTree({
-  treeAtom,
-  nodeCosts,
+  forestName,
+  treeIndex,
 }: AttributeTreeProps) {
-  const [tree, toggleNode] = useAtom(treeAtom);
-  const player = useAtomValue(playerAtom);
+  const forest = useAtomValue(forestsAtom).get(forestName)!;
+  const tree = forest.at(treeIndex)!;
 
   const rows = groupByRow(tree);
   const columnsCount =
@@ -43,9 +44,9 @@ export default function AttributeTree({
             {row.map((node) => (
               <AttributeNode
                 key={node.id}
-                node={node}
-                toggleNode={() => toggleNode(node)}
-                disabled={nodeCosts.get(node.id)! > player.availableSkillPoints}
+                forestName={forestName}
+                treeIndex={treeIndex}
+                nodeId={node.id}
               />
             ))}
           </div>

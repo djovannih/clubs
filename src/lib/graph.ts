@@ -49,7 +49,9 @@ const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
 };
 
 export const createTree = (nodes: NodeInfo[]) =>
-  new Map(nodes.reduce((tree, node) => addNode(tree, node), new Map()));
+  new Map(
+    nodes.reduce((tree, node) => addNode(tree, node), new Map()),
+  ) as Graph;
 
 export const getCheapestBranch = (
   startNode: GraphNode,

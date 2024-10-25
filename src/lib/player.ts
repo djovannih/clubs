@@ -1,6 +1,6 @@
 import { type GraphNode } from "./graph";
 
-type Position =
+export type Position =
   | "GK"
   | "CB"
   | "LB"
@@ -14,7 +14,7 @@ type Position =
   | "RW"
   | "ST";
 
-type AccelerationRate =
+export type AccelerationRate =
   | "Explosive"
   | "Mostly Explosive"
   | "Controlled Explosive"
@@ -79,7 +79,7 @@ export type Player = {
 };
 
 export type UpdateAttributeAction = {
-  attribute: AttributeName;
+  attribute: AttributeName | "weakFoot" | "skillMoves";
   value: number;
 };
 
@@ -89,6 +89,22 @@ export const updatePlayer = (
   actionType: "INC" | "DEC",
 ): Player => {
   const update = (player: Player, action: UpdateAttributeAction): Player => {
+    if (action.attribute === "weakFoot")
+      return {
+        ...player,
+        weakFoot:
+          player.weakFoot +
+          (actionType === "INC" ? action.value : -action.value),
+      };
+
+    if (action.attribute === "skillMoves")
+      return {
+        ...player,
+        skillMoves:
+          player.skillMoves +
+          (actionType === "INC" ? action.value : -action.value),
+      };
+
     const attribute = player.attributes.get(action.attribute)!;
     return {
       ...player,

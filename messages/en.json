@@ -135,6 +135,14 @@
     "aggression": {
       "long": "Aggression",
       "short": "Aggression"
+    },
+    "weakFoot": {
+      "long": "Weak Foot",
+      "short": "Weak Foot"
+    },
+    "skillMoves": {
+      "long": "Skill Moves",
+      "short": "Skill Moves"
     }
   },
   "AttributeEditor": {
