@@ -14,8 +14,8 @@ export const playerAtom = atom<Player>({
   position: "CAM",
   height: 180,
   weight: 80,
-  weakFoot: 3,
-  skillMoves: 4,
+  weakFoot: 2,
+  skillMoves: 3,
   attributes: new Map<AttributeName, PlayerAttribute>([
     ["acceleration", { value: 70, maxValue: 99 }],
     ["sprintSpeed", { value: 70, maxValue: 99 }],

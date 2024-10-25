@@ -55,80 +55,72 @@ export const createTree = (nodes: NodeInfo[]) =>
 
 export const getCheapestBranch = (
   startNode: GraphNode,
-  tree: Graph,
+  graph: Graph,
 ): GraphNode[] => {
-  function findBranchToRoot(
-    nodeId: string,
-    currentBranch: GraphNode[] = [],
-  ): GraphNode[] {
-    const node = tree.get(nodeId)!;
-    const branch = [node, ...currentBranch];
+  const getAllBranches = (startNode: GraphNode): GraphNode[][] => {
+    if (startNode.isActive) return [[]];
+    return startNode.parentIds.length === 0
+      ? [[startNode]]
+      : startNode.parentIds
+          .flatMap((parentId) => getAllBranches(graph.get(parentId)!))
+          .map((path) => [startNode, ...path]);
+  };
 
-    if (node.isActive || node.parentIds.length === 0) return branch;
+  const getBranchCost = (nodes: GraphNode[]) =>
+    nodes.reduce((totalCost, node) => totalCost + node.activationCost, 0);
 
-    let cheapestBranch: GraphNode[] = [];
-    let minCost = Infinity;
-
-    for (const parentId of node.parentIds) {
-      const parentBranch = findBranchToRoot(parentId, branch);
-      const branchCost = parentBranch.reduce(
-        (acc, n) => acc + n.activationCost,
-        0,
-      );
-
-      if (branchCost < minCost) {
-        minCost = branchCost;
-        cheapestBranch = parentBranch;
-      }
-    }
-
-    return cheapestBranch;
-  }
-
-  return findBranchToRoot(startNode.id);
+  const allBranches = getAllBranches(startNode);
+  return allBranches.reduce((cheapestBranch, branch) =>
+    getBranchCost(branch) < getBranchCost(cheapestBranch)
+      ? branch
+      : cheapestBranch,
+  );
 };
 
-export const toggleNode = (graph: Graph, node: GraphNode) => {
-  if (node.isActive) {
-    const getChildrenToDeactivate = (node: GraphNode): GraphNode[] => {
-      const childrenToDeactivate = node.childrenIds
-        .filter(
-          (childId) =>
-            graph.get(childId)!.isActive &&
-            !graph
-              .get(childId)!
-              .parentIds.some((p) => p !== node.id && graph.get(p)!.isActive),
-        )
-        .map((childId) => graph.get(childId)!);
-      const others = childrenToDeactivate.flatMap((child) =>
-        getChildrenToDeactivate(child),
-      );
-      return [...childrenToDeactivate, ...others];
-    };
-    const nodesToDeactivate = [node, ...getChildrenToDeactivate(node)];
-    const updatedTree = new Map(
-      nodesToDeactivate.reduce(
-        (updatedTree, node) =>
-          updatedTree.set(node.id, { ...graph.get(node.id)!, isActive: false }),
-        graph,
-      ),
+const deactivateNode = (node: GraphNode, graph: Graph) => {
+  const getChildrenToDeactivate = (node: GraphNode): GraphNode[] => {
+    const childrenToDeactivate = node.childrenIds
+      .filter(
+        (childId) =>
+          graph.get(childId)!.isActive &&
+          !graph
+            .get(childId)!
+            .parentIds.some((p) => p !== node.id && graph.get(p)!.isActive),
+      )
+      .map((childId) => graph.get(childId)!);
+    const others = childrenToDeactivate.flatMap((child) =>
+      getChildrenToDeactivate(child),
     );
-    return {
-      updatedTree: updatedTree,
-      toggledNodes: nodesToDeactivate,
-    };
-  }
+    return [...childrenToDeactivate, ...others];
+  };
+  const nodesToDeactivate = [node, ...getChildrenToDeactivate(node)];
+  const updatedTree = new Map(
+    nodesToDeactivate.reduce(
+      (updatedTree, node) =>
+        updatedTree.set(node.id, { ...graph.get(node.id)!, isActive: false }),
+      graph,
+    ),
+  );
+  return {
+    updatedTree: updatedTree,
+    toggledNodes: nodesToDeactivate,
+  };
+};
 
+const activateNode = (node: GraphNode, graph: Graph) => {
   const branch = getCheapestBranch(node, graph);
-  const newLocal = branch.reduce(
+  const updatedTree = branch.reduce(
     (tree, { id }) => tree.set(id, { ...tree.get(id)!, isActive: true }),
     graph,
   );
   return {
-    updatedTree: newLocal,
+    updatedTree: updatedTree,
     toggledNodes: branch,
   };
 };
+
+export const toggleNode = (graph: Graph, node: GraphNode) =>
+  node.isActive ? deactivateNode(node, graph) : activateNode(node, graph);
 
 export const groupByRow = (graph: Graph) =>
   Array.from(graph.values()).reduce<Map<number, GraphNode[]>>(
