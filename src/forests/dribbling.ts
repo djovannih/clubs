@@ -1,0 +1,246 @@
+import { createTree } from "@/lib/graph";
+
+export const dribblingTrees = [
+  createTree([
+    {
+      activationCost: 1,
+      parentIds: [],
+      row: 0,
+      column: 1,
+      actions: [
+        { attribute: "agility", value: 1 },
+        { attribute: "dribbling", value: 1 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["B1"],
+      row: 1,
+      column: 0,
+      actions: [{ attribute: "agility", value: 1 }],
+    },
+    {
+      activationCost: 3,
+      parentIds: ["B1"],
+      row: 1,
+      column: 1,
+      actions: [
+        { attribute: "agility", value: 2 },
+        { attribute: "dribbling", value: 2 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["B1"],
+      row: 1,
+      column: 2,
+      actions: [{ attribute: "dribbling", value: 1 }],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A2", "B2", "C2"],
+      row: 2,
+      column: 0,
+      actions: [
+        { attribute: "agility", value: 1 },
+        { attribute: "positioning", value: 2 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A2", "B2", "C2"],
+      row: 2,
+      column: 1,
+      actions: [
+        { attribute: "positioning", value: 2 },
+        { attribute: "dribbling", value: 1 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A2", "B2", "C2"],
+      row: 2,
+      column: 2,
+      actions: [
+        { attribute: "positioning", value: 2 },
+        { attribute: "dribbling", value: 1 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A3", "B3", "C3"],
+      row: 3,
+      column: 0,
+      actions: [{ attribute: "agility", value: 2 }],
+    },
+    {
+      activationCost: 5,
+      parentIds: ["A3", "B3", "C3"],
+      row: 3,
+      column: 1,
+      actions: [{ attribute: "skillMoves", value: 1 }],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A3", "B3", "C3"],
+      row: 3,
+      column: 2,
+      actions: [{ attribute: "dribbling", value: 2 }],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A4", "B4", "C4"],
+      row: 4,
+      column: 0,
+      actions: [{ attribute: "agility", value: 2 }],
+    },
+    {
+      activationCost: 3,
+      parentIds: ["A4", "B4", "C4"],
+      row: 4,
+      column: 1,
+      actions: [
+        { attribute: "agility", value: 2 },
+        { attribute: "dribbling", value: 2 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A4", "B4", "C4"],
+      row: 4,
+      column: 2,
+      actions: [{ attribute: "dribbling", value: 2 }],
+    },
+    {
+      activationCost: 3,
+      parentIds: ["B5"],
+      row: 5,
+      column: 1,
+      actions: [
+        { attribute: "agility", value: 2 },
+        { attribute: "dribbling", value: 2 },
+      ],
+    },
+  ]),
+  createTree([
+    {
+      activationCost: 1,
+      parentIds: [],
+      row: 0,
+      column: 1,
+      actions: [
+        { attribute: "balance", value: 1 },
+        { attribute: "ballControl", value: 1 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["B1"],
+      row: 1,
+      column: 0,
+      actions: [{ attribute: "ballControl", value: 1 }],
+    },
+    {
+      activationCost: 3,
+      parentIds: ["B1"],
+      row: 1,
+      column: 1,
+      actions: [
+        { attribute: "balance", value: 2 },
+        { attribute: "ballControl", value: 2 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["B1"],
+      row: 1,
+      column: 2,
+      actions: [{ attribute: "balance", value: 1 }],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A2", "B2", "C2"],
+      row: 2,
+      column: 0,
+      actions: [
+        { attribute: "positioning", value: 3 },
+        { attribute: "ballControl", value: 2 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A2", "B2", "C2"],
+      row: 2,
+      column: 1,
+      actions: [
+        { attribute: "positioning", value: 2 },
+        { attribute: "ballControl", value: 1 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A2", "B2", "C2"],
+      row: 2,
+      column: 2,
+      actions: [
+        { attribute: "balance", value: 2 },
+        { attribute: "positioning", value: 3 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A3", "B3", "C3"],
+      row: 3,
+      column: 0,
+      actions: [{ attribute: "ballControl", value: 2 }],
+    },
+    {
+      activationCost: 5,
+      parentIds: ["A3", "B3", "C3"],
+      row: 3,
+      column: 1,
+      actions: [{ attribute: "skillMoves", value: 1 }],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A3", "B3", "C3"],
+      row: 3,
+      column: 2,
+      actions: [{ attribute: "balance", value: 2 }],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A4", "B4", "C4"],
+      row: 4,
+      column: 0,
+      actions: [{ attribute: "ballControl", value: 2 }],
+    },
+    {
+      activationCost: 3,
+      parentIds: ["A4", "B4", "C4"],
+      row: 4,
+      column: 1,
+      actions: [
+        { attribute: "balance", value: 4 },
+        { attribute: "ballControl", value: 2 },
+      ],
+    },
+    {
+      activationCost: 2,
+      parentIds: ["A4", "B4", "C4"],
+      row: 4,
+      column: 2,
+      actions: [{ attribute: "balance", value: 2 }],
+    },
+    {
+      activationCost: 3,
+      parentIds: ["B5"],
+      row: 5,
+      column: 1,
+      actions: [
+        { attribute: "balance", value: 3 },
+        { attribute: "ballControl", value: 2 },
+      ],
+    },
+  ]),
+];

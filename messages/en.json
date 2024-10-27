@@ -20,6 +20,10 @@
       "long": "Physicality",
       "short": "Physicality"
     },
+    "goalkeeping": {
+      "long": "Goalkeeping",
+      "short": "Goalkeeping"
+    },
     "acceleration": {
       "long": "Acceleration",
       "short": "Acc."
@@ -135,6 +139,26 @@
     "aggression": {
       "long": "Aggression",
       "short": "Aggression"
+    },
+    "gkDiving": {
+      "long": "GK Diving",
+      "short": "Diving"
+    },
+    "gkHandling": {
+      "long": "GK Handling",
+      "short": "Handling"
+    },
+    "gkKicking": {
+      "long": "GK Kicking",
+      "short": "Kicking"
+    },
+    "gkPositioning": {
+      "long": "GK Positioning",
+      "short": "Pos."
+    },
+    "gkReflexes": {
+      "long": "GK Reflexes",
+      "short": "Reflexes"
     },
     "weakFoot": {
       "long": "Weak Foot",

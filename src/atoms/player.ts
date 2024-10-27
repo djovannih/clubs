@@ -46,6 +46,11 @@ export const playerAtom = atom<Player>({
     ["jumping", { value: 70, maxValue: 99 }],
     ["stamina", { value: 70, maxValue: 99 }],
     ["strength", { value: 70, maxValue: 99 }],
+    ["gkDiving", { value: 70, maxValue: 99 }],
+    ["gkHandling", { value: 70, maxValue: 99 }],
+    ["gkKicking", { value: 70, maxValue: 99 }],
+    ["gkPositioning", { value: 70, maxValue: 99 }],
+    ["gkReflexes", { value: 70, maxValue: 99 }],
   ]),
 });
 

@@ -5,11 +5,21 @@ import { atom } from "jotai";
 import { paceTrees } from "../forests/pace";
 import { shootingTrees } from "../forests/shooting";
 import { playerAtom } from "./player";
+import { passingTrees } from "@/forests/passing";
+import { dribblingTrees } from "@/forests/dribbling";
+import { defendingTrees } from "@/forests/defending";
+import { physicalityTrees } from "@/forests/physicality";
+import { goalkeepingTrees } from "@/forests/goalkeeping";
 
 export const forestsAtom = atom(
   new Map<MainAttributeName, Graph[]>([
     ["pace", paceTrees],
     ["shooting", shootingTrees],
+    ["passing", passingTrees],
+    ["dribbling", dribblingTrees],
+    ["defending", defendingTrees],
+    ["physicality", physicalityTrees],
+    ["goalkeeping", goalkeepingTrees],
   ]),
 );
 

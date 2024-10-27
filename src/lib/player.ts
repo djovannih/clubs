@@ -29,7 +29,8 @@ export type MainAttributeName =
   | "passing"
   | "dribbling"
   | "defending"
-  | "physicality";
+  | "physicality"
+  | "goalkeeping";
 
 export type AttributeName =
   | "acceleration"
@@ -60,7 +61,12 @@ export type AttributeName =
   | "jumping"
   | "stamina"
   | "strength"
-  | "aggression";
+  | "aggression"
+  | "gkDiving"
+  | "gkHandling"
+  | "gkKicking"
+  | "gkPositioning"
+  | "gkReflexes";
 
 export type PlayerAttribute = {
   value: number;
@@ -251,6 +257,16 @@ export const getCategoryAttributes = (
         ["stamina", attributes.get("stamina")!],
         ["strength", attributes.get("strength")!],
         ["aggression", attributes.get("aggression")!],
+      ]),
+    ],
+    [
+      "goalkeeping",
+      new Map([
+        ["gkDiving", attributes.get("gkDiving")!],
+        ["gkHandling", attributes.get("gkHandling")!],
+        ["gkKicking", attributes.get("gkKicking")!],
+        ["gkPositioning", attributes.get("gkPositioning")!],
+        ["gkReflexes", attributes.get("gkReflexes")!],
       ]),
     ],
   ]);
