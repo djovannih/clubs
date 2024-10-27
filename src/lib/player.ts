@@ -930,28 +930,28 @@ export const getAccelerationRate = (player: Player): AccelerationRate => {
     return "Controlled Explosive";
 
   if (
-    height >= 181 &&
-    strength >= 65 &&
-    acceleration >= 40 &&
-    agilityVsStrengthDifference >= 4
+    height >= 188 &&
+    strength >= 80 &&
+    acceleration >= 55 &&
+    agilityVsStrengthDifference <= -20
   )
-    return "Controlled Lengthy";
+    return "Lengthy";
 
   if (
     height >= 183 &&
     strength >= 75 &&
     acceleration >= 55 &&
-    agilityVsStrengthDifference >= 12
+    agilityVsStrengthDifference <= -12
   )
     return "Mostly Lengthy";
 
   if (
-    height >= 188 &&
-    strength >= 80 &&
-    acceleration >= 55 &&
-    agilityVsStrengthDifference >= 20
+    height >= 181 &&
+    strength >= 65 &&
+    acceleration >= 40 &&
+    agilityVsStrengthDifference <= -4
   )
-    return "Lengthy";
+    return "Controlled Lengthy";
 
   return "Controlled";
 };
