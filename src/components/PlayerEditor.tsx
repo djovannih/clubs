@@ -3,6 +3,7 @@
 import { playerAtom } from "@/atoms/player";
 import {
   updatePlayerHeight,
+  updatePlayerPosition,
   updatePlayerWeight,
   type Position,
 } from "@/lib/player";
@@ -18,6 +19,8 @@ export default function PlayerEditor() {
     "CB",
     "LB",
     "RB",
+    "LWB",
+    "RWB",
     "CDM",
     "CM",
     "CAM",
@@ -25,6 +28,9 @@ export default function PlayerEditor() {
     "RM",
     "LW",
     "RW",
+    "CF",
+    "LF",
+    "RF",
     "ST",
   ];
 
@@ -61,7 +67,7 @@ export default function PlayerEditor() {
         <select
           value={player.position}
           onChange={(e) =>
-            setPlayer({ ...player, position: e.target.value as Position })
+            setPlayer(updatePlayerPosition(player, e.target.value as Position))
           }
           className="w-full rounded-md border bg-background px-3 py-2"
         >
