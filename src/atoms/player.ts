@@ -58,7 +58,7 @@ export const playerAtom = atomWithStorage<Player>(
     ]),
   },
   createJSONStorage(() => localStorage, jsonStorageOptions),
-  { getOnInit: true },
+  // { getOnInit: true },
 );
 
 export const accelerationRateAtom = atom((get) =>

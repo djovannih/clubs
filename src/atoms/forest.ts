@@ -25,7 +25,7 @@ export const forestsAtom = atomWithStorage(
     ["goalkeeping", goalkeepingTrees],
   ]),
   createJSONStorage(() => localStorage, jsonStorageOptions),
-  { getOnInit: true },
+  // { getOnInit: true },
 );
 
 export const toggleNodeAtom = atom(
