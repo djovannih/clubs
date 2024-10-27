@@ -1,7 +1,7 @@
 "use client";
 
 import { playerAtom } from "@/atoms/player";
-import type { Position } from "@/lib/player";
+import { updatePlayerHeight, type Position } from "@/lib/player";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
@@ -31,9 +31,13 @@ export default function PlayerEditor() {
         <input
           type="number"
           value={player.height}
-          onChange={(e) =>
-            setPlayer({ ...player, height: parseInt(e.target.value) })
-          }
+          onChange={(e) => {
+            const newLocal = updatePlayerHeight(
+              player,
+              parseInt(e.target.value),
+            );
+            setPlayer(newLocal);
+          }}
           className="w-full rounded-md border bg-background px-3 py-2"
           min={0}
         />

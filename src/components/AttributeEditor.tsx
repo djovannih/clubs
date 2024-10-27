@@ -40,8 +40,8 @@ export default function AttributeEditor() {
           </button>
         ))}
       </div>
-      <AttributeForest forestName={activeForestName} />
       <AttributeDetail attributes={categoryAttributes.get(activeForestName)!} />
+      <AttributeForest forestName={activeForestName} />
     </div>
   );
 }
