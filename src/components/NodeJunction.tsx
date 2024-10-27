@@ -24,11 +24,23 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
   const showBottomEdge = bottomNode && bottomNode.parentIds.length > 0;
   const bottomEdgeIsActive = showBottomEdge && bottomNode?.isActive;
 
-  const showLeftEdge = topRow.some(
-    (node) =>
-      node.column < columnIndex &&
-      node.childrenIds.some((child) => tree.get(child)!.column >= columnIndex),
-  );
+  const showLeftEdge =
+    topRow.some(
+      (node) =>
+        node.column < columnIndex &&
+        node.childrenIds.some(
+          (child) => tree.get(child)!.column >= columnIndex,
+        ),
+    ) ||
+    bottomRow.some(
+      (bottomNode) =>
+        bottomNode.column < columnIndex &&
+        topRow.some(
+          (topNode) =>
+            topNode.column >= columnIndex &&
+            topNode.childrenIds.includes(bottomNode.id),
+        ),
+    );
   const leftEdgeIsActive =
     showLeftEdge &&
     (topRow.some(
@@ -54,10 +66,22 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
           ),
       ));
 
-  const showRightEdge = bottomRow
-    .filter((node) => node.column > columnIndex)
-    .some((node) =>
-      node.parentIds.some((p) => tree.get(p)!.column <= columnIndex),
+  const showRightEdge =
+    topRow.some(
+      (node) =>
+        node.column > columnIndex &&
+        node.childrenIds.some(
+          (child) => tree.get(child)!.column <= columnIndex,
+        ),
+    ) ||
+    bottomRow.some(
+      (bottomNode) =>
+        bottomNode.column > columnIndex &&
+        topRow.some(
+          (topNode) =>
+            topNode.column <= columnIndex &&
+            topNode.childrenIds.includes(bottomNode.id),
+        ),
     );
   const rightEdgeIsActive =
     showRightEdge &&
@@ -151,7 +175,7 @@ export default function NodeJunction({
     ) + 1;
 
   return (
-    <div className="flex justify-between">
+    <div className="grid grid-cols-3">
       {Array.from({ length: columnsCount }, (_, i) => (
         <Junction
           key={i}
