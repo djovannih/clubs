@@ -13,7 +13,7 @@ export default function AttributeEditor() {
   const forests = useAtomValue(forestsAtom);
   const t = useTranslations("AttributeEditor");
   const t2 = useTranslations("Attributes");
-  const [activeForestName, setActiveForestKey] = useState(
+  const [activeForestName, setActiveForestName] = useState(
     forests.keys().next().value!,
   );
   const categoryAttributes = useAtomValue(categoryAttributesAtom);
@@ -28,7 +28,7 @@ export default function AttributeEditor() {
         {Array.from(forests.keys()).map((name) => (
           <button
             key={name}
-            onClick={() => setActiveForestKey(name)}
+            onClick={() => setActiveForestName(name)}
             className={clsx(
               "p-2",
               name === activeForestName
@@ -41,7 +41,7 @@ export default function AttributeEditor() {
         ))}
       </div>
       <AttributeDetail attributes={categoryAttributes.get(activeForestName)!} />
-      <AttributeForest forestName={activeForestName} />
+      <AttributeForest key={activeForestName} forestName={activeForestName} />
     </div>
   );
 }
