@@ -441,6 +441,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "GK":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 61, maxValue: 99 }],
           ["sprintSpeed", { value: 51, maxValue: 99 }],
@@ -481,6 +482,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "CB":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 74, maxValue: 99 }],
           ["sprintSpeed", { value: 75, maxValue: 99 }],
@@ -522,6 +524,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "RB":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 79, maxValue: 99 }],
           ["sprintSpeed", { value: 79, maxValue: 99 }],
@@ -563,6 +566,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "RWB":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 82, maxValue: 99 }],
           ["sprintSpeed", { value: 80, maxValue: 99 }],
@@ -603,6 +607,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "CDM":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 77, maxValue: 99 }],
           ["sprintSpeed", { value: 76, maxValue: 99 }],
@@ -643,6 +648,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "CM":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 78, maxValue: 99 }],
           ["sprintSpeed", { value: 77, maxValue: 99 }],
@@ -684,6 +690,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "RM":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 82, maxValue: 99 }],
           ["sprintSpeed", { value: 80, maxValue: 99 }],
@@ -724,6 +731,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "CAM":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 81, maxValue: 99 }],
           ["sprintSpeed", { value: 77, maxValue: 99 }],
@@ -765,6 +773,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "RW":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 84, maxValue: 99 }],
           ["sprintSpeed", { value: 82, maxValue: 99 }],
@@ -807,6 +816,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "RF":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 77, maxValue: 99 }],
           ["sprintSpeed", { value: 73, maxValue: 99 }],
@@ -847,6 +857,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
     case "ST":
       return {
         ...player,
+        position: position,
         attributes: new Map<AttributeName, PlayerAttribute>([
           ["acceleration", { value: 81, maxValue: 99 }],
           ["sprintSpeed", { value: 77, maxValue: 99 }],
