@@ -147,7 +147,7 @@ export const updatePlayer = (
 const getHeightUpdateAttributeActions = (
   height: number,
 ): UpdateAttributeAction[] => {
-  // height <= 162 && height >= 160
+  //  height >= 160 && height <= 162
   if (height <= 162) return [];
 
   if (height >= 163 && height <= 167)
@@ -336,6 +336,99 @@ export const updatePlayerHeight = (player: Player, height: number): Player => ({
     ),
   ),
   height: height,
+});
+
+const getWeightUpdateAttributeActions = (
+  weight: number,
+): UpdateAttributeAction[] => {
+  // weight >= 45 && weight <= 54
+  if (weight <= 54) return [];
+
+  if (weight >= 55 && weight <= 68)
+    return [
+      { attribute: "acceleration", value: -1 },
+      { attribute: "sprintSpeed", value: -1 },
+      { attribute: "headingAccuracy", value: 1 },
+      { attribute: "longPassing", value: 1 },
+      { attribute: "shortPassing", value: -1 },
+      { attribute: "agility", value: -1 },
+      { attribute: "jumping", value: 1 },
+      { attribute: "strength", value: 1 },
+    ];
+
+  if (weight >= 69 && weight <= 79)
+    return [
+      { attribute: "acceleration", value: -2 },
+      { attribute: "sprintSpeed", value: -2 },
+      { attribute: "freeKickAccuracy", value: 1 },
+      { attribute: "headingAccuracy", value: 1 },
+      { attribute: "shotPower", value: 1 },
+      { attribute: "longShots", value: 1 },
+      { attribute: "volleys", value: 1 },
+      { attribute: "longPassing", value: 2 },
+      { attribute: "shortPassing", value: -2 },
+      { attribute: "agility", value: -2 },
+      { attribute: "balance", value: 1 },
+      { attribute: "dribbling", value: -1 },
+      { attribute: "jumping", value: 3 },
+      { attribute: "stamina", value: -1 },
+      { attribute: "strength", value: 2 },
+    ];
+
+  if (weight >= 80 && weight <= 90)
+    return [
+      { attribute: "acceleration", value: -3 },
+      { attribute: "sprintSpeed", value: -2 },
+      { attribute: "finishing", value: 1 },
+      { attribute: "freeKickAccuracy", value: 1 },
+      { attribute: "headingAccuracy", value: 2 },
+      { attribute: "shotPower", value: 1 },
+      { attribute: "longShots", value: 1 },
+      { attribute: "volleys", value: 1 },
+      { attribute: "longPassing", value: 3 },
+      { attribute: "shortPassing", value: -2 },
+      { attribute: "agility", value: -3 },
+      { attribute: "balance", value: 1 },
+      { attribute: "dribbling", value: -1 },
+      { attribute: "jumping", value: 1 },
+      { attribute: "stamina", value: -1 },
+      { attribute: "strength", value: 3 },
+    ];
+
+  // weight >= 91 && weight <= 115
+  return [
+    { attribute: "acceleration", value: -5 },
+    { attribute: "sprintSpeed", value: -2 },
+    { attribute: "finishing", value: 1 },
+    { attribute: "freeKickAccuracy", value: 2 },
+    { attribute: "headingAccuracy", value: 2 },
+    { attribute: "shotPower", value: 2 },
+    { attribute: "longShots", value: 2 },
+    { attribute: "volleys", value: 2 },
+    { attribute: "penalties", value: 1 },
+    { attribute: "longPassing", value: 4 },
+    { attribute: "shortPassing", value: -3 },
+    { attribute: "agility", value: -5 },
+    { attribute: "balance", value: 2 },
+    { attribute: "positioning", value: 1 },
+    { attribute: "dribbling", value: -2 },
+    { attribute: "jumping", value: -1 },
+    { attribute: "stamina", value: -2 },
+    { attribute: "strength", value: 4 },
+  ];
+};
+
+export const updatePlayerWeight = (player: Player, weight: number): Player => ({
+  ...getWeightUpdateAttributeActions(weight).reduce(
+    (updatedPlayer, action) =>
+      updatePlayerAttributess(updatedPlayer, action, "INC"),
+    getWeightUpdateAttributeActions(player.weight).reduce(
+      (updatedPlayer, action) =>
+        updatePlayerAttributess(updatedPlayer, action, "DEC"),
+      player,
+    ),
+  ),
+  weight: weight,
 });
 
 export const getAccelerationRate = (player: Player): AccelerationRate => {
