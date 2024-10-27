@@ -1,14 +1,184 @@
 {
+  "Attributes": {
+    "pace": {
+      "long": "Velocità",
+      "short": "Velocità"
+    },
+    "shooting": {
+      "long": "Tiro",
+      "short": "Tiro"
+    },
+    "passing": {
+      "long": "Passaggio",
+      "short": "Passaggio"
+    },
+    "defending": {
+      "long": "Difesa",
+      "short": "Difesa"
+    },
+    "physicality": {
+      "long": "Fisico",
+      "short": "Fisico"
+    },
+    "goalkeeping": {
+      "long": "Portiere",
+      "short": "Portiere"
+    },
+    "acceleration": {
+      "long": "Accelerazione",
+      "short": "Acc."
+    },
+    "sprintSpeed": {
+      "long": "Velocità Scatto",
+      "short": "Scatto"
+    },
+    "positioning": {
+      "long": "Posizionamento",
+      "short": "Att. Pos."
+    },
+    "finishing": {
+      "long": "Finalizzazione",
+      "short": "Fin."
+    },
+    "shotPower": {
+      "long": "Potenza Tiro",
+      "short": "Potenza tiro"
+    },
+    "longShots": {
+      "long": "Tiri da Lontano",
+      "short": "Tiri da lontano"
+    },
+    "volleys": {
+      "long": "Tiri al Volo",
+      "short": "Tiri al volo"
+    },
+    "penalties": {
+      "long": "Rigori",
+      "short": "Rigori"
+    },
+    "vision": {
+      "long": "Visione",
+      "short": "Visione"
+    },
+    "crossing": {
+      "long": "Cross",
+      "short": "Cross"
+    },
+    "freeKickAccuracy": {
+      "long": "Precisione Punizione",
+      "short": "Prec. Pun."
+    },
+    "shortPassing": {
+      "long": "Passaggio Corto",
+      "short": "Pass. Corto"
+    },
+    "longPassing": {
+      "long": "Passaggio Lungo",
+      "short": "Pass. Lungo"
+    },
+    "curve": {
+      "long": "Effetto",
+      "short": "Effetto"
+    },
+    "agility": {
+      "long": "Agilità",
+      "short": "Agilità"
+    },
+    "balance": {
+      "long": "Equilibrio",
+      "short": "Equilibrio"
+    },
+    "reactions": {
+      "long": "Reattività",
+      "short": "Reattività"
+    },
+    "ballControl": {
+      "long": "Controllo Palla",
+      "short": "Contr. palla"
+    },
+    "dribbling": {
+      "long": "Dribbling",
+      "short": "Dribbling"
+    },
+    "composure": {
+      "long": "Freddezza",
+      "short": "Freddezza"
+    },
+    "interceptions": {
+      "long": "Intercettazioni",
+      "short": "Interc."
+    },
+    "headingAccuracy": {
+      "long": "Precisione Colpi di Testa",
+      "short": "Colpo Testa"
+    },
+    "defensiveAwareness": {
+      "long": "Lettura Difensiva",
+      "short": "Lett. Dif."
+    },
+    "standingTackle": {
+      "long": "Contrasto in Piedi",
+      "short": "Contrasto"
+    },
+    "slidingTackle": {
+      "long": "Scivolata",
+      "short": "Sciv."
+    },
+    "jumping": {
+      "long": "Elevazione",
+      "short": "Elevazione"
+    },
+    "stamina": {
+      "long": "Resistenza",
+      "short": "Resistenza"
+    },
+    "strength": {
+      "long": "Forza",
+      "short": "Forza"
+    },
+    "aggression": {
+      "long": "Aggressività",
+      "short": "Aggressività"
+    },
+    "gkDiving": {
+      "long": "POR Tuffo",
+      "short": "Tuffo"
+    },
+    "gkHandling": {
+      "long": "POR Blocco",
+      "short": "Blocco"
+    },
+    "gkKicking": {
+      "long": "POR Rinvio",
+      "short": "Rinvio"
+    },
+    "gkPositioning": {
+      "long": "POR Posizionamento",
+      "short": "Posiz."
+    },
+    "gkReflexes": {
+      "long": "POR Riflessi",
+      "short": "Riflessi"
+    },
+    "weakFoot": {
+      "long": "Piede Debole",
+      "short": "Piede Debole"
+    },
+    "skillMoves": {
+      "long": "Mosse Abilità",
+      "short": "Mosse Abilità"
+    }
+  },
+  "AttributeEditor": {
+    "attributes": "Attributi"
+  },
   "PlayerInfo": {
-    "playerInfo": "Informazioni sul giocatore",
+    "playerInfo": "Info Giocatore",
     "position": "Posizione",
     "height": "Altezza",
     "weight": "Peso",
     "accelerate": "AcceleRATE",
-    "weakFoot": "Piede debole",
-    "skillMoves": "Mosse abilità"
-  },
-  "AttributeEditor": {
-    "attributes": "Attributi"
+    "weakFoot": "Piede Debole",
+    "skillMoves": "Abilità"
   }
 }
