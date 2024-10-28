@@ -43,11 +43,11 @@ export default function AttributeForest({ forestName }: AttributeForestProps) {
       <button
         className="mx-auto w-fit rounded-lg bg-red-900 p-4"
         onClick={() => {
-          forests.forEach((forest) =>
-            forest.forEach((tree) =>
+          forests.entries().forEach(([forName, forest]) =>
+            forest.forEach((tree, treeIdx) =>
               tree.forEach((node) => {
-                if (node.isActive)
-                  toggleNode(forestName, activeTreeIndex, node.id);
+                if (node.parentIds.length === 0 && node.isActive)
+                  toggleNode(forName, treeIdx, node.id);
               }),
             ),
           );

@@ -77,33 +77,25 @@ export const getCheapestBranch = (
   );
 };
 
-const deactivateNode = (node: GraphNode, graph: Graph) => {
-  const getChildrenToDeactivate = (node: GraphNode): GraphNode[] => {
-    const childrenToDeactivate = node.childrenIds
-      .filter(
-        (childId) =>
-          graph.get(childId)!.isActive &&
-          !graph
-            .get(childId)!
-            .parentIds.some((p) => p !== node.id && graph.get(p)!.isActive),
-      )
-      .map((childId) => graph.get(childId)!);
-    const others = childrenToDeactivate.flatMap((child) =>
-      getChildrenToDeactivate(child),
+const deactivateNode = (
+  node: GraphNode,
+  graph: Graph,
+  toggledNodes: GraphNode[] = [],
+) => {
+  graph.set(node.id, { ...graph.get(node.id)!, isActive: false });
+  toggledNodes.push(node);
+  node.childrenIds.forEach((childId) => {
+    const childNode = graph.get(childId)!;
+    const hasActiveParent = childNode.parentIds.some(
+      (parentId) => graph.get(parentId)!.isActive,
     );
-    return [...childrenToDeactivate, ...others];
-  };
-  const nodesToDeactivate = [node, ...getChildrenToDeactivate(node)];
-  const updatedTree = new Map(
-    nodesToDeactivate.reduce(
-      (updatedTree, node) =>
-        updatedTree.set(node.id, { ...graph.get(node.id)!, isActive: false }),
-      graph,
-    ),
-  );
+    if (childNode.isActive && !hasActiveParent)
+      deactivateNode(childNode, graph, toggledNodes);
+  });
+  
   return {
-    updatedTree: updatedTree,
-    toggledNodes: nodesToDeactivate,
+    updatedTree: graph,
+    toggledNodes,
   };
 };
 
