@@ -107,44 +107,45 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showTopEdge && (
         <div
           className={clsx(
-            "col-start-2 row-start-1 h-8 w-2 justify-self-center bg-slate-700",
-            topEdgeIsActive && "bg-green-600",
+            "col-start-2 row-start-1 h-8 w-2 justify-self-center",
+            topEdgeIsActive ? "bg-green-600" : "bg-slate-700",
           )}
         ></div>
       )}
       {showLeftEdge && (
         <div
           className={clsx(
-            "col-start-1 row-start-2 h-2 self-center bg-slate-700",
-            leftEdgeIsActive && "bg-green-600",
+            "col-start-1 row-start-2 h-2 self-center",
+            leftEdgeIsActive ? "bg-green-600" : "bg-slate-700",
           )}
         ></div>
       )}
       {(showTopEdge || showLeftEdge || showRightEdge || showBottomEdge) && (
         <div
           className={clsx(
-            "col-start-2 row-start-2 h-2 w-2 self-center bg-slate-700",
-            (topEdgeIsActive ||
+            "col-start-2 row-start-2 h-2 w-2 self-center",
+            topEdgeIsActive ||
               leftEdgeIsActive ||
               rightEdgeIsActive ||
-              bottomEdgeIsActive) &&
-              "bg-green-600",
+              bottomEdgeIsActive
+              ? "bg-green-600"
+              : "bg-slate-700",
           )}
         ></div>
       )}
       {showRightEdge && (
         <div
           className={clsx(
-            "col-start-3 row-start-2 h-2 self-center bg-slate-700",
-            rightEdgeIsActive && "bg-green-600",
+            "col-start-3 row-start-2 h-2 self-center",
+            rightEdgeIsActive ? "bg-green-600" : "bg-slate-700",
           )}
         ></div>
       )}
       {showBottomEdge && (
         <div
           className={clsx(
-            "col-start-2 row-start-3 h-8 w-2 justify-self-center bg-slate-700",
-            bottomEdgeIsActive && "bg-green-600",
+            "col-start-2 row-start-3 h-8 w-2 justify-self-center",
+            bottomEdgeIsActive ? "bg-green-600" : "bg-slate-700",
           )}
         ></div>
       )}
