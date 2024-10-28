@@ -14,7 +14,7 @@ export default function CollapsibleCard({
   const [collapseCard, setCollapseCard] = useState(false);
 
   return (
-    <div className="bg-slate-800 flex flex-col rounded-lg">
+    <div className="flex flex-col rounded-lg bg-slate-800">
       <button
         className="flex items-center justify-between px-4 py-2"
         onClick={() => setCollapseCard(!collapseCard)}

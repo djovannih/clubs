@@ -113,7 +113,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showTopEdge && (
         <div
           className={clsx(
-            "bg-slate-700 col-start-2 row-start-1 h-8 w-2 justify-self-center",
+            "col-start-2 row-start-1 h-8 w-2 justify-self-center bg-slate-700",
             topEdgeIsActive && "bg-green-600",
           )}
         ></div>
@@ -121,7 +121,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showLeftEdge && (
         <div
           className={clsx(
-            "bg-slate-700 col-start-1 row-start-2 h-2 self-center",
+            "col-start-1 row-start-2 h-2 self-center bg-slate-700",
             leftEdgeIsActive && "bg-green-600",
           )}
         ></div>
@@ -129,7 +129,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {(showTopEdge || showLeftEdge || showRightEdge || showBottomEdge) && (
         <div
           className={clsx(
-            "bg-slate-700 col-start-2 row-start-2 h-2 w-2 self-center",
+            "col-start-2 row-start-2 h-2 w-2 self-center bg-slate-700",
             (topEdgeIsActive ||
               leftEdgeIsActive ||
               rightEdgeIsActive ||

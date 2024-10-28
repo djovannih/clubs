@@ -49,7 +49,12 @@ export default function AttributeNode({
             >{`${t(`${action.attribute}.short`)} +${action.value}`}</li>
           ))}
         </ul>
-        <Badge active={node.isActive}>{node.activationCost}</Badge>
+        <Badge
+          key={`${forestName}-${treeIndex}-${node.id}`}
+          active={node.isActive}
+        >
+          {node.activationCost}
+        </Badge>
       </button>
     </div>
   );

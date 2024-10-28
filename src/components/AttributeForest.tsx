@@ -20,19 +20,23 @@ export default function AttributeForest({ forestName }: AttributeForestProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="bg-slate-900 flex rounded-lg overflow-hidden">
+      <div className="flex overflow-hidden rounded-lg bg-slate-900">
         {forest.map((_, i) => (
           <button
             key={`${forestName}-${i}`}
             onClick={() => setActiveTreeIndex(i)}
             className={clsx(
-              "grow rounded-x-lg p-2",
+              "rounded-x-lg grow p-2",
               activeTreeIndex === i ? "bg-sky-700" : "bg-slate-900",
             )}
           >{`${t(`${forestName}.short`)}${forest.length <= 1 ? "" : ` ${i + 1}`}`}</button>
         ))}
       </div>
-      <AttributeTree forestName={forestName} treeIndex={activeTreeIndex} />
+      <AttributeTree
+        key={`${forestName}-${activeTreeIndex}`}
+        forestName={forestName}
+        treeIndex={activeTreeIndex}
+      />
       <AttributeDetail attributes={categoryAttributes.get(forestName)!} />
     </div>
   );
