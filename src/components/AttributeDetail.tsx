@@ -21,7 +21,7 @@ export default function AttributeDetail({ attributes }: AttributeDetailprops) {
               <span>{t(`${name}.long`)}</span>
               <span>{attribute.value}</span>
             </div>
-            <div className="h-2.5 w-full rounded-full bg-slate-950">
+            <div className="h-2.5 w-full rounded-full bg-slate-900">
               <div
                 className="h-2.5 rounded-full bg-sky-700"
                 style={{

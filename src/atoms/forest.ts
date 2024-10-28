@@ -13,8 +13,7 @@ import { goalkeepingTrees } from "@/forests/goalkeeping";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { jsonStorageOptions } from "./utils";
 
-export const forestsAtom = atomWithStorage(
-  "forests",
+export const getDefaultForest = () =>
   new Map<MainAttributeName, Graph[]>([
     ["pace", paceTrees],
     ["shooting", shootingTrees],
@@ -23,7 +22,10 @@ export const forestsAtom = atomWithStorage(
     ["defending", defendingTrees],
     ["physicality", physicalityTrees],
     ["goalkeeping", goalkeepingTrees],
-  ]),
+  ]);
+export const forestsAtom = atomWithStorage(
+  "forests",
+  getDefaultForest(),
   createJSONStorage(() => localStorage, jsonStorageOptions),
   // { getOnInit: true },
 );

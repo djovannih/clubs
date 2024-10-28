@@ -10,9 +10,8 @@ import { atom } from "jotai";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { jsonStorageOptions } from "./utils";
 
-export const playerAtom = atomWithStorage<Player>(
-  "player",
-  {
+export const getDefaultPlayer = (): Player => {
+  return {
     level: 100,
     availableSkillPoints: 160,
     position: "ST",
@@ -56,7 +55,12 @@ export const playerAtom = atomWithStorage<Player>(
       ["gkPositioning", { value: 10, maxValue: 99 }],
       ["gkReflexes", { value: 10, maxValue: 99 }],
     ]),
-  },
+  };
+};
+
+export const playerAtom = atomWithStorage<Player>(
+  "player",
+  getDefaultPlayer(),
   createJSONStorage(() => localStorage, jsonStorageOptions),
   // { getOnInit: true },
 );

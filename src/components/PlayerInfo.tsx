@@ -31,11 +31,11 @@ export default function PlayerInfo() {
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("height")}: `}</span>
-            <span>{`${player.height}cm`}</span>
+            <span>{`${player.height} cm`}</span>
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("weight")}: `}</span>
-            <span>{`${player.weight}kg`}</span>
+            <span>{`${player.weight} kg`}</span>
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("accelerate")}: `}</span>

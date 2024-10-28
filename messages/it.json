@@ -1,6 +1,7 @@
 {
   "Attributes": {
     "attributes": "Attributi",
+    "resetAttributes": "Resetta attributi",
     "pace": {
       "long": "Velocità",
       "short": "Velocità"
@@ -177,8 +178,8 @@
     "height": "Altezza",
     "weight": "Peso",
     "accelerate": "AcceleRATE",
-    "weakFoot": "Piede Debole",
-    "skillMoves": "Abilità",
+    "weakFoot": "Piede debole",
+    "skillMoves": "Mosse abilità",
     "skillPoints": "Punti abilità",
     "GK": "POR",
     "CB": "DC",

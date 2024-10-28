@@ -27,10 +27,9 @@ export default function AttributeTree({
   return (
     <div>
       {Array.from(rows.entries()).map(([rowIndex, row]) => (
-        <div key={`${forestName}-${treeIndex}-${rowIndex}`}>
+        <div key={rowIndex}>
           {rowIndex > 0 && (
             <NodeJunction
-              key={`${forestName}-${treeIndex}-${rowIndex}`}
               tree={tree}
               topRow={rows.get(rowIndex - 1)!}
               bottomRow={row}

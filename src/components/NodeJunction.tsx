@@ -26,43 +26,39 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
 
   const showLeftEdge =
     topRow.some(
-      (node) =>
-        node.column < columnIndex &&
-        node.childrenIds.some(
-          (child) => tree.get(child)!.column >= columnIndex,
-        ),
+      (tn) =>
+        tn.column < columnIndex &&
+        tn.childrenIds.some((child) => tree.get(child)!.column >= columnIndex),
     ) ||
     bottomRow.some(
-      (bottomNode) =>
-        bottomNode.column < columnIndex &&
+      (bn) =>
+        bn.column < columnIndex &&
         topRow.some(
-          (topNode) =>
-            topNode.column >= columnIndex &&
-            topNode.childrenIds.includes(bottomNode.id),
+          (tn) => tn.column >= columnIndex && tn.childrenIds.includes(bn.id),
         ),
     );
   const leftEdgeIsActive =
     showLeftEdge &&
     (topRow.some(
-      (topNode) =>
-        topNode.column >= columnIndex &&
-        topNode.isActive &&
+      (tn) =>
+        tn.column >= columnIndex &&
+        tn.isActive &&
         bottomRow.some(
-          (bottomNode) =>
-            bottomNode.column < columnIndex &&
-            bottomNode.isActive &&
-            bottomNode.parentIds.some((p) => p === topNode.id),
+          (bn) =>
+            bn.column < columnIndex &&
+            bn.isActive &&
+            bn.parentIds.some((p) => p === tn.id),
         ),
     ) ||
       topRow.some(
-        (topNode) =>
-          topNode.column < columnIndex &&
-          topNode.isActive &&
+        (tn) =>
+          tn.column < columnIndex &&
+          tn.isActive &&
           bottomRow.some(
-            (bottomNode) =>
-              bottomNode.column >= columnIndex &&
-              bottomNode.isActive &&
-              bottomNode.parentIds.some((p) => p === topNode.id),
+            (bn) =>
+              bn.column >= columnIndex &&
+              bn.isActive &&
+              bn.parentIds.some((p) => p === tn.id),
           ),
       ));
 
@@ -75,36 +71,34 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
         ),
     ) ||
     bottomRow.some(
-      (bottomNode) =>
-        bottomNode.column > columnIndex &&
+      (bn) =>
+        bn.column > columnIndex &&
         topRow.some(
-          (topNode) =>
-            topNode.column <= columnIndex &&
-            topNode.childrenIds.includes(bottomNode.id),
+          (tn) => tn.column <= columnIndex && tn.childrenIds.includes(bn.id),
         ),
     );
   const rightEdgeIsActive =
     showRightEdge &&
     (topRow.some(
-      (topNode) =>
-        topNode.column <= columnIndex &&
-        topNode.isActive &&
+      (tn) =>
+        tn.column <= columnIndex &&
+        tn.isActive &&
         bottomRow.some(
-          (bottomNode) =>
-            bottomNode.column > columnIndex &&
-            bottomNode.isActive &&
-            bottomNode.parentIds.some((p) => p === topNode.id),
+          (bn) =>
+            bn.column > columnIndex &&
+            bn.isActive &&
+            bn.parentIds.some((p) => p === tn.id),
         ),
     ) ||
       topRow.some(
-        (topNode) =>
-          topNode.column > columnIndex &&
-          topNode.isActive &&
+        (tn) =>
+          tn.column > columnIndex &&
+          tn.isActive &&
           bottomRow.some(
-            (bottomNode) =>
-              bottomNode.column <= columnIndex &&
-              bottomNode.isActive &&
-              bottomNode.parentIds.some((p) => p === topNode.id),
+            (bn) =>
+              bn.column <= columnIndex &&
+              bn.isActive &&
+              bn.parentIds.some((p) => p === tn.id),
           ),
       ));
 
@@ -113,7 +107,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showTopEdge && (
         <div
           className={clsx(
-            "col-start-2 row-start-1 h-8 w-2 justify-self-center bg-slate-700",
+            "bg-slate-700 col-start-2 row-start-1 h-8 w-2 justify-self-center",
             topEdgeIsActive && "bg-green-600",
           )}
         ></div>
@@ -121,7 +115,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showLeftEdge && (
         <div
           className={clsx(
-            "col-start-1 row-start-2 h-2 self-center bg-slate-700",
+            "bg-slate-700 col-start-1 row-start-2 h-2 self-center",
             leftEdgeIsActive && "bg-green-600",
           )}
         ></div>
@@ -129,7 +123,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {(showTopEdge || showLeftEdge || showRightEdge || showBottomEdge) && (
         <div
           className={clsx(
-            "col-start-2 row-start-2 h-2 w-2 self-center bg-slate-700",
+            "bg-slate-700 col-start-2 row-start-2 h-2 w-2 self-center",
             (topEdgeIsActive ||
               leftEdgeIsActive ||
               rightEdgeIsActive ||
@@ -141,7 +135,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showRightEdge && (
         <div
           className={clsx(
-            "col-start-3 row-start-2 h-2 self-center bg-slate-700",
+            "bg-slate-700 col-start-3 row-start-2 h-2 self-center",
             rightEdgeIsActive && "bg-green-600",
           )}
         ></div>
@@ -149,7 +143,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showBottomEdge && (
         <div
           className={clsx(
-            "col-start-2 row-start-3 h-8 w-2 justify-self-center bg-slate-700",
+            "bg-slate-700 col-start-2 row-start-3 h-8 w-2 justify-self-center",
             bottomEdgeIsActive && "bg-green-600",
           )}
         ></div>

@@ -5,6 +5,7 @@ interface SliderProps {
   maxValue: number;
   markedValues: number[];
   updateValue: (value: number) => void;
+  suffix?: string;
 }
 export default function Slider({
   headline,
@@ -13,13 +14,14 @@ export default function Slider({
   maxValue,
   markedValues,
   updateValue,
+  suffix = "",
 }: SliderProps) {
   return (
     <div className="w-full">
       <div className="flex flex-col gap-3">
         <div className="flex justify-between">
           <span>{headline}</span>
-          <span>{value}</span>
+          <span>{`${value} ${suffix}`}</span>
         </div>
         <div className="flex flex-col gap-3">
           <input
@@ -28,9 +30,9 @@ export default function Slider({
             max={maxValue}
             value={value}
             onChange={(e) => updateValue(parseInt(e.target.value))}
-            className="h-2.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-200"
+            className="bg-slate-200 h-2.5 w-full cursor-pointer appearance-none rounded-lg"
             style={{
-              background: `linear-gradient(to right, #0369a1 0%, #0369a1 ${((value - minValue) / (maxValue - minValue)) * 100}%, #020617 ${((value - minValue) / (maxValue - minValue)) * 100}%, #020617 100%)`,
+              background: `linear-gradient(to right, #0369a1 0%, #0369a1 ${((value - minValue) / (maxValue - minValue)) * 100}%, #0f172a ${((value - minValue) / (maxValue - minValue)) * 100}%, #0f172a 100%)`,
             }}
           />
           <div className="relative flex h-6 w-full">
@@ -43,8 +45,8 @@ export default function Slider({
                   right: `${((maxValue - val) / (maxValue - minValue)) * 100}%`,
                 }}
               >
-                <span className="h-2 w-2 rounded-full bg-sky-700"></span>
-                <span className="text-xs text-slate-500">{val}</span>
+                <span className="bg-sky-700 h-2 w-2 rounded-full"></span>
+                <span className="text-slate-500 text-xs">{val}</span>
               </div>
             ))}
           </div>

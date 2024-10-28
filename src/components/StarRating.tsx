@@ -14,9 +14,9 @@ export default function StarRating({
         <Star
           key={i}
           size={24}
-          fill={i < starsCount ? "yellow" : "#020617"}
+          fill={i < starsCount ? "yellow" : "#0f172a"}
           strokeWidth={i < starsCount ? 0 : 1}
-          stroke="#020617"
+          stroke="#0f172a"
         />
       ))}
     </span>

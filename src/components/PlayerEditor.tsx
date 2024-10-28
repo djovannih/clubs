@@ -49,6 +49,7 @@ export default function PlayerEditor() {
             updateValue={(value) =>
               setPlayer(updatePlayerHeight(player, value))
             }
+            suffix="cm"
           />
           <Slider
             headline={t("weight")}
@@ -59,6 +60,7 @@ export default function PlayerEditor() {
             updateValue={(value) =>
               setPlayer(updatePlayerWeight(player, value))
             }
+            suffix="kg"
           />
           <div className="flex flex-col gap-2">
             <label className="block">{t("position")}</label>
@@ -69,7 +71,7 @@ export default function PlayerEditor() {
                   updatePlayerPosition(player, e.target.value as Position),
                 )
               }
-              className="w-full rounded-md border border-slate-500 bg-slate-900 px-3 py-2 focus:outline-none"
+              className="border-slate-500 bg-slate-900 w-full rounded-md border px-3 py-2 focus:outline-none"
             >
               {positions.map((pos) => (
                 <option key={pos} value={pos}>

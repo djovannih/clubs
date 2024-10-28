@@ -1,6 +1,7 @@
 {
   "Attributes": {
     "attributes": "Attributes",
+    "resetAttributes": "Reset Attributes",
     "pace": {
       "long": "Pace",
       "short": "Pace"
