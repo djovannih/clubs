@@ -113,44 +113,44 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       {showTopEdge && (
         <div
           className={clsx(
-            "col-start-2 row-start-1 h-8 w-2 justify-self-center bg-inactive-node",
-            topEdgeIsActive && "bg-primary-dark",
+            "bg-slate-700 col-start-2 row-start-1 h-8 w-2 justify-self-center",
+            topEdgeIsActive && "bg-green-600",
           )}
         ></div>
       )}
       {showLeftEdge && (
         <div
           className={clsx(
-            "col-start-1 row-start-2 h-2 self-center bg-inactive-node",
-            leftEdgeIsActive && "bg-primary-dark",
+            "bg-slate-700 col-start-1 row-start-2 h-2 self-center",
+            leftEdgeIsActive && "bg-green-600",
           )}
         ></div>
       )}
       {(showTopEdge || showLeftEdge || showRightEdge || showBottomEdge) && (
         <div
           className={clsx(
-            "col-start-2 row-start-2 h-2 w-2 self-center bg-inactive-node",
+            "bg-slate-700 col-start-2 row-start-2 h-2 w-2 self-center",
             (topEdgeIsActive ||
               leftEdgeIsActive ||
               rightEdgeIsActive ||
               bottomEdgeIsActive) &&
-              "bg-primary-dark",
+              "bg-green-600",
           )}
         ></div>
       )}
       {showRightEdge && (
         <div
           className={clsx(
-            "col-start-3 row-start-2 h-2 self-center bg-inactive-node",
-            rightEdgeIsActive && "bg-primary-dark",
+            "col-start-3 row-start-2 h-2 self-center bg-slate-700",
+            rightEdgeIsActive && "bg-green-600",
           )}
         ></div>
       )}
       {showBottomEdge && (
         <div
           className={clsx(
-            "col-start-2 row-start-3 h-8 w-2 justify-self-center bg-inactive-node",
-            bottomEdgeIsActive && "bg-primary-dark",
+            "col-start-2 row-start-3 h-8 w-2 justify-self-center bg-slate-700",
+            bottomEdgeIsActive && "bg-green-600",
           )}
         ></div>
       )}

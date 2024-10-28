@@ -9,6 +9,8 @@ import {
 } from "@/lib/player";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
+import Slider from "./Slider";
+import CollapsibleCard from "./CollapsibleCard";
 
 export default function PlayerEditor() {
   const t = useTranslations("PlayerInfo");
@@ -35,49 +37,49 @@ export default function PlayerEditor() {
   ];
 
   return (
-    <div className="mx-auto max-w-md space-y-4 rounded-lg p-6 shadow-md">
-      <div>
-        <label className="mb-2 block text-sm font-bold">{t("height")}</label>
-        <input
-          type="number"
-          value={player.height}
-          onChange={(e) =>
-            setPlayer(updatePlayerHeight(player, parseInt(e.target.value)))
-          }
-          className="w-full rounded-md border bg-background px-3 py-2"
-          min={0}
-        />
-      </div>
-
-      <div>
-        <label className="mb-2 block text-sm font-bold">{t("weight")}</label>
-        <input
-          type="number"
-          value={player.weight}
-          onChange={(e) =>
-            setPlayer(updatePlayerWeight(player, parseInt(e.target.value)))
-          }
-          className="w-full rounded-md border bg-background px-3 py-2"
-          min={0}
-        />
-      </div>
-
-      <div>
-        <label className="mb-2 block text-sm font-bold">{t("position")}</label>
-        <select
-          value={player.position}
-          onChange={(e) =>
-            setPlayer(updatePlayerPosition(player, e.target.value as Position))
-          }
-          className="w-full rounded-md border bg-background px-3 py-2"
-        >
-          {positions.map((pos) => (
-            <option key={pos} value={pos}>
-              {pos}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
+    <>
+      <CollapsibleCard heading={t("editPlayerInfo")} maxHeight={400}>
+        <div className="flex flex-col gap-4">
+          <Slider
+            headline={t("height")}
+            value={player.height}
+            minValue={160}
+            maxValue={195}
+            markedValues={[163, 168, 173, 178, 183, 188, 193]}
+            updateValue={(value) =>
+              setPlayer(updatePlayerHeight(player, value))
+            }
+          />
+          <Slider
+            headline={t("weight")}
+            value={player.weight}
+            minValue={45}
+            maxValue={115}
+            markedValues={[55, 69, 80, 91]}
+            updateValue={(value) =>
+              setPlayer(updatePlayerWeight(player, value))
+            }
+          />
+          <div className="flex flex-col gap-2">
+            <label className="block">{t("position")}</label>
+            <select
+              value={player.position}
+              onChange={(e) =>
+                setPlayer(
+                  updatePlayerPosition(player, e.target.value as Position),
+                )
+              }
+              className="border-slate-500 bg-slate-900 w-full rounded-md border px-3 py-2 focus:outline-none"
+            >
+              {positions.map((pos) => (
+                <option key={pos} value={pos}>
+                  {t(pos)}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </CollapsibleCard>
+    </>
   );
 }

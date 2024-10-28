@@ -30,13 +30,13 @@ export default function AttributeNode({
 
   return (
     <div
-      className="items-between z-10 mx-4 flex h-full flex-col"
+      className="items-between z-10 flex h-full flex-col"
       style={{ gridColumnStart: node.column + 1 }}
     >
       <button
         className={clsx(
           "relative rounded-lg p-4",
-          node.isActive ? "bg-primary-dark" : "bg-inactive-node",
+          node.isActive ? "bg-green-600" : "bg-slate-700",
         )}
         onClick={() => toggleNode(forestName, treeIndex, nodeId)}
         disabled={branchCost > player.availableSkillPoints}
@@ -45,10 +45,11 @@ export default function AttributeNode({
           {node.actions.map((action) => (
             <li
               key={action.attribute}
+              className="text-nowrap"
             >{`${t(`${action.attribute}.short`)} +${action.value}`}</li>
           ))}
         </ul>
-        <Badge>{node.activationCost}</Badge>
+        <Badge active={node.isActive}>{node.activationCost}</Badge>
       </button>
     </div>
   );

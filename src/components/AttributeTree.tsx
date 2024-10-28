@@ -36,7 +36,7 @@ export default function AttributeTree({
             />
           )}
           <div
-            className="grid"
+            className="grid gap-x-6"
             style={{
               gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))`,
             }}

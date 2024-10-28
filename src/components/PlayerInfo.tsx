@@ -1,14 +1,15 @@
 "use client";
 
 import {
+  mainAttributesAtom,
   accelerationRateAtom as playerAccelerationRateAtom,
   playerAtom,
-  mainAttributesAtom,
 } from "@/atoms/player";
 import { useAtomValue } from "jotai";
-import { Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import AttributeDetail from "./AttributeDetail";
+import CollapsibleCard from "./CollapsibleCard";
+import StarRating from "./StarRating";
 
 export default function PlayerInfo() {
   const t = useTranslations("PlayerInfo");
@@ -18,35 +19,37 @@ export default function PlayerInfo() {
 
   return (
     <>
-      <h2 className="mt-16 text-center text-3xl font-bold uppercase">
-        {t("playerInfo")}
-      </h2>
-      <div className="mb-8 flex flex-col gap-4 p-4">
-        <div className="rounded-lg bg-node-locked p-4">
-          <div>{`Skill Points: ${player.availableSkillPoints}`}</div>
-          <div>{`${t("position")}: ${player.position}`}</div>
-          <div>{`${t("height")}: ${player.height}`}</div>
-          <div>{`${t("weight")}: ${player.weight}`}</div>
-          <div>{`${t("accelerate")}: ${accelerationRate}`}</div>
-          <div className="flex gap-2">
-            <span>{`${t("weakFoot")}: `}</span>
-            <div className="flex">
-              {/* TODO: extract a StarRating component */}
-              {Array.from({ length: player.weakFoot }, (_, i) => (
-                <Star key={i} size={24} fill="yellow" strokeWidth={0} />
-              ))}
-            </div>
+      <div className="flex flex-col gap-4">
+        <CollapsibleCard heading={t("playerInfo")} maxHeight={250}>
+          <div>
+            <span className="font-bold">{`${t("position")}: `}</span>
+            <span>{`${t(player.position)}`}</span>
           </div>
           <div className="flex gap-2">
-            <span>{`${t("skillMoves")}: `}</span>
-            <div className="flex">
-              {/* TODO: use the StarRating component */}
-              {Array.from({ length: player.skillMoves }, (_, i) => (
-                <Star key={i} size={24} fill="yellow" strokeWidth={0} />
-              ))}
-            </div>
+            <span className="font-bold">{`${t("skillPoints")}: `}</span>
+            <span>{`${player.availableSkillPoints}`}</span>
           </div>
-        </div>
+          <div className="flex gap-2">
+            <span className="font-bold">{`${t("height")}: `}</span>
+            <span>{`${player.height}cm`}</span>
+          </div>
+          <div className="flex gap-2">
+            <span className="font-bold">{`${t("weight")}: `}</span>
+            <span>{`${player.weight}kg`}</span>
+          </div>
+          <div className="flex gap-2">
+            <span className="font-bold">{`${t("accelerate")}: `}</span>
+            <span>{`${t(accelerationRate)}`}</span>
+          </div>
+          <div className="flex gap-2">
+            <span className="font-bold">{`${t("weakFoot")}: `}</span>
+            <StarRating starsCount={player.weakFoot} maxStarsCount={5} />
+          </div>
+          <div className="flex gap-2">
+            <span className="font-bold">{`${t("skillMoves")}: `}</span>
+            <StarRating starsCount={player.skillMoves} maxStarsCount={5} />
+          </div>
+        </CollapsibleCard>
         <AttributeDetail attributes={mainAttributes} />
       </div>
     </>

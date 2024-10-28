@@ -1,5 +1,6 @@
 {
   "Attributes": {
+    "attributes": "Attributi",
     "pace": {
       "long": "Velocità",
       "short": "Velocità"
@@ -169,16 +170,39 @@
       "short": "Mosse Abilità"
     }
   },
-  "AttributeEditor": {
-    "attributes": "Attributi"
-  },
   "PlayerInfo": {
     "playerInfo": "Info Giocatore",
+    "editPlayerInfo": "Modifica info giocatore",
     "position": "Posizione",
     "height": "Altezza",
     "weight": "Peso",
     "accelerate": "AcceleRATE",
     "weakFoot": "Piede Debole",
-    "skillMoves": "Abilità"
+    "skillMoves": "Abilità",
+    "skillPoints": "Punti abilità",
+    "GK": "POR",
+    "CB": "DC",
+    "LB": "TS",
+    "RB": "TD",
+    "LWB": "ASA",
+    "RWB": "ADA",
+    "CDM": "CDC",
+    "CM": "CC",
+    "CAM": "COC",
+    "LM": "ES",
+    "RM": "ED",
+    "LW": "AS",
+    "RW": "AD",
+    "CF": "AT",
+    "LF": "ATS",
+    "RF": "ATD",
+    "ST": "ATT",
+    "Explosive": "Esplosiva (pura)",
+    "Mostly Explosive": "Più esplosiva",
+    "Controlled Explosive": "Esplosiva controllata",
+    "Controlled": "Controllata",
+    "Controlled Lengthy": "Prolungata controllata",
+    "Mostly Lengthy": "Più prolungata",
+    "Lengthy": "Prolungata (pura)"
   }
 }

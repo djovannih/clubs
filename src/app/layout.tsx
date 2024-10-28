@@ -31,7 +31,7 @@ export default async function RootLayout({
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body>
+      <body className="bg-gray-950 text-slate-200">
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,5 +1,6 @@
 {
   "Attributes": {
+    "attributes": "Attributes",
     "pace": {
       "long": "Pace",
       "short": "Pace"
@@ -169,16 +170,39 @@
       "short": "Skill Moves"
     }
   },
-  "AttributeEditor": {
-    "attributes": "Attributes"
-  },
   "PlayerInfo": {
     "playerInfo": "Player info",
+    "editPlayerInfo": "Edit Player Info",
     "position": "Position",
     "height": "Height",
     "weight": "Weight",
     "accelerate": "AcceleRATE",
     "weakFoot": "Weak foot",
-    "skillMoves": "Skill moves"
+    "skillMoves": "Skill moves",
+    "skillPoints": "Skill points",
+    "GK": "GK",
+    "CB": "CB",
+    "LB": "LB",
+    "RB": "RB",
+    "LWB": "LWB",
+    "RWB": "RWB",
+    "CDM": "CDM",
+    "CM": "CM",
+    "CAM": "CAM",
+    "LM": "LM",
+    "RM": "RM",
+    "LW": "LW",
+    "RW": "RW",
+    "CF": "CF",
+    "LF": "LF",
+    "RF": "RF",
+    "ST": "ST",
+    "Explosive": "Explosive (Pure)",
+    "Mostly Explosive": "Mostly Explosive",
+    "Controlled Explosive": "Controlled Explosive",
+    "Controlled": "Controlled",
+    "Controlled Lengthy": "Controlled Lengthy",
+    "Mostly Lengthy": "Mostly Lengthy",
+    "Lengthy": "Lengthy (Pure)"
   }
 }
