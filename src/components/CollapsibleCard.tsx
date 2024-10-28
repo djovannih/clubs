@@ -14,15 +14,15 @@ export default function CollapsibleCard({
   const [collapseCard, setCollapseCard] = useState(false);
 
   return (
-    <div className="flex flex-col rounded-lg bg-slate-800">
+    <div className="flex flex-col rounded-lg bg-slate-800 lg:basis-1/3">
       <button
-        className="flex items-center justify-between px-4 py-2"
+        className="lg:disabled flex items-center justify-between px-4 py-2"
         onClick={() => setCollapseCard(!collapseCard)}
       >
         <h2 className="text-xl font-bold">{heading}</h2>
         <ChevronDown
           className={clsx(
-            "transition-transform duration-300",
+            "transition-transform duration-300 lg:hidden",
             collapseCard ? "rotate-0" : "rotate-180",
           )}
         />

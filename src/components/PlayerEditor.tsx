@@ -1,5 +1,3 @@
-"use client";
-
 import { playerAtom } from "@/atoms/player";
 import {
   updatePlayerHeight,

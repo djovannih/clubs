@@ -22,7 +22,7 @@ export default function AttributeEditor() {
             key={name}
             onClick={() => setActiveForestName(name)}
             className={clsx(
-              "grow basis-1/3 border border-slate-800 p-2",
+              "grow basis-1/3 lg:basis-0 border border-slate-800 p-2",
               name === activeForestName ? "bg-sky-700" : "bg-slate-900",
             )}
           >

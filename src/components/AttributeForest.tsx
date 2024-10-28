@@ -34,12 +34,14 @@ export default function AttributeForest({ forestName }: AttributeForestProps) {
           >{`${t(`${forestName}.short`)}${forest.length <= 1 ? "" : ` ${i + 1}`}`}</button>
         ))}
       </div>
-      <AttributeTree
-        key={forestName}
-        forestName={forestName}
-        treeIndex={activeTreeIndex}
-      />
-      <AttributeDetail attributes={categoryAttributes.get(forestName)!} />
+      <div className="flex flex-col gap-8 lg:flex-row">
+        <AttributeTree
+          key={forestName}
+          forestName={forestName}
+          treeIndex={activeTreeIndex}
+        />
+        <AttributeDetail attributes={categoryAttributes.get(forestName)!} />
+      </div>
       <button
         className="mx-auto w-fit rounded-lg bg-red-900 p-4"
         onClick={() => {

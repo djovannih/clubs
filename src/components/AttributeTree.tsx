@@ -25,7 +25,7 @@ export default function AttributeTree({
     ) + 1;
 
   return (
-    <div>
+    <div className="lg:basis-2/3 lg:mx-auto">
       {Array.from(rows.entries()).map(([rowIndex, row]) => (
         <div key={rowIndex}>
           {rowIndex > 0 && (
