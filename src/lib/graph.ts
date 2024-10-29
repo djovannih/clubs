@@ -92,7 +92,7 @@ const deactivateNode = (
     if (childNode.isActive && !hasActiveParent)
       deactivateNode(childNode, graph, toggledNodes);
   });
-  
+
   return {
     updatedTree: graph,
     toggledNodes,

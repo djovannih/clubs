@@ -1,18 +1,22 @@
+import { forestsAtom, toggleNodeAtom } from "@/atoms/forest";
 import { playerAtom } from "@/atoms/player";
+import { reapplyActivatedNodes, resetAttributeTrees } from "@/atoms/utils";
+import CollapsibleCard from "@/components/CollapsibleCard";
 import {
   updatePlayerHeight,
   updatePlayerPosition,
   updatePlayerWeight,
   type Position,
 } from "@/lib/player";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import Slider from "./Slider";
-import CollapsibleCard from "./CollapsibleCard";
 
 export default function PlayerEditor() {
   const t = useTranslations("PlayerInfo");
   const [player, setPlayer] = useAtom(playerAtom);
+  const forests = useAtomValue(forestsAtom);
+  const toggleNode = useSetAtom(toggleNodeAtom);
 
   const positions: Position[] = [
     "GK",
@@ -64,11 +68,14 @@ export default function PlayerEditor() {
             <label className="block">{t("position")}</label>
             <select
               value={player.position}
-              onChange={(e) =>
+              onChange={(e) => {
+                const funcs = reapplyActivatedNodes(forests, toggleNode);
+                resetAttributeTrees(forests, toggleNode);
                 setPlayer(
                   updatePlayerPosition(player, e.target.value as Position),
-                )
-              }
+                );
+                funcs.forEach((func) => func());
+              }}
               className="w-full rounded-md border border-slate-500 bg-slate-900 px-3 py-2 focus:outline-none"
             >
               {positions.map((pos) => (

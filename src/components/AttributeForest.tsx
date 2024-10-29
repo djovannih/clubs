@@ -7,6 +7,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import AttributeDetail from "./AttributeDetail";
+import { resetAttributeTrees } from "@/atoms/utils";
 
 interface AttributeForestProps {
   forestName: MainAttributeName;
@@ -44,16 +45,7 @@ export default function AttributeForest({ forestName }: AttributeForestProps) {
       </div>
       <button
         className="mx-auto w-fit rounded-lg bg-red-900 p-4"
-        onClick={() => {
-          forests.entries().forEach(([forName, forest]) =>
-            forest.forEach((tree, treeIdx) =>
-              tree.forEach((node) => {
-                if (node.parentIds.length === 0 && node.isActive)
-                  toggleNode(forName, treeIdx, node.id);
-              }),
-            ),
-          );
-        }}
+        onClick={() => resetAttributeTrees(forests, toggleNode)}
       >
         {t("resetAttributes")}
       </button>
