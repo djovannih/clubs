@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  mainAttributesAtom,
-  accelerationRateAtom as playerAccelerationRateAtom,
-  playerAtom,
-} from "@/atoms/player";
+import { playerAtom } from "@/atoms/player";
 import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import AttributeDetail from "./AttributeDetail";
@@ -15,8 +11,9 @@ import PlayerEditor from "./PlayerEditor";
 export default function PlayerInfo() {
   const t = useTranslations("PlayerInfo");
   const player = useAtomValue(playerAtom);
-  const mainAttributes = useAtomValue(mainAttributesAtom);
-  const accelerationRate = useAtomValue(playerAccelerationRateAtom);
+  const weakFoot = useAtomValue(player.weakFoot);
+  const skillMoves = useAtomValue(player.skillMoves);
+  const accelerationRate = useAtomValue(player.accelerationRate);
 
   return (
     <>
@@ -44,11 +41,11 @@ export default function PlayerInfo() {
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("weakFoot")}: `}</span>
-            <StarRating starsCount={player.weakFoot} maxStarsCount={5} />
+            <StarRating starsCount={weakFoot} maxStarsCount={5} />
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("skillMoves")}: `}</span>
-            <StarRating starsCount={player.skillMoves} maxStarsCount={5} />
+            <StarRating starsCount={skillMoves} maxStarsCount={5} />
           </div>
         </CollapsibleCard>
         <AttributeDetail attributes={mainAttributes} />

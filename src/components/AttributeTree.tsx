@@ -14,7 +14,7 @@ export default function AttributeTree({
   forestName,
   treeIndex,
 }: AttributeTreeProps) {
-  const forest = useAtomValue(forestsAtom).get(forestName)!;
+  const forest = useAtomValue(useAtomValue(forestsAtom).get(forestName)!);
   const tree = forest.at(treeIndex)!;
 
   const rows = groupByRow(tree);
@@ -25,7 +25,7 @@ export default function AttributeTree({
     ) + 1;
 
   return (
-    <div className="lg:basis-2/3 lg:mx-auto">
+    <div className="lg:mx-auto lg:basis-2/3">
       {Array.from(rows.entries()).map(([rowIndex, row]) => (
         <div key={rowIndex}>
           {rowIndex > 0 && (

@@ -30,7 +30,7 @@ export const defendingTrees = [
       column: 0,
       actions: [
         { attribute: "interceptions", value: 2 },
-        { attribute: "defensiveAwareness", value: 1 },
+        { attribute: "defAwareness", value: 1 },
       ],
     },
     {
@@ -39,7 +39,7 @@ export const defendingTrees = [
       row: 1,
       column: 1,
       actions: [
-        { attribute: "defensiveAwareness", value: 1 },
+        { attribute: "defAwareness", value: 1 },
         { attribute: "slidingTackle", value: 2 },
       ],
     },
@@ -49,7 +49,7 @@ export const defendingTrees = [
       row: 1,
       column: 2,
       actions: [
-        { attribute: "defensiveAwareness", value: 1 },
+        { attribute: "defAwareness", value: 1 },
         { attribute: "standingTackle", value: 2 },
       ],
     },
@@ -81,7 +81,7 @@ export const defendingTrees = [
       column: 0,
       actions: [
         { attribute: "interceptions", value: 3 },
-        { attribute: "defensiveAwareness", value: 1 },
+        { attribute: "defAwareness", value: 1 },
       ],
     },
     {
@@ -90,7 +90,7 @@ export const defendingTrees = [
       row: 3,
       column: 1,
       actions: [
-        { attribute: "defensiveAwareness", value: 1 },
+        { attribute: "defAwareness", value: 1 },
         { attribute: "slidingTackle", value: 2 },
       ],
     },
@@ -100,7 +100,7 @@ export const defendingTrees = [
       row: 3,
       column: 2,
       actions: [
-        { attribute: "defensiveAwareness", value: 1 },
+        { attribute: "defAwareness", value: 1 },
         { attribute: "standingTackle", value: 2 },
       ],
     },
@@ -111,7 +111,7 @@ export const defendingTrees = [
       column: 0,
       actions: [
         { attribute: "interceptions", value: 3 },
-        { attribute: "defensiveAwareness", value: 2 },
+        { attribute: "defAwareness", value: 2 },
       ],
     },
     {
@@ -120,7 +120,7 @@ export const defendingTrees = [
       row: 4,
       column: 1,
       actions: [
-        { attribute: "defensiveAwareness", value: 2 },
+        { attribute: "defAwareness", value: 2 },
         { attribute: "slidingTackle", value: 3 },
       ],
     },
@@ -130,7 +130,7 @@ export const defendingTrees = [
       row: 4,
       column: 2,
       actions: [
-        { attribute: "defensiveAwareness", value: 3 },
+        { attribute: "defAwareness", value: 3 },
         { attribute: "standingTackle", value: 3 },
       ],
     },
@@ -141,7 +141,7 @@ export const defendingTrees = [
       column: 0,
       actions: [
         { attribute: "interceptions", value: 3 },
-        { attribute: "defensiveAwareness", value: 1 },
+        { attribute: "defAwareness", value: 1 },
       ],
     },
     {

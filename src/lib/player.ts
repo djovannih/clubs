@@ -60,7 +60,7 @@ export type AttributeName =
   | "composure"
   | "interceptions"
   | "headingAccuracy"
-  | "defensiveAwareness"
+  | "defAwareness"
   | "standingTackle"
   | "slidingTackle"
   | "jumping"
@@ -71,7 +71,9 @@ export type AttributeName =
   | "gkHandling"
   | "gkKicking"
   | "gkPositioning"
-  | "gkReflexes";
+  | "gkReflexes"
+  | "weakFoot"
+  | "skillMoves";
 
 export type PlayerAttribute = {
   value: number;
@@ -160,7 +162,7 @@ const getHeightUpdateAttributeActions = (
       { attribute: "acceleration", value: -1 },
       { attribute: "longPassing", value: 1 },
       { attribute: "balance", value: -1 },
-      { attribute: "defensiveAwareness", value: 1 },
+      { attribute: "defAwareness", value: 1 },
       { attribute: "standingTackle", value: -1 },
       { attribute: "slidingTackle", value: -1 },
       { attribute: "jumping", value: 1 },
@@ -183,7 +185,7 @@ const getHeightUpdateAttributeActions = (
       { attribute: "balance", value: -2 },
       { attribute: "ballControl", value: -1 },
       { attribute: "dribbling", value: -1 },
-      { attribute: "defensiveAwareness", value: -2 },
+      { attribute: "defAwareness", value: -2 },
       { attribute: "standingTackle", value: -2 },
       { attribute: "slidingTackle", value: -2 },
       { attribute: "jumping", value: 2 },
@@ -208,7 +210,7 @@ const getHeightUpdateAttributeActions = (
       { attribute: "balance", value: -3 },
       { attribute: "ballControl", value: -1 },
       { attribute: "dribbling", value: -2 },
-      { attribute: "defensiveAwareness", value: -3 },
+      { attribute: "defAwareness", value: -3 },
       { attribute: "standingTackle", value: -3 },
       { attribute: "slidingTackle", value: -3 },
       { attribute: "jumping", value: 3 },
@@ -234,7 +236,7 @@ const getHeightUpdateAttributeActions = (
       { attribute: "balance", value: -4 },
       { attribute: "ballControl", value: -2 },
       { attribute: "dribbling", value: -3 },
-      { attribute: "defensiveAwareness", value: -4 },
+      { attribute: "defAwareness", value: -4 },
       { attribute: "standingTackle", value: -4 },
       { attribute: "slidingTackle", value: -4 },
       { attribute: "jumping", value: 4 },
@@ -261,7 +263,7 @@ const getHeightUpdateAttributeActions = (
       { attribute: "balance", value: -5 },
       { attribute: "ballControl", value: -2 },
       { attribute: "dribbling", value: -4 },
-      { attribute: "defensiveAwareness", value: -5 },
+      { attribute: "defAwareness", value: -5 },
       { attribute: "standingTackle", value: -5 },
       { attribute: "slidingTackle", value: -5 },
       { attribute: "jumping", value: 5 },
@@ -290,7 +292,7 @@ const getHeightUpdateAttributeActions = (
       { attribute: "balance", value: -6 },
       { attribute: "ballControl", value: -3 },
       { attribute: "dribbling", value: -6 },
-      { attribute: "defensiveAwareness", value: -6 },
+      { attribute: "defAwareness", value: -6 },
       { attribute: "standingTackle", value: -6 },
       { attribute: "slidingTackle", value: -6 },
       { attribute: "jumping", value: 3 },
@@ -319,7 +321,7 @@ const getHeightUpdateAttributeActions = (
     { attribute: "balance", value: -7 },
     { attribute: "ballControl", value: -4 },
     { attribute: "dribbling", value: -9 },
-    { attribute: "defensiveAwareness", value: -7 },
+    { attribute: "defAwareness", value: -7 },
     { attribute: "standingTackle", value: -7 },
     { attribute: "slidingTackle", value: -7 },
     { attribute: "stamina", value: -3 },
@@ -463,7 +465,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 20, maxValue: 99 }],
           ["dribbling", { value: 15, maxValue: 99 }],
           ["interceptions", { value: 20, maxValue: 99 }],
-          ["defensiveAwareness", { value: 20, maxValue: 99 }],
+          ["defAwareness", { value: 20, maxValue: 99 }],
           ["standingTackle", { value: 20, maxValue: 99 }],
           ["slidingTackle", { value: 20, maxValue: 99 }],
           ["jumping", { value: 64, maxValue: 99 }],
@@ -504,7 +506,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 73, maxValue: 99 }],
           ["dribbling", { value: 69, maxValue: 99 }],
           ["interceptions", { value: 84, maxValue: 99 }],
-          ["defensiveAwareness", { value: 82, maxValue: 99 }],
+          ["defAwareness", { value: 82, maxValue: 99 }],
           ["standingTackle", { value: 79, maxValue: 99 }],
           ["slidingTackle", { value: 81, maxValue: 99 }],
           ["jumping", { value: 79, maxValue: 99 }],
@@ -546,7 +548,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 76, maxValue: 99 }],
           ["dribbling", { value: 74, maxValue: 99 }],
           ["interceptions", { value: 82, maxValue: 99 }],
-          ["defensiveAwareness", { value: 81, maxValue: 99 }],
+          ["defAwareness", { value: 81, maxValue: 99 }],
           ["standingTackle", { value: 75, maxValue: 99 }],
           ["slidingTackle", { value: 79, maxValue: 99 }],
           ["jumping", { value: 75, maxValue: 99 }],
@@ -588,7 +590,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 78, maxValue: 99 }],
           ["dribbling", { value: 76, maxValue: 99 }],
           ["interceptions", { value: 78, maxValue: 99 }],
-          ["defensiveAwareness", { value: 79, maxValue: 99 }],
+          ["defAwareness", { value: 79, maxValue: 99 }],
           ["standingTackle", { value: 73, maxValue: 99 }],
           ["slidingTackle", { value: 77, maxValue: 99 }],
           ["jumping", { value: 70, maxValue: 99 }],
@@ -629,7 +631,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 75, maxValue: 99 }],
           ["dribbling", { value: 74, maxValue: 99 }],
           ["interceptions", { value: 84, maxValue: 99 }],
-          ["defensiveAwareness", { value: 81, maxValue: 99 }],
+          ["defAwareness", { value: 81, maxValue: 99 }],
           ["standingTackle", { value: 76, maxValue: 99 }],
           ["slidingTackle", { value: 75, maxValue: 99 }],
           ["jumping", { value: 76, maxValue: 99 }],
@@ -670,7 +672,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 81, maxValue: 99 }],
           ["dribbling", { value: 80, maxValue: 99 }],
           ["interceptions", { value: 80, maxValue: 99 }],
-          ["defensiveAwareness", { value: 74, maxValue: 99 }],
+          ["defAwareness", { value: 74, maxValue: 99 }],
           ["standingTackle", { value: 69, maxValue: 99 }],
           ["slidingTackle", { value: 70, maxValue: 99 }],
           ["jumping", { value: 71, maxValue: 99 }],
@@ -712,7 +714,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 81, maxValue: 99 }],
           ["dribbling", { value: 82, maxValue: 99 }],
           ["interceptions", { value: 64, maxValue: 99 }],
-          ["defensiveAwareness", { value: 65, maxValue: 99 }],
+          ["defAwareness", { value: 65, maxValue: 99 }],
           ["standingTackle", { value: 62, maxValue: 99 }],
           ["slidingTackle", { value: 59, maxValue: 99 }],
           ["jumping", { value: 69, maxValue: 99 }],
@@ -753,7 +755,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 84, maxValue: 99 }],
           ["dribbling", { value: 83, maxValue: 99 }],
           ["interceptions", { value: 64, maxValue: 99 }],
-          ["defensiveAwareness", { value: 65, maxValue: 99 }],
+          ["defAwareness", { value: 65, maxValue: 99 }],
           ["standingTackle", { value: 63, maxValue: 99 }],
           ["slidingTackle", { value: 61, maxValue: 99 }],
           ["jumping", { value: 66, maxValue: 99 }],
@@ -795,7 +797,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 82, maxValue: 99 }],
           ["dribbling", { value: 85, maxValue: 99 }],
           ["interceptions", { value: 64, maxValue: 99 }],
-          ["defensiveAwareness", { value: 52, maxValue: 99 }],
+          ["defAwareness", { value: 52, maxValue: 99 }],
           ["standingTackle", { value: 60, maxValue: 99 }],
           ["slidingTackle", { value: 56, maxValue: 99 }],
           ["jumping", { value: 67, maxValue: 99 }],
@@ -838,7 +840,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 80, maxValue: 99 }],
           ["dribbling", { value: 84, maxValue: 99 }],
           ["interceptions", { value: 60, maxValue: 99 }],
-          ["defensiveAwareness", { value: 50, maxValue: 99 }],
+          ["defAwareness", { value: 50, maxValue: 99 }],
           ["standingTackle", { value: 71, maxValue: 99 }],
           ["slidingTackle", { value: 59, maxValue: 99 }],
           ["jumping", { value: 73, maxValue: 99 }],
@@ -879,7 +881,7 @@ const getPlayerByPosition = (player: Player, position: Position): Player => {
           ["ballControl", { value: 80, maxValue: 99 }],
           ["dribbling", { value: 81, maxValue: 99 }],
           ["interceptions", { value: 60, maxValue: 99 }],
-          ["defensiveAwareness", { value: 50, maxValue: 99 }],
+          ["defAwareness", { value: 50, maxValue: 99 }],
           ["standingTackle", { value: 52, maxValue: 99 }],
           ["slidingTackle", { value: 59, maxValue: 99 }],
           ["jumping", { value: 70, maxValue: 99 }],
@@ -909,11 +911,12 @@ export const updatePlayerPosition = (
     player.weight,
   );
 
-export const getAccelerationRate = (player: Player): AccelerationRate => {
-  const height = player.height;
-  const agility = player.attributes.get("agility")!.value;
-  const strength = player.attributes.get("strength")!.value;
-  const acceleration = player.attributes.get("acceleration")!.value;
+export const getAccelerationRate = (
+  height: number,
+  agility: number,
+  strength: number,
+  acceleration: number,
+): AccelerationRate => {
   const agilityVsStrengthDifference = agility - strength;
 
   if (
@@ -1016,7 +1019,7 @@ export const getAccelerationRate = (player: Player): AccelerationRate => {
 //       new Map([
 //         ["interceptions", attributes.get("interceptions")!],
 //         ["headingAccuracy", attributes.get("headingAccuracy")!],
-//         ["defensiveAwareness", attributes.get("defensiveAwareness")!],
+//         ["defAwareness", attributes.get("defAwareness")!],
 //         ["standingTackle", attributes.get("standingTackle")!],
 //         ["slidingTackle", attributes.get("slidingTackle")!],
 //       ]),
@@ -1092,7 +1095,7 @@ export const getCategoryAttributes = (
       "defending",
       new Map([
         ["interceptions", attributes.get("interceptions")!],
-        ["defensiveAwareness", attributes.get("defensiveAwareness")!],
+        ["defAwareness", attributes.get("defAwareness")!],
         ["standingTackle", attributes.get("standingTackle")!],
         ["slidingTackle", attributes.get("slidingTackle")!],
       ]),

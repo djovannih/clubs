@@ -114,7 +114,7 @@
       "long": "Heading Accuracy",
       "short": "Head."
     },
-    "defensiveAwareness": {
+    "defAwareness": {
       "long": "Defensive Awareness",
       "short": "Def. Awareness"
     },

@@ -114,7 +114,7 @@
       "long": "Precisione Colpi di Testa",
       "short": "Colpo Testa"
     },
-    "defensiveAwareness": {
+    "defAwareness": {
       "long": "Lettura Difensiva",
       "short": "Lett. Dif."
     },

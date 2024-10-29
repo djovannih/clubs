@@ -1,63 +1,43 @@
-import type { Graph } from "@/lib/graph";
-import { getCheapestBranch, toggleNode } from "@/lib/graph";
-import { updatePlayer, type MainAttributeName } from "@/lib/player";
-import { atom } from "jotai";
+import { defendingTrees } from "@/forests/defending";
+import { dribblingTrees } from "@/forests/dribbling";
+import { goalkeepingTrees } from "@/forests/goalkeeping";
+import { passingTrees } from "@/forests/passing";
+import { physicalityTrees } from "@/forests/physicality";
+import type { Graph, GraphNode } from "@/lib/graph";
+import { getCheapestBranch } from "@/lib/graph";
+import { type MainAttributeName } from "@/lib/player";
+import { atom, type PrimitiveAtom } from "jotai";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { paceTrees } from "../forests/pace";
 import { shootingTrees } from "../forests/shooting";
-import { playerAtom } from "./player";
-import { passingTrees } from "@/forests/passing";
-import { dribblingTrees } from "@/forests/dribbling";
-import { defendingTrees } from "@/forests/defending";
-import { physicalityTrees } from "@/forests/physicality";
-import { goalkeepingTrees } from "@/forests/goalkeeping";
-import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { jsonStorageOptions } from "./utils";
 
-export const getDefaultForest = () =>
-  new Map<MainAttributeName, Graph[]>([
-    ["pace", paceTrees],
-    ["shooting", shootingTrees],
-    ["passing", passingTrees],
-    ["dribbling", dribblingTrees],
-    ["defending", defendingTrees],
-    ["physicality", physicalityTrees],
-    ["goalkeeping", goalkeepingTrees],
-  ]);
+const toAtom = (forest: Graph[]) =>
+  atom(
+    forest.map((tree) =>
+      atom(new Map(tree.entries().map(([key, value]) => [key, atom(value)]))),
+    ),
+  );
 export const forestsAtom = atomWithStorage(
   "forests",
-  getDefaultForest(),
+  new Map([
+    ["pace" as MainAttributeName, toAtom(paceTrees)],
+    ["shooting" as MainAttributeName, toAtom(shootingTrees)],
+    ["passing" as MainAttributeName, toAtom(passingTrees)],
+    ["dribbling" as MainAttributeName, toAtom(dribblingTrees)],
+    ["defending" as MainAttributeName, toAtom(defendingTrees)],
+    ["physicality" as MainAttributeName, toAtom(physicalityTrees)],
+    ["goalkeeping" as MainAttributeName, toAtom(goalkeepingTrees)],
+  ]),
   createJSONStorage(() => localStorage, jsonStorageOptions),
   // { getOnInit: true },
 );
 
 export const toggleNodeAtom = atom(
   null,
-  (
-    get,
-    set,
-    forestName: MainAttributeName,
-    treeIndex: number,
-    nodeId: string,
-  ) => {
-    const forests = get(forestsAtom);
-    const forest = forests.get(forestName)!;
-    const tree = forest.at(treeIndex)!;
-    const node = tree.get(nodeId)!;
-    const { updatedTree, toggledNodes } = toggleNode(tree, node);
-    const updatedForest = [
-      ...forest.slice(0, treeIndex),
-      updatedTree,
-      ...forest.slice(treeIndex + 1),
-    ];
-    set(forestsAtom, new Map(forests.set(forestName, updatedForest)));
-    set(
-      playerAtom,
-      updatePlayer(
-        get(playerAtom),
-        toggledNodes,
-        node.isActive ? "DEC" : "INC",
-      ),
-    );
+  (get, set, nodeAtom: PrimitiveAtom<GraphNode>) => {
+    const node = get(nodeAtom);
+    set(nodeAtom, { ...node, isActive: !node.isActive });
   },
 );
 
@@ -77,7 +57,7 @@ export const nodeCostsAtom = atom((get) => {
   return new Map(
     Array.from(get(forestsAtom).entries()).map(([forestName, trees]) => [
       forestName,
-      getNodeCosts(trees),
+      getNodeCosts(get(trees)),
     ]),
   );
 });

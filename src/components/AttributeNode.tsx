@@ -17,8 +17,7 @@ export default function AttributeNode({
   nodeId,
 }: AttributeNodeProps) {
   const t = useTranslations("Attributes");
-  const node = useAtomValue(forestsAtom)
-    .get(forestName)!
+  const node = useAtomValue(useAtomValue(forestsAtom).get(forestName)!)
     .at(treeIndex)!
     .get(nodeId)!;
   const branchCost = useAtomValue(nodeCostsAtom)

@@ -19,7 +19,7 @@ export default function AttributeForest({ forestName }: AttributeForestProps) {
   const [activeTreeIndex, setActiveTreeIndex] = useState(0);
   const categoryAttributes = useAtomValue(categoryAttributesAtom);
   const toggleNode = useSetAtom(toggleNodeAtom);
-  const forest = forests.get(forestName)!;
+  const forest = useAtomValue(forests.get(forestName)!);
 
   return (
     <div className="flex flex-col gap-8">
