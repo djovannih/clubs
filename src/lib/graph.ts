@@ -1,4 +1,4 @@
-import type { AttributeName } from "./player";
+import type { AttributeName } from "@/atoms/player";
 
 export type GraphNode = {
   id: string;
@@ -12,13 +12,6 @@ export type GraphNode = {
 };
 
 export type Graph = Map<string, GraphNode>;
-
-export type Forest = Graph[];
-
-export type ToggleNodeResult = {
-  updatedTree: Graph;
-  cost: number;
-};
 
 type NodeInfo = Omit<GraphNode, "id" | "isActive" | "childrenIds">;
 
@@ -52,70 +45,3 @@ export const createTree = (nodes: NodeInfo[]) =>
   new Map(
     nodes.reduce((tree, node) => addNode(tree, node), new Map()),
   ) as Graph;
-
-export const getCheapestBranch = (
-  startNode: GraphNode,
-  graph: Graph,
-): GraphNode[] => {
-  const getAllBranches = (startNode: GraphNode): GraphNode[][] => {
-    if (startNode.isActive) return [[]];
-    return startNode.parentIds.length === 0
-      ? [[startNode]]
-      : startNode.parentIds
-          .flatMap((parentId) => getAllBranches(graph.get(parentId)!))
-          .map((path) => [startNode, ...path]);
-  };
-
-  const getBranchCost = (nodes: GraphNode[]) =>
-    nodes.reduce((totalCost, node) => totalCost + node.baseActivationCost, 0);
-
-  const allBranches = getAllBranches(startNode);
-  return allBranches.reduce((cheapestBranch, branch) =>
-    getBranchCost(branch) < getBranchCost(cheapestBranch)
-      ? branch
-      : cheapestBranch,
-  );
-};
-
-const deactivateNode = (
-  node: GraphNode,
-  graph: Graph,
-  toggledNodes: GraphNode[] = [],
-) => {
-  graph.set(node.id, { ...graph.get(node.id)!, isActive: false });
-  toggledNodes.push(node);
-  node.childrenIds.forEach((childId) => {
-    const childNode = graph.get(childId)!;
-    const hasActiveParent = childNode.parentIds.some(
-      (parentId) => graph.get(parentId)!.isActive,
-    );
-    if (childNode.isActive && !hasActiveParent)
-      deactivateNode(childNode, graph, toggledNodes);
-  });
-
-  return {
-    updatedTree: graph,
-    toggledNodes,
-  };
-};
-
-const activateNode = (node: GraphNode, graph: Graph) => {
-  const branch = getCheapestBranch(node, graph);
-  const updatedTree = branch.reduce(
-    (tree, { id }) => tree.set(id, { ...tree.get(id)!, isActive: true }),
-    graph,
-  );
-  return {
-    updatedTree: updatedTree,
-    toggledNodes: branch,
-  };
-};
-
-export const toggleNode = (graph: Graph, node: GraphNode) =>
-  node.isActive ? deactivateNode(node, graph) : activateNode(node, graph);
-
-export const groupByRow = (graph: Graph) =>
-  [...graph.values()].reduce(
-    (acc, node) => acc.set(node.row, [...(acc.get(node.row) || []), node]),
-    new Map<number, GraphNode[]>(),
-  );
