@@ -1,6 +1,6 @@
 "use client";
 
-import { forestsAtom } from "@/atoms/forest";
+import { playerAtom } from "@/atoms/player";
 import AttributeForest from "@/components/AttributeForest";
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
@@ -8,21 +8,20 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function AttributeEditor() {
-  const forests = useAtomValue(forestsAtom);
   const t = useTranslations("Attributes");
-  const [activeForestName, setActiveForestName] = useState(
-    forests.keys().next().value!,
-  );
+  const player = useAtomValue(playerAtom);
+  const forestNames = [...player.forests.keys()];
+  const [activeForestName, setActiveForestName] = useState(forestNames.at(0)!);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap justify-between overflow-hidden rounded-lg">
-        {Array.from(forests.keys()).map((name) => (
+        {forestNames.map((name) => (
           <button
             key={name}
             onClick={() => setActiveForestName(name)}
             className={clsx(
-              "grow basis-1/3 lg:basis-0 border border-slate-800 p-2",
+              "grow basis-1/3 border border-slate-800 p-2 lg:basis-0",
               name === activeForestName ? "bg-sky-700" : "bg-slate-900",
             )}
           >
@@ -30,7 +29,11 @@ export default function AttributeEditor() {
           </button>
         ))}
       </div>
-      <AttributeForest key={activeForestName} forestName={activeForestName} />
+      <AttributeForest
+        key={activeForestName}
+        forest={player.forests.get(activeForestName)!}
+        forestName={activeForestName}
+      />
     </div>
   );
 }

@@ -1,13 +1,13 @@
 import { forestsAtom, nodeCostsAtom, toggleNodeAtom } from "@/atoms/forest";
 import { playerAtom } from "@/atoms/player";
 import Badge from "@/components/Badge";
-import type { MainAttributeName } from "@/lib/player";
+import type { AttributeCategoryName } from "@/lib/player";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
 interface AttributeNodeProps {
-  forestName: MainAttributeName;
+  forestName: AttributeCategoryName;
   treeIndex: number;
   nodeId: string;
 }

@@ -7,9 +7,9 @@ export const dribblingTrees = [
       parentIds: [],
       row: 0,
       column: 1,
-      actions: [
-        { attribute: "agility", value: 1 },
-        { attribute: "dribbling", value: 1 },
+      modifiers: [
+        { attributeName: "agility", updateValue: 1 },
+        { attributeName: "dribbling", updateValue: 1 },
       ],
     },
     {
@@ -17,16 +17,16 @@ export const dribblingTrees = [
       parentIds: ["B1"],
       row: 1,
       column: 0,
-      actions: [{ attribute: "agility", value: 1 }],
+      modifiers: [{ attributeName: "agility", updateValue: 1 }],
     },
     {
       activationCost: 3,
       parentIds: ["B1"],
       row: 1,
       column: 1,
-      actions: [
-        { attribute: "agility", value: 2 },
-        { attribute: "dribbling", value: 2 },
+      modifiers: [
+        { attributeName: "agility", updateValue: 2 },
+        { attributeName: "dribbling", updateValue: 2 },
       ],
     },
     {
@@ -34,16 +34,16 @@ export const dribblingTrees = [
       parentIds: ["B1"],
       row: 1,
       column: 2,
-      actions: [{ attribute: "dribbling", value: 1 }],
+      modifiers: [{ attributeName: "dribbling", updateValue: 1 }],
     },
     {
       activationCost: 2,
       parentIds: ["A2", "B2", "C2"],
       row: 2,
       column: 0,
-      actions: [
-        { attribute: "agility", value: 1 },
-        { attribute: "positioning", value: 2 },
+      modifiers: [
+        { attributeName: "agility", updateValue: 1 },
+        { attributeName: "positioning", updateValue: 2 },
       ],
     },
     {
@@ -51,9 +51,9 @@ export const dribblingTrees = [
       parentIds: ["A2", "B2", "C2"],
       row: 2,
       column: 1,
-      actions: [
-        { attribute: "positioning", value: 2 },
-        { attribute: "dribbling", value: 1 },
+      modifiers: [
+        { attributeName: "positioning", updateValue: 2 },
+        { attributeName: "dribbling", updateValue: 1 },
       ],
     },
     {
@@ -61,9 +61,9 @@ export const dribblingTrees = [
       parentIds: ["A2", "B2", "C2"],
       row: 2,
       column: 2,
-      actions: [
-        { attribute: "positioning", value: 2 },
-        { attribute: "dribbling", value: 1 },
+      modifiers: [
+        { attributeName: "positioning", updateValue: 2 },
+        { attributeName: "dribbling", updateValue: 1 },
       ],
     },
     {
@@ -71,37 +71,37 @@ export const dribblingTrees = [
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 0,
-      actions: [{ attribute: "agility", value: 2 }],
+      modifiers: [{ attributeName: "agility", updateValue: 2 }],
     },
     {
       activationCost: 5,
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 1,
-      actions: [{ attribute: "skillMoves", value: 1 }],
+      modifiers: [{ attributeName: "skillMoves", updateValue: 1 }],
     },
     {
       activationCost: 2,
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 2,
-      actions: [{ attribute: "dribbling", value: 2 }],
+      modifiers: [{ attributeName: "dribbling", updateValue: 2 }],
     },
     {
       activationCost: 2,
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 0,
-      actions: [{ attribute: "agility", value: 2 }],
+      modifiers: [{ attributeName: "agility", updateValue: 2 }],
     },
     {
       activationCost: 3,
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 1,
-      actions: [
-        { attribute: "agility", value: 2 },
-        { attribute: "dribbling", value: 2 },
+      modifiers: [
+        { attributeName: "agility", updateValue: 2 },
+        { attributeName: "dribbling", updateValue: 2 },
       ],
     },
     {
@@ -109,16 +109,16 @@ export const dribblingTrees = [
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 2,
-      actions: [{ attribute: "dribbling", value: 2 }],
+      modifiers: [{ attributeName: "dribbling", updateValue: 2 }],
     },
     {
       activationCost: 3,
       parentIds: ["B5"],
       row: 5,
       column: 1,
-      actions: [
-        { attribute: "agility", value: 2 },
-        { attribute: "dribbling", value: 2 },
+      modifiers: [
+        { attributeName: "agility", updateValue: 2 },
+        { attributeName: "dribbling", updateValue: 2 },
       ],
     },
   ]),
@@ -128,9 +128,9 @@ export const dribblingTrees = [
       parentIds: [],
       row: 0,
       column: 1,
-      actions: [
-        { attribute: "balance", value: 1 },
-        { attribute: "ballControl", value: 1 },
+      modifiers: [
+        { attributeName: "balance", updateValue: 1 },
+        { attributeName: "ballControl", updateValue: 1 },
       ],
     },
     {
@@ -138,16 +138,16 @@ export const dribblingTrees = [
       parentIds: ["B1"],
       row: 1,
       column: 0,
-      actions: [{ attribute: "ballControl", value: 1 }],
+      modifiers: [{ attributeName: "ballControl", updateValue: 1 }],
     },
     {
       activationCost: 3,
       parentIds: ["B1"],
       row: 1,
       column: 1,
-      actions: [
-        { attribute: "balance", value: 2 },
-        { attribute: "ballControl", value: 2 },
+      modifiers: [
+        { attributeName: "balance", updateValue: 2 },
+        { attributeName: "ballControl", updateValue: 2 },
       ],
     },
     {
@@ -155,16 +155,16 @@ export const dribblingTrees = [
       parentIds: ["B1"],
       row: 1,
       column: 2,
-      actions: [{ attribute: "balance", value: 1 }],
+      modifiers: [{ attributeName: "balance", updateValue: 1 }],
     },
     {
       activationCost: 2,
       parentIds: ["A2", "B2", "C2"],
       row: 2,
       column: 0,
-      actions: [
-        { attribute: "positioning", value: 3 },
-        { attribute: "ballControl", value: 2 },
+      modifiers: [
+        { attributeName: "positioning", updateValue: 3 },
+        { attributeName: "ballControl", updateValue: 2 },
       ],
     },
     {
@@ -172,9 +172,9 @@ export const dribblingTrees = [
       parentIds: ["A2", "B2", "C2"],
       row: 2,
       column: 1,
-      actions: [
-        { attribute: "positioning", value: 2 },
-        { attribute: "ballControl", value: 1 },
+      modifiers: [
+        { attributeName: "positioning", updateValue: 2 },
+        { attributeName: "ballControl", updateValue: 1 },
       ],
     },
     {
@@ -182,9 +182,9 @@ export const dribblingTrees = [
       parentIds: ["A2", "B2", "C2"],
       row: 2,
       column: 2,
-      actions: [
-        { attribute: "balance", value: 2 },
-        { attribute: "positioning", value: 3 },
+      modifiers: [
+        { attributeName: "balance", updateValue: 2 },
+        { attributeName: "positioning", updateValue: 3 },
       ],
     },
     {
@@ -192,37 +192,37 @@ export const dribblingTrees = [
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 0,
-      actions: [{ attribute: "ballControl", value: 2 }],
+      modifiers: [{ attributeName: "ballControl", updateValue: 2 }],
     },
     {
       activationCost: 5,
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 1,
-      actions: [{ attribute: "skillMoves", value: 1 }],
+      modifiers: [{ attributeName: "skillMoves", updateValue: 1 }],
     },
     {
       activationCost: 2,
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 2,
-      actions: [{ attribute: "balance", value: 2 }],
+      modifiers: [{ attributeName: "balance", updateValue: 2 }],
     },
     {
       activationCost: 2,
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 0,
-      actions: [{ attribute: "ballControl", value: 2 }],
+      modifiers: [{ attributeName: "ballControl", updateValue: 2 }],
     },
     {
       activationCost: 3,
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 1,
-      actions: [
-        { attribute: "balance", value: 4 },
-        { attribute: "ballControl", value: 2 },
+      modifiers: [
+        { attributeName: "balance", updateValue: 4 },
+        { attributeName: "ballControl", updateValue: 2 },
       ],
     },
     {
@@ -230,16 +230,16 @@ export const dribblingTrees = [
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 2,
-      actions: [{ attribute: "balance", value: 2 }],
+      modifiers: [{ attributeName: "balance", updateValue: 2 }],
     },
     {
       activationCost: 3,
       parentIds: ["B5"],
       row: 5,
       column: 1,
-      actions: [
-        { attribute: "balance", value: 3 },
-        { attribute: "ballControl", value: 2 },
+      modifiers: [
+        { attributeName: "balance", updateValue: 3 },
+        { attributeName: "ballControl", updateValue: 2 },
       ],
     },
   ]),

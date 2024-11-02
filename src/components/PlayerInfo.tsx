@@ -1,19 +1,21 @@
 "use client";
 
-import { playerAtom } from "@/atoms/player";
+import { playerAtom, playerCategoryAttributesAtom } from "@/atoms/player";
+import AttributeDetail from "@/components/AttributeDetail";
+import CollapsibleCard from "@/components/CollapsibleCard";
+import PlayerEditor from "@/components/PlayerEditor";
+import StarRating from "@/components/StarRating";
 import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-import AttributeDetail from "./AttributeDetail";
-import CollapsibleCard from "./CollapsibleCard";
-import StarRating from "./StarRating";
-import PlayerEditor from "./PlayerEditor";
 
 export default function PlayerInfo() {
   const t = useTranslations("PlayerInfo");
   const player = useAtomValue(playerAtom);
+  const playerPosition = useAtomValue(player.position);
   const weakFoot = useAtomValue(player.weakFoot);
   const skillMoves = useAtomValue(player.skillMoves);
   const accelerationRate = useAtomValue(player.accelerationRate);
+  const playerMainAttributes = useAtomValue(playerCategoryAttributesAtom);
 
   return (
     <>
@@ -21,7 +23,7 @@ export default function PlayerInfo() {
         <CollapsibleCard heading={t("playerInfo")} maxHeight={250}>
           <div>
             <span className="font-bold">{`${t("position")}: `}</span>
-            <span>{`${t(player.position)}`}</span>
+            <span>{`${t(playerPosition)}`}</span>
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("skillPoints")}: `}</span>
@@ -48,7 +50,7 @@ export default function PlayerInfo() {
             <StarRating starsCount={skillMoves} maxStarsCount={5} />
           </div>
         </CollapsibleCard>
-        <AttributeDetail attributes={mainAttributes} />
+        <AttributeDetail attributes={playerMainAttributes} />
         <PlayerEditor />
       </div>
     </>

@@ -1,4 +1,4 @@
-import type { UpdateAttributeAction } from "./player";
+import type { AttributeName } from "./player";
 
 export type GraphNode = {
   id: string;
@@ -8,7 +8,7 @@ export type GraphNode = {
   childrenIds: string[];
   row: number;
   column: number;
-  actions: UpdateAttributeAction[];
+  modifiers: Map<AttributeName, number>;
 };
 
 export type Graph = Map<string, GraphNode>;
@@ -29,7 +29,7 @@ const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
     column: nodeInfo.column,
     activationCost: nodeInfo.activationCost,
     isActive: false,
-    actions: nodeInfo.actions,
+    modifiers: nodeInfo.modifiers,
     parentIds: nodeInfo.parentIds,
     childrenIds: [],
   };
@@ -115,7 +115,7 @@ export const toggleNode = (graph: Graph, node: GraphNode) =>
   node.isActive ? deactivateNode(node, graph) : activateNode(node, graph);
 
 export const groupByRow = (graph: Graph) =>
-  Array.from(graph.values()).reduce<Map<number, GraphNode[]>>(
+  [...graph.values()].reduce(
     (acc, node) => acc.set(node.row, [...(acc.get(node.row) || []), node]),
-    new Map(),
+    new Map<number, GraphNode[]>(),
   );

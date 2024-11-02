@@ -8,7 +8,7 @@ export const jsonStorageOptions: {
     value instanceof Map
       ? {
           dataType: "Map",
-          value: Array.from(value.entries()),
+          value: [...value.entries()],
         }
       : value,
   reviver: (_, value) =>

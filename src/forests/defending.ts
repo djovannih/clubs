@@ -7,30 +7,30 @@ export const defendingTrees = [
       parentIds: [],
       row: 0,
       column: 0,
-      actions: [{ attribute: "interceptions", value: 2 }],
+      modifiers: [{ attributeName: "interceptions", updateValue: 2 }],
     },
     {
       activationCost: 1,
       parentIds: [],
       row: 0,
       column: 1,
-      actions: [{ attribute: "slidingTackle", value: 2 }],
+      modifiers: [{ attributeName: "slidingTackle", updateValue: 2 }],
     },
     {
       activationCost: 1,
       parentIds: [],
       row: 0,
       column: 2,
-      actions: [{ attribute: "standingTackle", value: 2 }],
+      modifiers: [{ attributeName: "standingTackle", updateValue: 2 }],
     },
     {
       activationCost: 2,
       parentIds: ["A1"],
       row: 1,
       column: 0,
-      actions: [
-        { attribute: "interceptions", value: 2 },
-        { attribute: "defAwareness", value: 1 },
+      modifiers: [
+        { attributeName: "interceptions", updateValue: 2 },
+        { attributeName: "defAwareness", updateValue: 1 },
       ],
     },
     {
@@ -38,9 +38,9 @@ export const defendingTrees = [
       parentIds: ["B1"],
       row: 1,
       column: 1,
-      actions: [
-        { attribute: "defAwareness", value: 1 },
-        { attribute: "slidingTackle", value: 2 },
+      modifiers: [
+        { attributeName: "defAwareness", updateValue: 1 },
+        { attributeName: "slidingTackle", updateValue: 2 },
       ],
     },
     {
@@ -48,9 +48,9 @@ export const defendingTrees = [
       parentIds: ["C1"],
       row: 1,
       column: 2,
-      actions: [
-        { attribute: "defAwareness", value: 1 },
-        { attribute: "standingTackle", value: 2 },
+      modifiers: [
+        { attributeName: "defAwareness", updateValue: 1 },
+        { attributeName: "standingTackle", updateValue: 2 },
       ],
     },
     {
@@ -58,30 +58,30 @@ export const defendingTrees = [
       parentIds: ["A2"],
       row: 2,
       column: 0,
-      actions: [{ attribute: "interceptions", value: 2 }],
+      modifiers: [{ attributeName: "interceptions", updateValue: 2 }],
     },
     {
       activationCost: 2,
       parentIds: ["B2"],
       row: 2,
       column: 1,
-      actions: [{ attribute: "slidingTackle", value: 2 }],
+      modifiers: [{ attributeName: "slidingTackle", updateValue: 2 }],
     },
     {
       activationCost: 2,
       parentIds: ["C2"],
       row: 2,
       column: 2,
-      actions: [{ attribute: "standingTackle", value: 2 }],
+      modifiers: [{ attributeName: "standingTackle", updateValue: 2 }],
     },
     {
       activationCost: 3,
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 0,
-      actions: [
-        { attribute: "interceptions", value: 3 },
-        { attribute: "defAwareness", value: 1 },
+      modifiers: [
+        { attributeName: "interceptions", updateValue: 3 },
+        { attributeName: "defAwareness", updateValue: 1 },
       ],
     },
     {
@@ -89,9 +89,9 @@ export const defendingTrees = [
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 1,
-      actions: [
-        { attribute: "defAwareness", value: 1 },
-        { attribute: "slidingTackle", value: 2 },
+      modifiers: [
+        { attributeName: "defAwareness", updateValue: 1 },
+        { attributeName: "slidingTackle", updateValue: 2 },
       ],
     },
     {
@@ -99,9 +99,9 @@ export const defendingTrees = [
       parentIds: ["A3", "B3", "C3"],
       row: 3,
       column: 2,
-      actions: [
-        { attribute: "defAwareness", value: 1 },
-        { attribute: "standingTackle", value: 2 },
+      modifiers: [
+        { attributeName: "defAwareness", updateValue: 1 },
+        { attributeName: "standingTackle", updateValue: 2 },
       ],
     },
     {
@@ -109,9 +109,9 @@ export const defendingTrees = [
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 0,
-      actions: [
-        { attribute: "interceptions", value: 3 },
-        { attribute: "defAwareness", value: 2 },
+      modifiers: [
+        { attributeName: "interceptions", updateValue: 3 },
+        { attributeName: "defAwareness", updateValue: 2 },
       ],
     },
     {
@@ -119,9 +119,9 @@ export const defendingTrees = [
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 1,
-      actions: [
-        { attribute: "defAwareness", value: 2 },
-        { attribute: "slidingTackle", value: 3 },
+      modifiers: [
+        { attributeName: "defAwareness", updateValue: 2 },
+        { attributeName: "slidingTackle", updateValue: 3 },
       ],
     },
     {
@@ -129,9 +129,9 @@ export const defendingTrees = [
       parentIds: ["A4", "B4", "C4"],
       row: 4,
       column: 2,
-      actions: [
-        { attribute: "defAwareness", value: 3 },
-        { attribute: "standingTackle", value: 3 },
+      modifiers: [
+        { attributeName: "defAwareness", updateValue: 3 },
+        { attributeName: "standingTackle", updateValue: 3 },
       ],
     },
     {
@@ -139,9 +139,9 @@ export const defendingTrees = [
       parentIds: ["A5"],
       row: 5,
       column: 0,
-      actions: [
-        { attribute: "interceptions", value: 3 },
-        { attribute: "defAwareness", value: 1 },
+      modifiers: [
+        { attributeName: "interceptions", updateValue: 3 },
+        { attributeName: "defAwareness", updateValue: 1 },
       ],
     },
     {
@@ -149,9 +149,9 @@ export const defendingTrees = [
       parentIds: ["B5"],
       row: 5,
       column: 1,
-      actions: [
-        { attribute: "slidingTackle", value: 3 },
-        { attribute: "standingTackle", value: 3 },
+      modifiers: [
+        { attributeName: "slidingTackle", updateValue: 3 },
+        { attributeName: "standingTackle", updateValue: 3 },
       ],
     },
   ]),

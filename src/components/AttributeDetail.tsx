@@ -1,14 +1,12 @@
-import type {
-  AttributeName,
-  MainAttributeName,
-  PlayerAttribute,
-} from "@/lib/player";
+import type { PlayerAttributeWithName } from "@/atoms/player";
+import CollapsibleCard from "@/components/CollapsibleCard";
+import ProgressBar from "@/components/ProgressBar";
 import { useTranslations } from "next-intl";
-import CollapsibleCard from "./CollapsibleCard";
 
 interface AttributeDetailprops {
-  attributes: Map<MainAttributeName | AttributeName, PlayerAttribute>;
+  attributes: PlayerAttributeWithName[];
 }
+
 export default function AttributeDetail({ attributes }: AttributeDetailprops) {
   const t = useTranslations("Attributes");
 
@@ -16,21 +14,13 @@ export default function AttributeDetail({ attributes }: AttributeDetailprops) {
     <div className="lg:h-fit lg:basis-1/3">
       <CollapsibleCard heading={t("attributes")} maxHeight={400}>
         <div className="flex flex-col gap-4">
-          {Array.from(attributes.entries()).map(([name, attribute]) => (
-            <div key={name} className="flex flex-col gap-1">
-              <div className="flex justify-between">
-                <span>{t(`${name}.long`)}</span>
-                <span>{attribute.value}</span>
-              </div>
-              <div className="h-2.5 w-full rounded-full bg-slate-900">
-                <div
-                  className="h-2.5 rounded-full bg-sky-700"
-                  style={{
-                    width: `${(attribute.value / attribute.maxValue) * 100}%`,
-                  }}
-                ></div>
-              </div>
-            </div>
+          {attributes.map((attribute) => (
+            <ProgressBar
+              key={attribute.name}
+              value={attribute.value}
+              maxValue={attribute.maxValue}
+              label={t(`${attribute.name}.long`)}
+            />
           ))}
         </div>
       </CollapsibleCard>

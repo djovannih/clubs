@@ -28,7 +28,7 @@ export type AccelerationRate =
   | "Mostly Lengthy"
   | "Lengthy";
 
-export type MainAttributeName =
+export type AttributeCategoryName =
   | "pace"
   | "shooting"
   | "passing"
@@ -91,40 +91,41 @@ export type Player = {
   skillMoves: number;
 };
 
-export type UpdateAttributeAction = {
-  attribute: AttributeName | "weakFoot" | "skillMoves";
-  value: number;
+export type AttributeUpdate = {
+  attributeName: AttributeName;
+  updateValue: number;
 };
 
 const updatePlayerAttributess = (
   player: Player,
-  action: UpdateAttributeAction,
+  action: AttributeUpdate,
   actionType: "INC" | "DEC",
 ): Player => {
-  if (action.attribute === "weakFoot")
+  if (action.attributeName === "weakFoot")
     return {
       ...player,
       weakFoot:
-        player.weakFoot + (actionType === "INC" ? action.value : -action.value),
+        player.weakFoot +
+        (actionType === "INC" ? action.updateValue : -action.updateValue),
     };
 
-  if (action.attribute === "skillMoves")
+  if (action.attributeName === "skillMoves")
     return {
       ...player,
       skillMoves:
         player.skillMoves +
-        (actionType === "INC" ? action.value : -action.value),
+        (actionType === "INC" ? action.updateValue : -action.updateValue),
     };
 
-  const attribute = player.attributes.get(action.attribute)!;
+  const attribute = player.attributes.get(action.attributeName)!;
   return {
     ...player,
     attributes: new Map(
-      player.attributes.set(action.attribute, {
+      player.attributes.set(action.attributeName, {
         ...attribute,
         value:
           attribute.value +
-          (actionType === "INC" ? action.value : -action.value),
+          (actionType === "INC" ? action.updateValue : -action.updateValue),
       }),
     ),
   };
@@ -140,7 +141,7 @@ export const updatePlayer = (
     0,
   );
   return toggledNodes
-    .flatMap((node) => node.actions)
+    .flatMap((node) => node.modifiers)
     .reduce(
       (player, action) => updatePlayerAttributess(player, action, actionType),
       {
@@ -151,192 +152,190 @@ export const updatePlayer = (
     );
 };
 
-const getHeightUpdateAttributeActions = (
-  height: number,
-): UpdateAttributeAction[] => {
+export const getHeightModifiers = (height: number): AttributeUpdate[] => {
   //  height >= 160 && height <= 162
   if (height <= 162) return [];
 
   if (height >= 163 && height <= 167)
     return [
-      { attribute: "acceleration", value: -1 },
-      { attribute: "longPassing", value: 1 },
-      { attribute: "balance", value: -1 },
-      { attribute: "defAwareness", value: 1 },
-      { attribute: "standingTackle", value: -1 },
-      { attribute: "slidingTackle", value: -1 },
-      { attribute: "jumping", value: 1 },
-      { attribute: "stamina", value: 1 },
-      { attribute: "strength", value: 1 },
-      { attribute: "aggression", value: 1 },
+      { attributeName: "acceleration", updateValue: -1 },
+      { attributeName: "longPassing", updateValue: 1 },
+      { attributeName: "balance", updateValue: -1 },
+      { attributeName: "defAwareness", updateValue: 1 },
+      { attributeName: "standingTackle", updateValue: -1 },
+      { attributeName: "slidingTackle", updateValue: -1 },
+      { attributeName: "jumping", updateValue: 1 },
+      { attributeName: "stamina", updateValue: 1 },
+      { attributeName: "strength", updateValue: 1 },
+      { attributeName: "aggression", updateValue: 1 },
     ];
 
   if (height >= 168 && height <= 172)
     return [
-      { attribute: "acceleration", value: -2 },
-      { attribute: "sprintSpeed", value: 1 },
-      { attribute: "headingAccuracy", value: 1 },
-      { attribute: "shotPower", value: 1 },
-      { attribute: "vision", value: 1 },
-      { attribute: "longPassing", value: 2 },
-      { attribute: "shortPassing", value: -1 },
-      { attribute: "curve", value: -1 },
-      { attribute: "agility", value: -1 },
-      { attribute: "balance", value: -2 },
-      { attribute: "ballControl", value: -1 },
-      { attribute: "dribbling", value: -1 },
-      { attribute: "defAwareness", value: -2 },
-      { attribute: "standingTackle", value: -2 },
-      { attribute: "slidingTackle", value: -2 },
-      { attribute: "jumping", value: 2 },
-      { attribute: "stamina", value: 2 },
-      { attribute: "strength", value: 2 },
-      { attribute: "aggression", value: 2 },
+      { attributeName: "acceleration", updateValue: -2 },
+      { attributeName: "sprintSpeed", updateValue: 1 },
+      { attributeName: "headingAccuracy", updateValue: 1 },
+      { attributeName: "shotPower", updateValue: 1 },
+      { attributeName: "vision", updateValue: 1 },
+      { attributeName: "longPassing", updateValue: 2 },
+      { attributeName: "shortPassing", updateValue: -1 },
+      { attributeName: "curve", updateValue: -1 },
+      { attributeName: "agility", updateValue: -1 },
+      { attributeName: "balance", updateValue: -2 },
+      { attributeName: "ballControl", updateValue: -1 },
+      { attributeName: "dribbling", updateValue: -1 },
+      { attributeName: "defAwareness", updateValue: -2 },
+      { attributeName: "standingTackle", updateValue: -2 },
+      { attributeName: "slidingTackle", updateValue: -2 },
+      { attributeName: "jumping", updateValue: 2 },
+      { attributeName: "stamina", updateValue: 2 },
+      { attributeName: "strength", updateValue: 2 },
+      { attributeName: "aggression", updateValue: 2 },
     ];
 
   if (height >= 173 && height <= 177)
     return [
-      { attribute: "acceleration", value: -3 },
-      { attribute: "sprintSpeed", value: 1 },
-      { attribute: "finishing", value: 1 },
-      { attribute: "headingAccuracy", value: 2 },
-      { attribute: "shotPower", value: 1 },
-      { attribute: "volleys", value: 1 },
-      { attribute: "vision", value: 1 },
-      { attribute: "longPassing", value: 3 },
-      { attribute: "shortPassing", value: -1 },
-      { attribute: "curve", value: -1 },
-      { attribute: "agility", value: -1 },
-      { attribute: "balance", value: -3 },
-      { attribute: "ballControl", value: -1 },
-      { attribute: "dribbling", value: -2 },
-      { attribute: "defAwareness", value: -3 },
-      { attribute: "standingTackle", value: -3 },
-      { attribute: "slidingTackle", value: -3 },
-      { attribute: "jumping", value: 3 },
-      { attribute: "stamina", value: 3 },
-      { attribute: "strength", value: 3 },
-      { attribute: "aggression", value: 3 },
+      { attributeName: "acceleration", updateValue: -3 },
+      { attributeName: "sprintSpeed", updateValue: 1 },
+      { attributeName: "finishing", updateValue: 1 },
+      { attributeName: "headingAccuracy", updateValue: 2 },
+      { attributeName: "shotPower", updateValue: 1 },
+      { attributeName: "volleys", updateValue: 1 },
+      { attributeName: "vision", updateValue: 1 },
+      { attributeName: "longPassing", updateValue: 3 },
+      { attributeName: "shortPassing", updateValue: -1 },
+      { attributeName: "curve", updateValue: -1 },
+      { attributeName: "agility", updateValue: -1 },
+      { attributeName: "balance", updateValue: -3 },
+      { attributeName: "ballControl", updateValue: -1 },
+      { attributeName: "dribbling", updateValue: -2 },
+      { attributeName: "defAwareness", updateValue: -3 },
+      { attributeName: "standingTackle", updateValue: -3 },
+      { attributeName: "slidingTackle", updateValue: -3 },
+      { attributeName: "jumping", updateValue: 3 },
+      { attributeName: "stamina", updateValue: 3 },
+      { attributeName: "strength", updateValue: 3 },
+      { attributeName: "aggression", updateValue: 3 },
     ];
 
   if (height >= 178 && height <= 182)
     return [
-      { attribute: "acceleration", value: -4 },
-      { attribute: "sprintSpeed", value: 2 },
-      { attribute: "finishing", value: 1 },
-      { attribute: "headingAccuracy", value: 3 },
-      { attribute: "shotPower", value: 2 },
-      { attribute: "longShots", value: 1 },
-      { attribute: "volleys", value: 1 },
-      { attribute: "vision", value: 2 },
-      { attribute: "longPassing", value: 4 },
-      { attribute: "shortPassing", value: -2 },
-      { attribute: "curve", value: -2 },
-      { attribute: "agility", value: -2 },
-      { attribute: "balance", value: -4 },
-      { attribute: "ballControl", value: -2 },
-      { attribute: "dribbling", value: -3 },
-      { attribute: "defAwareness", value: -4 },
-      { attribute: "standingTackle", value: -4 },
-      { attribute: "slidingTackle", value: -4 },
-      { attribute: "jumping", value: 4 },
-      { attribute: "stamina", value: 4 },
-      { attribute: "strength", value: 4 },
-      { attribute: "aggression", value: 4 },
-      { attribute: "composure", value: 1 },
+      { attributeName: "acceleration", updateValue: -4 },
+      { attributeName: "sprintSpeed", updateValue: 2 },
+      { attributeName: "finishing", updateValue: 1 },
+      { attributeName: "headingAccuracy", updateValue: 3 },
+      { attributeName: "shotPower", updateValue: 2 },
+      { attributeName: "longShots", updateValue: 1 },
+      { attributeName: "volleys", updateValue: 1 },
+      { attributeName: "vision", updateValue: 2 },
+      { attributeName: "longPassing", updateValue: 4 },
+      { attributeName: "shortPassing", updateValue: -2 },
+      { attributeName: "curve", updateValue: -2 },
+      { attributeName: "agility", updateValue: -2 },
+      { attributeName: "balance", updateValue: -4 },
+      { attributeName: "ballControl", updateValue: -2 },
+      { attributeName: "dribbling", updateValue: -3 },
+      { attributeName: "defAwareness", updateValue: -4 },
+      { attributeName: "standingTackle", updateValue: -4 },
+      { attributeName: "slidingTackle", updateValue: -4 },
+      { attributeName: "jumping", updateValue: 4 },
+      { attributeName: "stamina", updateValue: 4 },
+      { attributeName: "strength", updateValue: 4 },
+      { attributeName: "aggression", updateValue: 4 },
+      { attributeName: "composure", updateValue: 1 },
     ];
 
   if (height >= 183 && height <= 187)
     return [
-      { attribute: "acceleration", value: -6 },
-      { attribute: "sprintSpeed", value: 1 },
-      { attribute: "finishing", value: 2 },
-      { attribute: "headingAccuracy", value: 4 },
-      { attribute: "shotPower", value: 2 },
-      { attribute: "longShots", value: 1 },
-      { attribute: "volleys", value: 1 },
-      { attribute: "vision", value: 2 },
-      { attribute: "longPassing", value: 5 },
-      { attribute: "shortPassing", value: -2 },
-      { attribute: "curve", value: -2 },
-      { attribute: "agility", value: -3 },
-      { attribute: "balance", value: -5 },
-      { attribute: "ballControl", value: -2 },
-      { attribute: "dribbling", value: -4 },
-      { attribute: "defAwareness", value: -5 },
-      { attribute: "standingTackle", value: -5 },
-      { attribute: "slidingTackle", value: -5 },
-      { attribute: "jumping", value: 5 },
-      { attribute: "stamina", value: 3 },
-      { attribute: "strength", value: 5 },
-      { attribute: "reactions", value: -1 },
-      { attribute: "aggression", value: 6 },
-      { attribute: "composure", value: 1 },
+      { attributeName: "acceleration", updateValue: -6 },
+      { attributeName: "sprintSpeed", updateValue: 1 },
+      { attributeName: "finishing", updateValue: 2 },
+      { attributeName: "headingAccuracy", updateValue: 4 },
+      { attributeName: "shotPower", updateValue: 2 },
+      { attributeName: "longShots", updateValue: 1 },
+      { attributeName: "volleys", updateValue: 1 },
+      { attributeName: "vision", updateValue: 2 },
+      { attributeName: "longPassing", updateValue: 5 },
+      { attributeName: "shortPassing", updateValue: -2 },
+      { attributeName: "curve", updateValue: -2 },
+      { attributeName: "agility", updateValue: -3 },
+      { attributeName: "balance", updateValue: -5 },
+      { attributeName: "ballControl", updateValue: -2 },
+      { attributeName: "dribbling", updateValue: -4 },
+      { attributeName: "defAwareness", updateValue: -5 },
+      { attributeName: "standingTackle", updateValue: -5 },
+      { attributeName: "slidingTackle", updateValue: -5 },
+      { attributeName: "jumping", updateValue: 5 },
+      { attributeName: "stamina", updateValue: 3 },
+      { attributeName: "strength", updateValue: 5 },
+      { attributeName: "reactions", updateValue: -1 },
+      { attributeName: "aggression", updateValue: 6 },
+      { attributeName: "composure", updateValue: 1 },
     ];
 
   if (height >= 188 && height <= 192)
     return [
-      { attribute: "acceleration", value: -10 },
-      { attribute: "sprintSpeed", value: -3 },
-      { attribute: "finishing", value: 2 },
-      { attribute: "headingAccuracy", value: 5 },
-      { attribute: "shotPower", value: 3 },
-      { attribute: "longShots", value: 1 },
-      { attribute: "volleys", value: 2 },
-      { attribute: "vision", value: 3 },
-      { attribute: "crossing", value: 2 },
-      { attribute: "longPassing", value: 6 },
-      { attribute: "shortPassing", value: -3 },
-      { attribute: "curve", value: -3 },
-      { attribute: "agility", value: -5 },
-      { attribute: "balance", value: -6 },
-      { attribute: "ballControl", value: -3 },
-      { attribute: "dribbling", value: -6 },
-      { attribute: "defAwareness", value: -6 },
-      { attribute: "standingTackle", value: -6 },
-      { attribute: "slidingTackle", value: -6 },
-      { attribute: "jumping", value: 3 },
-      { attribute: "stamina", value: 1 },
-      { attribute: "strength", value: 6 },
-      { attribute: "reactions", value: -2 },
-      { attribute: "aggression", value: 8 },
-      { attribute: "composure", value: 1 },
+      { attributeName: "acceleration", updateValue: -10 },
+      { attributeName: "sprintSpeed", updateValue: -3 },
+      { attributeName: "finishing", updateValue: 2 },
+      { attributeName: "headingAccuracy", updateValue: 5 },
+      { attributeName: "shotPower", updateValue: 3 },
+      { attributeName: "longShots", updateValue: 1 },
+      { attributeName: "volleys", updateValue: 2 },
+      { attributeName: "vision", updateValue: 3 },
+      { attributeName: "crossing", updateValue: 2 },
+      { attributeName: "longPassing", updateValue: 6 },
+      { attributeName: "shortPassing", updateValue: -3 },
+      { attributeName: "curve", updateValue: -3 },
+      { attributeName: "agility", updateValue: -5 },
+      { attributeName: "balance", updateValue: -6 },
+      { attributeName: "ballControl", updateValue: -3 },
+      { attributeName: "dribbling", updateValue: -6 },
+      { attributeName: "defAwareness", updateValue: -6 },
+      { attributeName: "standingTackle", updateValue: -6 },
+      { attributeName: "slidingTackle", updateValue: -6 },
+      { attributeName: "jumping", updateValue: 3 },
+      { attributeName: "stamina", updateValue: 1 },
+      { attributeName: "strength", updateValue: 6 },
+      { attributeName: "reactions", updateValue: -2 },
+      { attributeName: "aggression", updateValue: 8 },
+      { attributeName: "composure", updateValue: 1 },
     ];
 
   // height >= 193 && height <= 195
   return [
-    { attribute: "acceleration", value: -14 },
-    { attribute: "sprintSpeed", value: -7 },
-    { attribute: "finishing", value: 1 },
-    { attribute: "headingAccuracy", value: 6 },
-    { attribute: "shotPower", value: 3 },
-    { attribute: "longShots", value: 1 },
-    { attribute: "volleys", value: 2 },
-    { attribute: "vision", value: 3 },
-    { attribute: "crossing", value: 2 },
-    { attribute: "longPassing", value: 7 },
-    { attribute: "shortPassing", value: -4 },
-    { attribute: "curve", value: -3 },
-    { attribute: "agility", value: -9 },
-    { attribute: "balance", value: -7 },
-    { attribute: "ballControl", value: -4 },
-    { attribute: "dribbling", value: -9 },
-    { attribute: "defAwareness", value: -7 },
-    { attribute: "standingTackle", value: -7 },
-    { attribute: "slidingTackle", value: -7 },
-    { attribute: "stamina", value: -3 },
-    { attribute: "strength", value: 7 },
-    { attribute: "reactions", value: -4 },
-    { attribute: "aggression", value: 10 },
-    { attribute: "composure", value: 2 },
+    { attributeName: "acceleration", updateValue: -14 },
+    { attributeName: "sprintSpeed", updateValue: -7 },
+    { attributeName: "finishing", updateValue: 1 },
+    { attributeName: "headingAccuracy", updateValue: 6 },
+    { attributeName: "shotPower", updateValue: 3 },
+    { attributeName: "longShots", updateValue: 1 },
+    { attributeName: "volleys", updateValue: 2 },
+    { attributeName: "vision", updateValue: 3 },
+    { attributeName: "crossing", updateValue: 2 },
+    { attributeName: "longPassing", updateValue: 7 },
+    { attributeName: "shortPassing", updateValue: -4 },
+    { attributeName: "curve", updateValue: -3 },
+    { attributeName: "agility", updateValue: -9 },
+    { attributeName: "balance", updateValue: -7 },
+    { attributeName: "ballControl", updateValue: -4 },
+    { attributeName: "dribbling", updateValue: -9 },
+    { attributeName: "defAwareness", updateValue: -7 },
+    { attributeName: "standingTackle", updateValue: -7 },
+    { attributeName: "slidingTackle", updateValue: -7 },
+    { attributeName: "stamina", updateValue: -3 },
+    { attributeName: "strength", updateValue: 7 },
+    { attributeName: "reactions", updateValue: -4 },
+    { attributeName: "aggression", updateValue: 10 },
+    { attributeName: "composure", updateValue: 2 },
   ];
 };
 
 export const updatePlayerHeight = (player: Player, height: number): Player => ({
-  ...getHeightUpdateAttributeActions(height).reduce(
+  ...getHeightModifiers(height).reduce(
     (updatedPlayer, action) =>
       updatePlayerAttributess(updatedPlayer, action, "INC"),
-    getHeightUpdateAttributeActions(player.height).reduce(
+    getHeightModifiers(player.height).reduce(
       (updatedPlayer, action) =>
         updatePlayerAttributess(updatedPlayer, action, "DEC"),
       player,
@@ -345,83 +344,83 @@ export const updatePlayerHeight = (player: Player, height: number): Player => ({
   height: height,
 });
 
-const getWeightUpdateAttributeActions = (
+export const getWeightUpdateAttributeActions = (
   weight: number,
-): UpdateAttributeAction[] => {
+): AttributeUpdate[] => {
   // weight >= 45 && weight <= 54
   if (weight <= 54) return [];
 
   if (weight >= 55 && weight <= 68)
     return [
-      { attribute: "acceleration", value: -1 },
-      { attribute: "sprintSpeed", value: -1 },
-      { attribute: "headingAccuracy", value: 1 },
-      { attribute: "longPassing", value: 1 },
-      { attribute: "shortPassing", value: -1 },
-      { attribute: "agility", value: -1 },
-      { attribute: "jumping", value: 1 },
-      { attribute: "strength", value: 1 },
+      { attributeName: "acceleration", updateValue: -1 },
+      { attributeName: "sprintSpeed", updateValue: -1 },
+      { attributeName: "headingAccuracy", updateValue: 1 },
+      { attributeName: "longPassing", updateValue: 1 },
+      { attributeName: "shortPassing", updateValue: -1 },
+      { attributeName: "agility", updateValue: -1 },
+      { attributeName: "jumping", updateValue: 1 },
+      { attributeName: "strength", updateValue: 1 },
     ];
 
   if (weight >= 69 && weight <= 79)
     return [
-      { attribute: "acceleration", value: -2 },
-      { attribute: "sprintSpeed", value: -2 },
-      { attribute: "freeKickAccuracy", value: 1 },
-      { attribute: "headingAccuracy", value: 1 },
-      { attribute: "shotPower", value: 1 },
-      { attribute: "longShots", value: 1 },
-      { attribute: "volleys", value: 1 },
-      { attribute: "longPassing", value: 2 },
-      { attribute: "shortPassing", value: -2 },
-      { attribute: "agility", value: -2 },
-      { attribute: "balance", value: 1 },
-      { attribute: "dribbling", value: -1 },
-      { attribute: "jumping", value: 3 },
-      { attribute: "stamina", value: -1 },
-      { attribute: "strength", value: 2 },
+      { attributeName: "acceleration", updateValue: -2 },
+      { attributeName: "sprintSpeed", updateValue: -2 },
+      { attributeName: "freeKickAccuracy", updateValue: 1 },
+      { attributeName: "headingAccuracy", updateValue: 1 },
+      { attributeName: "shotPower", updateValue: 1 },
+      { attributeName: "longShots", updateValue: 1 },
+      { attributeName: "volleys", updateValue: 1 },
+      { attributeName: "longPassing", updateValue: 2 },
+      { attributeName: "shortPassing", updateValue: -2 },
+      { attributeName: "agility", updateValue: -2 },
+      { attributeName: "balance", updateValue: 1 },
+      { attributeName: "dribbling", updateValue: -1 },
+      { attributeName: "jumping", updateValue: 3 },
+      { attributeName: "stamina", updateValue: -1 },
+      { attributeName: "strength", updateValue: 2 },
     ];
 
   if (weight >= 80 && weight <= 90)
     return [
-      { attribute: "acceleration", value: -3 },
-      { attribute: "sprintSpeed", value: -2 },
-      { attribute: "finishing", value: 1 },
-      { attribute: "freeKickAccuracy", value: 1 },
-      { attribute: "headingAccuracy", value: 2 },
-      { attribute: "shotPower", value: 1 },
-      { attribute: "longShots", value: 1 },
-      { attribute: "volleys", value: 1 },
-      { attribute: "longPassing", value: 3 },
-      { attribute: "shortPassing", value: -2 },
-      { attribute: "agility", value: -3 },
-      { attribute: "balance", value: 1 },
-      { attribute: "dribbling", value: -1 },
-      { attribute: "jumping", value: 1 },
-      { attribute: "stamina", value: -1 },
-      { attribute: "strength", value: 3 },
+      { attributeName: "acceleration", updateValue: -3 },
+      { attributeName: "sprintSpeed", updateValue: -2 },
+      { attributeName: "finishing", updateValue: 1 },
+      { attributeName: "freeKickAccuracy", updateValue: 1 },
+      { attributeName: "headingAccuracy", updateValue: 2 },
+      { attributeName: "shotPower", updateValue: 1 },
+      { attributeName: "longShots", updateValue: 1 },
+      { attributeName: "volleys", updateValue: 1 },
+      { attributeName: "longPassing", updateValue: 3 },
+      { attributeName: "shortPassing", updateValue: -2 },
+      { attributeName: "agility", updateValue: -3 },
+      { attributeName: "balance", updateValue: 1 },
+      { attributeName: "dribbling", updateValue: -1 },
+      { attributeName: "jumping", updateValue: 1 },
+      { attributeName: "stamina", updateValue: -1 },
+      { attributeName: "strength", updateValue: 3 },
     ];
 
   // weight >= 91 && weight <= 115
   return [
-    { attribute: "acceleration", value: -5 },
-    { attribute: "sprintSpeed", value: -2 },
-    { attribute: "finishing", value: 1 },
-    { attribute: "freeKickAccuracy", value: 2 },
-    { attribute: "headingAccuracy", value: 2 },
-    { attribute: "shotPower", value: 2 },
-    { attribute: "longShots", value: 2 },
-    { attribute: "volleys", value: 2 },
-    { attribute: "penalties", value: 1 },
-    { attribute: "longPassing", value: 4 },
-    { attribute: "shortPassing", value: -3 },
-    { attribute: "agility", value: -5 },
-    { attribute: "balance", value: 2 },
-    { attribute: "positioning", value: 1 },
-    { attribute: "dribbling", value: -2 },
-    { attribute: "jumping", value: -1 },
-    { attribute: "stamina", value: -2 },
-    { attribute: "strength", value: 4 },
+    { attributeName: "acceleration", updateValue: -5 },
+    { attributeName: "sprintSpeed", updateValue: -2 },
+    { attributeName: "finishing", updateValue: 1 },
+    { attributeName: "freeKickAccuracy", updateValue: 2 },
+    { attributeName: "headingAccuracy", updateValue: 2 },
+    { attributeName: "shotPower", updateValue: 2 },
+    { attributeName: "longShots", updateValue: 2 },
+    { attributeName: "volleys", updateValue: 2 },
+    { attributeName: "penalties", updateValue: 1 },
+    { attributeName: "longPassing", updateValue: 4 },
+    { attributeName: "shortPassing", updateValue: -3 },
+    { attributeName: "agility", updateValue: -5 },
+    { attributeName: "balance", updateValue: 2 },
+    { attributeName: "positioning", updateValue: 1 },
+    { attributeName: "dribbling", updateValue: -2 },
+    { attributeName: "jumping", updateValue: -1 },
+    { attributeName: "stamina", updateValue: -2 },
+    { attributeName: "strength", updateValue: 4 },
   ];
 };
 
@@ -437,6 +436,51 @@ export const updatePlayerWeight = (player: Player, weight: number): Player => ({
   ),
   weight: weight,
 });
+
+// TODO: Add remaining positions
+export const getAttributesByPosition = (position: Position) => {
+  switch (position) {
+    case "GK":
+      return new Map<AttributeName, PlayerAttribute>([
+        ["acceleration", { value: 61, maxValue: 99 }],
+        ["sprintSpeed", { value: 51, maxValue: 99 }],
+        ["finishing", { value: 20, maxValue: 99 }],
+        ["freeKickAccuracy", { value: 20, maxValue: 99 }],
+        ["headingAccuracy", { value: 15, maxValue: 99 }],
+        ["shotPower", { value: 55, maxValue: 99 }],
+        ["longShots", { value: 15, maxValue: 99 }],
+        ["volleys", { value: 15, maxValue: 99 }],
+        ["penalties", { value: 35, maxValue: 99 }],
+        ["vision", { value: 65, maxValue: 99 }],
+        ["crossing", { value: 25, maxValue: 99 }],
+        ["longPassing", { value: 60, maxValue: 99 }],
+        ["shortPassing", { value: 55, maxValue: 99 }],
+        ["curve", { value: 30, maxValue: 99 }],
+        ["agility", { value: 58, maxValue: 99 }],
+        ["balance", { value: 56, maxValue: 99 }],
+        ["positioning", { value: 20, maxValue: 99 }],
+        ["ballControl", { value: 20, maxValue: 99 }],
+        ["dribbling", { value: 15, maxValue: 99 }],
+        ["interceptions", { value: 20, maxValue: 99 }],
+        ["defAwareness", { value: 20, maxValue: 99 }],
+        ["standingTackle", { value: 20, maxValue: 99 }],
+        ["slidingTackle", { value: 20, maxValue: 99 }],
+        ["jumping", { value: 64, maxValue: 99 }],
+        ["stamina", { value: 56, maxValue: 99 }],
+        ["strength", { value: 43, maxValue: 99 }],
+        ["reactions", { value: 85, maxValue: 99 }],
+        ["aggression", { value: 40, maxValue: 99 }],
+        ["composure", { value: 60, maxValue: 99 }],
+        ["gkDiving", { value: 85, maxValue: 99 }],
+        ["gkHandling", { value: 77, maxValue: 99 }],
+        ["gkKicking", { value: 74, maxValue: 99 }],
+        ["gkReflexes", { value: 85, maxValue: 99 }],
+        ["gkPositioning", { value: 74, maxValue: 99 }],
+      ]);
+    default:
+      throw new Error(`Unknown position: ${position}`);
+  }
+};
 
 const getPlayerByPosition = (player: Player, position: Position): Player => {
   switch (position) {
@@ -1049,7 +1093,7 @@ export const getAccelerationRate = (
 export const getCategoryAttributes = (
   attributes: Map<AttributeName, PlayerAttribute>,
 ) => {
-  return new Map<MainAttributeName, Map<AttributeName, PlayerAttribute>>([
+  return new Map<AttributeCategoryName, Map<AttributeName, PlayerAttribute>>([
     [
       "pace",
       new Map([
@@ -1131,17 +1175,13 @@ export const getMainAttributes = (
 
   const categoryAttributes = getCategoryAttributes(attributes);
 
-  return new Map<MainAttributeName, PlayerAttribute>(
-    Array.from(categoryAttributes.entries()).map(
-      ([mainAttributeName, catAttr]) => [
-        mainAttributeName,
-        {
-          value: getAverageValue(
-            Array.from(catAttr.values()).map((a) => a.value),
-          ),
-          maxValue: 99,
-        },
-      ],
-    ),
+  return new Map<AttributeCategoryName, PlayerAttribute>(
+    [...categoryAttributes.entries()].map(([mainAttributeName, catAttr]) => [
+      mainAttributeName,
+      {
+        value: getAverageValue([...catAttr.values()].map((a) => a.value)),
+        maxValue: 99,
+      },
+    ]),
   );
 };

@@ -2,11 +2,11 @@ import { forestsAtom } from "@/atoms/forest";
 import AttributeNode from "@/components/AttributeNode";
 import NodeJunction from "@/components/NodeJunction";
 import { groupByRow } from "@/lib/graph";
-import type { MainAttributeName } from "@/lib/player";
+import type { AttributeCategoryName } from "@/lib/player";
 import { useAtomValue } from "jotai";
 
 interface AttributeTreeProps {
-  forestName: MainAttributeName;
+  forestName: AttributeCategoryName;
   treeIndex: number;
 }
 
@@ -19,14 +19,14 @@ export default function AttributeTree({
 
   const rows = groupByRow(tree);
   const columnsCount =
-    Array.from(tree.values()).reduce(
+  [...tree.values()].reduce(
       (acc, node) => (node.column > acc ? node.column : acc),
       0,
     ) + 1;
 
   return (
     <div className="lg:mx-auto lg:basis-2/3">
-      {Array.from(rows.entries()).map(([rowIndex, row]) => (
+      {[...rows.entries()].map(([rowIndex, row]) => (
         <div key={rowIndex}>
           {rowIndex > 0 && (
             <NodeJunction

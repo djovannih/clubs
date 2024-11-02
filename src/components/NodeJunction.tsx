@@ -171,15 +171,18 @@ export default function NodeJunction({
 
   return (
     <div className="grid grid-cols-3">
-      {Array.from({ length: columnsCount }, (_, i) => (
-        <Junction
-          key={i}
-          tree={tree}
-          topRow={topRow}
-          bottomRow={bottomRow}
-          columnIndex={i}
-        />
-      ))}
+      {[
+        ...{ length: columnsCount },
+        (_, i) => (
+          <Junction
+            key={i}
+            tree={tree}
+            topRow={topRow}
+            bottomRow={bottomRow}
+            columnIndex={i}
+          />
+        ),
+      ]}
     </div>
   );
 }

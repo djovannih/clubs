@@ -1,30 +1,29 @@
-import { forestsAtom, toggleNodeAtom } from "@/atoms/forest";
-import { categoryAttributesAtom } from "@/atoms/player";
+import { playerAttributesByCategoryAtom, type TreeNode } from "@/atoms/player";
+import AttributeDetail from "@/components/AttributeDetail";
 import AttributeTree from "@/components/AttributeTree";
-import type { MainAttributeName } from "@/lib/player";
+import type { AttributeCategoryName } from "@/lib/player";
 import clsx from "clsx";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import AttributeDetail from "./AttributeDetail";
-import { resetAttributeTrees } from "@/atoms/utils";
 
 interface AttributeForestProps {
-  forestName: MainAttributeName;
+  forest: Map<string, TreeNode>[];
+  forestName: AttributeCategoryName;
 }
 
-export default function AttributeForest({ forestName }: AttributeForestProps) {
+export default function AttributeForest({
+  forest,
+  forestName,
+}: AttributeForestProps) {
   const t = useTranslations("Attributes");
-  const forests = useAtomValue(forestsAtom);
+  const categoryAttributes = useAtomValue(playerAttributesByCategoryAtom);
   const [activeTreeIndex, setActiveTreeIndex] = useState(0);
-  const categoryAttributes = useAtomValue(categoryAttributesAtom);
-  const toggleNode = useSetAtom(toggleNodeAtom);
-  const forest = useAtomValue(forests.get(forestName)!);
 
   return (
     <div className="flex flex-col gap-8">
       <div className="flex overflow-hidden rounded-lg bg-slate-900">
-        {forest.map((_, i) => (
+        {forest.map((tree, i) => (
           <button
             key={`${forestName}-${i}`}
             onClick={() => setActiveTreeIndex(i)}

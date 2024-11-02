@@ -6,6 +6,7 @@ interface CollapsibleCardProps extends Readonly<PropsWithChildren> {
   heading: string;
   maxHeight: number;
 }
+
 export default function CollapsibleCard({
   heading,
   maxHeight,
