@@ -6,23 +6,21 @@ import { paceTrees } from "@/forests/pace";
 import { passingTrees } from "@/forests/passing";
 import { physicalityTrees } from "@/forests/physicality";
 import { shootingTrees } from "@/forests/shooting";
-import { type Graph } from "@/lib/graph";
+import type { Graph, GraphNode } from "@/lib/graph";
 import { average, sum } from "@/lib/math";
 import {
   type AccelerationRate,
+  type AttributeCategoryName,
   type AttributeName,
   getAccelerationRate,
   getAttributesByPosition,
-  type AttributeCategoryName,
   type Position,
 } from "@/lib/player";
 import type { Getter, PrimitiveAtom, Setter } from "jotai";
 import { type Atom, atom, type WritableAtom } from "jotai";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 
-const getActiveNodes = (
-  forests: Map<AttributeCategoryName, Map<string, TreeNode>[]>,
-) =>
+const getActiveNodes = (forests: Map<AttributeCategoryName, Forest>) =>
   [...forests.values()].flatMap((forest) =>
     [...forest.values()].flatMap((tree) =>
       [...tree.values()].filter((node) => node.isActive),
@@ -288,22 +286,20 @@ const getWeightModifiers = (weight: number): Map<AttributeName, number> => {
 };
 
 const getNodesModifiers = (
-  forests: Map<AttributeCategoryName, Map<string, TreeNode>[]>,
+  forests: Map<AttributeCategoryName, Forest>,
 ): Map<AttributeName, number> =>
   getActiveNodes(forests)
     .map((node) => node.modifiers)
     .reduce(
       (flatModifiers, modifiers) =>
-        modifiers
-          .entries()
-          .reduce(
-            (mergedModifiers, [attribute, modifier]) =>
-              mergedModifiers.set(
-                attribute,
-                (mergedModifiers.get(attribute) || 0) + modifier,
-              ),
-            flatModifiers,
-          ),
+        [...modifiers.entries()].reduce(
+          (mergedModifiers, [attribute, modifier]) =>
+            mergedModifiers.set(
+              attribute,
+              (mergedModifiers.get(attribute) || 0) + modifier,
+            ),
+          flatModifiers,
+        ),
       new Map<AttributeName, number>(),
     );
 
@@ -319,25 +315,54 @@ const getAttribute = (
       const height = get(player.height);
       const weight = get(player.weight);
       const baseValue = getAttributesByPosition(position).get(attribute)!.value;
-      const heightModifier = getHeightModifiers(height).get(attribute)!;
-      const weightModifier = getWeightModifiers(weight).get(attribute)!;
-      const nodesModifier = getNodesModifiers(player.forests).get(attribute)!;
-      return baseValue + heightModifier + weightModifier + nodesModifier;
+      const heightModifier = getHeightModifiers(height).get(attribute) || 0;
+      const weightModifier = getWeightModifiers(weight).get(attribute) || 0;
+      const nodesModifier =
+        getNodesModifiers(player.forests).get(attribute) || 0;
+      return Math.floor(
+        baseValue + heightModifier + weightModifier + nodesModifier,
+      );
     }),
     maxValue: maxValue,
   },
 ];
 
+export const getCheapestBranch = (
+  startNode: GraphNode,
+  graph: Graph,
+): GraphNode[] => {
+  const getAllBranches = (startNode: GraphNode): GraphNode[][] => {
+    if (startNode.isActive) return [[]];
+    return startNode.parentIds.length === 0
+      ? [[startNode]]
+      : startNode.parentIds
+          .flatMap((parentId) => getAllBranches(graph.get(parentId)!))
+          .map((path) => [startNode, ...path]);
+  };
+
+  const getBranchCost = (nodes: GraphNode[]) =>
+    sum(nodes, (node) => node.baseActivationCost);
+
+  return getAllBranches(startNode).reduce((cheapestBranch, branch) =>
+    getBranchCost(branch) < getBranchCost(cheapestBranch)
+      ? branch
+      : cheapestBranch,
+  );
+};
+
 const toTrees = (graphs: Graph[]) =>
   graphs.map(
     (graph) =>
       new Map<string, TreeNode>(
-        graph.entries().map(([attribute, node]) => [
+        [...graph.entries()].map(([attribute, node]) => [
           attribute,
           {
             ...node,
+            actualActivationCost: atom(() =>
+              sum(getCheapestBranch(node, graph)),
+            ),
             isActive: atomWithToggle(node.isActive),
-          } as TreeNode,
+          },
         ]),
       ),
   );
@@ -452,15 +477,15 @@ const basePlayer: Player = {
     const totalSkillPoints = skillPointsByLevel.get(get(player.level))!;
     const spentSkillPoints = sum(
       getActiveNodes(player.forests),
-      (node) => node.activationCost,
+      (node) => node.baseActivationCost,
     );
     return totalSkillPoints - spentSkillPoints;
   }),
   position: atom<Position>("ST"),
-  height: atom(160),
-  weight: atom(45),
-  weakFoot: atom(2),
-  skillMoves: atom(3),
+  height: atom(178),
+  weight: atom(80),
+  weakFoot: atom(2), // This must be always initialized to 2
+  skillMoves: atom(3), // This must be always initialized to 3
   attributes: new Map<AttributeName, PlayerAttribute>([
     getAttribute("acceleration", 99),
     getAttribute("sprintSpeed", 99),
@@ -562,12 +587,14 @@ export const attributeNamesByCategory = new Map<
 
 export const playerCategoryAttributesAtom = atom((get) => {
   const getAttributeCategoryValue = (categoryName: AttributeCategoryName) =>
-    average(
-      attributeNamesByCategory
-        .get(categoryName)!
-        .map((attributeName) =>
-          get(get(playerAtom).attributes.get(attributeName)!.value),
-        ),
+    Math.floor(
+      average(
+        attributeNamesByCategory
+          .get(categoryName)!
+          .map((attributeName) =>
+            get(get(playerAtom).attributes.get(attributeName)!.value),
+          ),
+      ),
     );
 
   return attributeCategories.map(
@@ -602,6 +629,12 @@ export const playerAttributesByCategoryAtom = atom(
     ),
 );
 
+export const deactivateAllNodesAtom = atom(null, (get, set) =>
+  get(playerAtom).forests.forEach((forest) =>
+    forest.forEach((tree) => tree.forEach((node) => set(node.isActive, false))),
+  ),
+);
+
 export interface PlayerAttribute {
   value: Atom<number>;
   maxValue: number;
@@ -615,7 +648,8 @@ export interface PlayerAttributeWithName {
 
 export interface TreeNode {
   id: string;
-  activationCost: number;
+  baseActivationCost: number;
+  actualActivationCost: Atom<number>;
   isActive: WritableAtom<boolean, [boolean?], void>;
   parentIds: string[];
   childrenIds: string[];
@@ -623,6 +657,10 @@ export interface TreeNode {
   column: number;
   modifiers: Map<AttributeName, number>;
 }
+
+export type Tree = Map<string, TreeNode>;
+
+export type Forest = Tree[];
 
 export interface Player {
   level: PrimitiveAtom<number>;
@@ -633,7 +671,7 @@ export interface Player {
   weakFoot: PrimitiveAtom<number>;
   skillMoves: PrimitiveAtom<number>;
   attributes: Map<AttributeName, PlayerAttribute>;
-  forests: Map<AttributeCategoryName, Map<string, TreeNode>[]>;
+  forests: Map<AttributeCategoryName, Forest>;
   accelerationRate: Atom<AccelerationRate>;
 }
 

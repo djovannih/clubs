@@ -1,10 +1,10 @@
-import type { Graph, GraphNode } from "@/lib/graph";
+import type { Tree, TreeNode } from "@/atoms/player";
 import clsx from "clsx";
 
 interface JunctionProps {
-  tree: Graph;
-  topRow: GraphNode[];
-  bottomRow: GraphNode[];
+  tree: Tree;
+  topRow: TreeNode[];
+  bottomRow: TreeNode[];
   columnIndex: number;
 }
 const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
@@ -67,7 +67,7 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
       (node) =>
         node.column > columnIndex &&
         node.childrenIds.some(
-          (child) => tree.get(child)!.column <= columnIndex,
+          (childId) => tree.get(childId)!.column <= columnIndex,
         ),
     ) ||
     bottomRow.some(
@@ -154,9 +154,9 @@ const Junction = ({ tree, topRow, bottomRow, columnIndex }: JunctionProps) => {
 };
 
 interface NodeJunctionProps {
-  tree: Graph;
-  topRow: GraphNode[];
-  bottomRow: GraphNode[];
+  tree: Tree;
+  topRow: TreeNode[];
+  bottomRow: TreeNode[];
 }
 export default function NodeJunction({
   tree,
@@ -171,18 +171,15 @@ export default function NodeJunction({
 
   return (
     <div className="grid grid-cols-3">
-      {[
-        ...{ length: columnsCount },
-        (_, i) => (
-          <Junction
-            key={i}
-            tree={tree}
-            topRow={topRow}
-            bottomRow={bottomRow}
-            columnIndex={i}
-          />
-        ),
-      ]}
+      {Array.from({ length: columnsCount }).map((_, i) => (
+        <Junction
+          key={i}
+          tree={tree}
+          topRow={topRow}
+          bottomRow={bottomRow}
+          columnIndex={i}
+        />
+      ))}
     </div>
   );
 }

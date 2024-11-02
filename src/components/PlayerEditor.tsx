@@ -8,6 +8,7 @@ import Slider from "./Slider";
 export default function PlayerEditor() {
   const t = useTranslations("PlayerInfo");
   const player = useAtomValue(playerAtom);
+  const [playerLevel, setPlayerLevel] = useAtom(player.level);
   const [playerHeight, setPlayerHeight] = useAtom(player.height);
   const [playerWeight, setPlayerWeight] = useAtom(player.weight);
   const [playerPosition, setPlayerPosition] = useAtom(player.position);
@@ -15,6 +16,14 @@ export default function PlayerEditor() {
   return (
     <CollapsibleCard heading={t("editPlayerInfo")} maxHeight={400}>
       <div className="flex flex-col gap-4">
+        <Slider
+          headline={t("level")}
+          value={playerLevel}
+          minValue={1}
+          maxValue={100}
+          markedValues={[1, 50, 100]}
+          updateValue={(value) => setPlayerLevel(value)}
+        />
         <Slider
           headline={t("height")}
           value={playerHeight}

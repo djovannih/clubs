@@ -36,17 +36,17 @@ export default function Slider({
             }}
           />
           <div className="relative flex h-6 w-full">
-            {markedValues.map((val) => (
+            {markedValues.map((value) => (
               <div
-                key={val}
+                key={value}
                 className="absolute flex flex-col items-center"
                 style={{
-                  left: `${((val - minValue) / (maxValue - minValue)) * 100}%`,
-                  right: `${((maxValue - val) / (maxValue - minValue)) * 100}%`,
+                  left: `${((value - minValue) / (maxValue - minValue)) * 100}%`,
+                  right: `${((maxValue - value) / (maxValue - minValue)) * 100}%`,
                 }}
               >
                 <span className="h-2 w-2 rounded-full bg-sky-700"></span>
-                <span className="text-xs text-slate-500">{val}</span>
+                <span className="text-xs text-slate-500">{value}</span>
               </div>
             ))}
           </div>

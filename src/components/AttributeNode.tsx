@@ -1,31 +1,18 @@
-import { forestsAtom, nodeCostsAtom, toggleNodeAtom } from "@/atoms/forest";
-import { playerAtom } from "@/atoms/player";
+import { playerAtom, type TreeNode } from "@/atoms/player";
 import Badge from "@/components/Badge";
-import type { AttributeCategoryName } from "@/lib/player";
 import clsx from "clsx";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 
 interface AttributeNodeProps {
-  forestName: AttributeCategoryName;
-  treeIndex: number;
-  nodeId: string;
+  node: TreeNode;
 }
-export default function AttributeNode({
-  forestName,
-  treeIndex,
-  nodeId,
-}: AttributeNodeProps) {
+export default function AttributeNode({ node }: AttributeNodeProps) {
   const t = useTranslations("Attributes");
-  const node = useAtomValue(useAtomValue(forestsAtom).get(forestName)!)
-    .at(treeIndex)!
-    .get(nodeId)!;
-  const branchCost = useAtomValue(nodeCostsAtom)
-    .get(forestName)!
-    .at(treeIndex)!
-    .get(nodeId)!;
-  const toggleNode = useSetAtom(toggleNodeAtom);
+  const [isActive, toggleIsActive] = useAtom(node.isActive);
+  const activationCost = useAtomValue(node.actualActivationCost);
   const player = useAtomValue(playerAtom);
+  const playerSkillPoints = useAtomValue(player.availableSkillPoints);
 
   return (
     <div
@@ -35,20 +22,20 @@ export default function AttributeNode({
       <button
         className={clsx(
           "relative rounded-lg p-4",
-          node.isActive ? "bg-green-600" : "bg-slate-700",
+          isActive ? "bg-green-600" : "bg-slate-700",
         )}
-        onClick={() => toggleNode(forestName, treeIndex, nodeId)}
-        disabled={branchCost > player.availableSkillPoints}
+        onClick={() => toggleIsActive()}
+        disabled={activationCost > playerSkillPoints}
       >
         <ul className="flex min-h-[2lh] grow flex-col items-center justify-center rounded-sm text-sm">
-          {node.actions.map((action) => (
+          {[...node.modifiers.entries()].map(([attributeName, modifier]) => (
             <li
-              key={action.attribute}
+              key={attributeName}
               className="text-nowrap"
-            >{`${t(`${action.attribute}.short`)} +${action.value}`}</li>
+            >{`${t(`${attributeName}.short`)} +${modifier}`}</li>
           ))}
         </ul>
-        <Badge active={node.isActive}>{node.activationCost}</Badge>
+        <Badge active={isActive}>{node.baseActivationCost}</Badge>
       </button>
     </div>
   );

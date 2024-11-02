@@ -1,14 +1,18 @@
-import { playerAttributesByCategoryAtom, type TreeNode } from "@/atoms/player";
+import {
+  deactivateAllNodesAtom,
+  type Forest,
+  playerAttributesByCategoryAtom,
+} from "@/atoms/player";
 import AttributeDetail from "@/components/AttributeDetail";
 import AttributeTree from "@/components/AttributeTree";
 import type { AttributeCategoryName } from "@/lib/player";
 import clsx from "clsx";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface AttributeForestProps {
-  forest: Map<string, TreeNode>[];
+  forest: Forest;
   forestName: AttributeCategoryName;
 }
 
@@ -18,6 +22,7 @@ export default function AttributeForest({
 }: AttributeForestProps) {
   const t = useTranslations("Attributes");
   const categoryAttributes = useAtomValue(playerAttributesByCategoryAtom);
+  const deactivateAllNodes = useSetAtom(deactivateAllNodesAtom);
   const [activeTreeIndex, setActiveTreeIndex] = useState(0);
 
   return (
@@ -35,16 +40,12 @@ export default function AttributeForest({
         ))}
       </div>
       <div className="flex flex-col gap-8 lg:flex-row">
-        <AttributeTree
-          key={forestName}
-          forestName={forestName}
-          treeIndex={activeTreeIndex}
-        />
+        <AttributeTree key={forestName} tree={forest.at(activeTreeIndex)!} />
         <AttributeDetail attributes={categoryAttributes.get(forestName)!} />
       </div>
       <button
         className="mx-auto w-fit rounded-lg bg-red-900 p-4"
-        onClick={() => resetAttributeTrees(forests, toggleNode)}
+        onClick={deactivateAllNodes}
       >
         {t("resetAttributes")}
       </button>

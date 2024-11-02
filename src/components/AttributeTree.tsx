@@ -1,25 +1,19 @@
-import { forestsAtom } from "@/atoms/forest";
+import type { Tree, TreeNode } from "@/atoms/player";
 import AttributeNode from "@/components/AttributeNode";
 import NodeJunction from "@/components/NodeJunction";
-import { groupByRow } from "@/lib/graph";
-import type { AttributeCategoryName } from "@/lib/player";
-import { useAtomValue } from "jotai";
 
 interface AttributeTreeProps {
-  forestName: AttributeCategoryName;
-  treeIndex: number;
+  tree: Tree;
 }
 
-export default function AttributeTree({
-  forestName,
-  treeIndex,
-}: AttributeTreeProps) {
-  const forest = useAtomValue(useAtomValue(forestsAtom).get(forestName)!);
-  const tree = forest.at(treeIndex)!;
+export default function AttributeTree({ tree }: AttributeTreeProps) {
+  const rows = [...tree.values()].reduce(
+    (acc, node) => acc.set(node.row, [...(acc.get(node.row) || []), node]),
+    new Map<number, TreeNode[]>(),
+  );
 
-  const rows = groupByRow(tree);
   const columnsCount =
-  [...tree.values()].reduce(
+    [...tree.values()].reduce(
       (acc, node) => (node.column > acc ? node.column : acc),
       0,
     ) + 1;
@@ -42,12 +36,7 @@ export default function AttributeTree({
             }}
           >
             {row.map((node) => (
-              <AttributeNode
-                key={node.id}
-                forestName={forestName}
-                treeIndex={treeIndex}
-                nodeId={node.id}
-              />
+              <AttributeNode key={node.id} node={node} />
             ))}
           </div>
         </div>

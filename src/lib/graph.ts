@@ -2,7 +2,7 @@ import type { AttributeName } from "./player";
 
 export type GraphNode = {
   id: string;
-  activationCost: number;
+  baseActivationCost: number;
   isActive: boolean;
   parentIds: string[];
   childrenIds: string[];
@@ -27,7 +27,7 @@ const addNode = (tree: Graph, nodeInfo: NodeInfo) => {
     id: `${String.fromCharCode(65 + nodeInfo.column)}${nodeInfo.row + 1}`,
     row: nodeInfo.row,
     column: nodeInfo.column,
-    activationCost: nodeInfo.activationCost,
+    baseActivationCost: nodeInfo.baseActivationCost,
     isActive: false,
     modifiers: nodeInfo.modifiers,
     parentIds: nodeInfo.parentIds,
@@ -67,7 +67,7 @@ export const getCheapestBranch = (
   };
 
   const getBranchCost = (nodes: GraphNode[]) =>
-    nodes.reduce((totalCost, node) => totalCost + node.activationCost, 0);
+    nodes.reduce((totalCost, node) => totalCost + node.baseActivationCost, 0);
 
   const allBranches = getAllBranches(startNode);
   return allBranches.reduce((cheapestBranch, branch) =>

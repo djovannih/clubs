@@ -11,31 +11,39 @@ import { useTranslations } from "next-intl";
 export default function PlayerInfo() {
   const t = useTranslations("PlayerInfo");
   const player = useAtomValue(playerAtom);
+  const playerLevel = useAtomValue(player.level);
   const playerPosition = useAtomValue(player.position);
   const weakFoot = useAtomValue(player.weakFoot);
   const skillMoves = useAtomValue(player.skillMoves);
   const accelerationRate = useAtomValue(player.accelerationRate);
   const playerMainAttributes = useAtomValue(playerCategoryAttributesAtom);
+  const availableSkillPoints = useAtomValue(player.availableSkillPoints);
+  const playerHeight = useAtomValue(player.height);
+  const playerWeight = useAtomValue(player.weight);
 
   return (
     <>
       <div className="flex flex-col gap-4 lg:flex-row lg:justify-between">
-        <CollapsibleCard heading={t("playerInfo")} maxHeight={250}>
+        <CollapsibleCard heading={t("playerInfo")} maxHeight={280}>
+          <div>
+            <span className="font-bold">{`${t("level")}: `}</span>
+            <span>{playerLevel}</span>
+          </div>
           <div>
             <span className="font-bold">{`${t("position")}: `}</span>
             <span>{`${t(playerPosition)}`}</span>
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("skillPoints")}: `}</span>
-            <span>{`${player.availableSkillPoints}`}</span>
+            <span>{`${availableSkillPoints}`}</span>
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("height")}: `}</span>
-            <span>{`${player.height} cm`}</span>
+            <span>{`${playerHeight} cm`}</span>
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("weight")}: `}</span>
-            <span>{`${player.weight} kg`}</span>
+            <span>{`${playerWeight} kg`}</span>
           </div>
           <div className="flex gap-2">
             <span className="font-bold">{`${t("accelerate")}: `}</span>
