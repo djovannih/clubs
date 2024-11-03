@@ -1,11 +1,11 @@
 import {
+  type AttributeCategoryName,
   deactivateAllNodesAtom,
   type Forest,
   playerAttributesByCategoryAtom,
 } from "@/atoms/player";
 import AttributeDetail from "@/components/AttributeDetail";
 import AttributeTree from "@/components/AttributeTree";
-import type { AttributeCategoryName } from "@/lib/player";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
