@@ -1,6 +1,5 @@
-import { playerAtom, positions } from "@/atoms/player";
+import { playerAtom, type Position, positions } from "@/atoms/player";
 import CollapsibleCard from "@/components/CollapsibleCard";
-import { type Position } from "@/lib/player";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import Slider from "./Slider";
