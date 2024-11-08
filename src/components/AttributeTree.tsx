@@ -1,6 +1,6 @@
 import type { Tree, TreeNode } from "@/atoms/player";
 import AttributeNode from "@/components/AttributeNode";
-import TreeEdge from "./TreeEdge";
+import TreeEdge from "@/components/TreeEdge";
 
 interface AttributeTreeProps {
   tree: Tree;

@@ -1,4 +1,4 @@
-import { atomWithToggle, jsonStorageOptions } from "@/atoms/utils";
+import { jsonStorageOptions } from "@/atoms/utils";
 import { defendingTrees } from "@/forests/defending";
 import { dribblingTrees } from "@/forests/dribbling";
 import { goalkeepingTrees } from "@/forests/goalkeeping";
@@ -739,10 +739,7 @@ const getAttribute = (
   },
 ];
 
-export const getCheapestBranch = (
-  startNode: GraphNode,
-  graph: Graph,
-): GraphNode[] => {
+const getCheapestBranch = (startNode: GraphNode, graph: Graph): GraphNode[] => {
   const getAllBranches = (startNode: GraphNode): GraphNode[][] => {
     if (startNode.isActive) return [[]];
     return startNode.parentIds.length === 0
@@ -762,20 +759,43 @@ export const getCheapestBranch = (
   );
 };
 
-const toTrees = (graphs: Graph[]) =>
+const toForest = (graphs: Graph[], forestName: AttributeCategoryName) =>
   graphs.map(
-    (graph) =>
+    (graph, i) =>
       new Map<string, TreeNode>(
-        [...graph.entries()].map(([attribute, node]) => [
-          attribute,
-          {
-            ...node,
-            actualActivationCost: atom(() =>
-              sum(getCheapestBranch(node, graph)),
-            ),
-            isActive: atomWithToggle(node.isActive),
-          },
-        ]),
+        [...graph.entries()].map(([attribute, node]) => {
+          const isActiveAtom = atom(
+            node.isActive,
+            (get, set, nextValue?: boolean) => {
+              nextValue = nextValue ?? !get(isActiveAtom);
+              set(isActiveAtom, nextValue);
+              const tree = get(playerAtom).forests.get(forestName)!.at(i)!;
+              if (nextValue)
+                getCheapestBranch(node, graph).forEach((n) => {
+                  set(tree.get(n.id)!.isActive, true);
+                });
+              else
+                node.childrenIds.forEach((childId) => {
+                  const child = tree.get(childId)!;
+                  if (
+                    get(child.isActive) &&
+                    !child.parentIds.some((id) => get(tree.get(id)!.isActive))
+                  )
+                    set(child.isActive, false);
+                });
+            },
+          );
+          return [
+            attribute,
+            {
+              ...node,
+              actualActivationCost: atom(() =>
+                sum(getCheapestBranch(node, graph)),
+              ),
+              isActive: isActiveAtom,
+            },
+          ];
+        }),
       ),
   );
 
@@ -936,13 +956,13 @@ const basePlayer: Player = {
     getAttribute("gkReflexes", 99),
   ]),
   forests: new Map([
-    ["pace", toTrees(paceTrees)],
-    ["shooting", toTrees(shootingTrees)],
-    ["passing", toTrees(passingTrees)],
-    ["dribbling", toTrees(dribblingTrees)],
-    ["defending", toTrees(defendingTrees)],
-    ["physicality", toTrees(physicalityTrees)],
-    ["goalkeeping", toTrees(goalkeepingTrees)],
+    ["pace", toForest(paceTrees, "pace")],
+    ["shooting", toForest(shootingTrees, "shooting")],
+    ["passing", toForest(passingTrees, "passing")],
+    ["dribbling", toForest(dribblingTrees, "dribbling")],
+    ["defending", toForest(defendingTrees, "defending")],
+    ["physicality", toForest(physicalityTrees, "physicality")],
+    ["goalkeeping", toForest(goalkeepingTrees, "goalkeeping")],
   ]),
   accelerationRate: atom((get) => {
     const player = get(playerAtom);

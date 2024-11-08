@@ -1,8 +1,8 @@
 import { playerAtom, type Position, positions } from "@/atoms/player";
 import CollapsibleCard from "@/components/CollapsibleCard";
+import Slider from "@/components/Slider";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-import Slider from "./Slider";
 
 export default function PlayerEditor() {
   const t = useTranslations("PlayerInfo");
