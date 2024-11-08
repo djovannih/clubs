@@ -793,8 +793,19 @@ const toForest = (graphs: Graph[], forestName: AttributeCategoryName) =>
             attribute,
             {
               ...node,
-              actualActivationCost: atom(() =>
-                sum(getCheapestBranch(node, graph)),
+              actualActivationCost: atom((get) =>
+                sum(
+                  getCheapestBranch(node, graph).filter(
+                    (n) =>
+                      !get(
+                        get(playerAtom)
+                          .forests.get(forestName)!
+                          .at(i)!
+                          .get(n.id)!.isActive,
+                      ),
+                  ),
+                  (n) => n.baseActivationCost,
+                ),
               ),
               isActive: isActiveAtom,
             },
