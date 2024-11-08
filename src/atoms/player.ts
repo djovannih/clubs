@@ -12,10 +12,13 @@ import type { Getter, PrimitiveAtom, Setter } from "jotai";
 import { type Atom, atom, type WritableAtom } from "jotai";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 
-const getActiveNodes = (forests: Map<AttributeCategoryName, Forest>) =>
+const getActiveNodes = (
+  forests: Map<AttributeCategoryName, Forest>,
+  get: Getter,
+) =>
   [...forests.values()].flatMap((forest) =>
     [...forest.values()].flatMap((tree) =>
-      [...tree.values()].filter((node) => node.isActive),
+      [...tree.values()].filter((node) => get(node.isActive)),
     ),
   );
 
@@ -279,8 +282,9 @@ const getWeightModifiers = (weight: number): Map<AttributeName, number> => {
 
 const getNodesModifiers = (
   forests: Map<AttributeCategoryName, Forest>,
+  get: Getter,
 ): Map<AttributeName, number> =>
-  getActiveNodes(forests)
+  getActiveNodes(forests, get)
     .map((node) => node.modifiers)
     .reduce(
       (flatModifiers, modifiers) =>
@@ -295,7 +299,7 @@ const getNodesModifiers = (
       new Map<AttributeName, number>(),
     );
 
-export const getAttributesByPosition = (position: Position) => {
+const getAttributesByPosition = (position: Position) => {
   switch (position) {
     case "GK":
       return new Map<AttributeName, { value: number; maxValue: 5 | 99 }>([
@@ -730,7 +734,7 @@ const getAttribute = (
       const heightModifier = getHeightModifiers(height).get(attribute) || 0;
       const weightModifier = getWeightModifiers(weight).get(attribute) || 0;
       const nodesModifier =
-        getNodesModifiers(player.forests).get(attribute) || 0;
+        getNodesModifiers(player.forests, get).get(attribute) || 0;
       return Math.floor(
         baseValue + heightModifier + weightModifier + nodesModifier,
       );
@@ -908,7 +912,7 @@ const basePlayer: Player = {
     const player = get(playerAtom);
     const totalSkillPoints = skillPointsByLevel.get(get(player.level))!;
     const spentSkillPoints = sum(
-      getActiveNodes(player.forests),
+      getActiveNodes(player.forests, get),
       (node) => node.baseActivationCost,
     );
     return totalSkillPoints - spentSkillPoints;
